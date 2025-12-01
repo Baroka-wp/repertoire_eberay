@@ -67,7 +67,7 @@ export default function FiltresModal({ isOpen, onClose, initialValues }: Filtres
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto">
+    <div className="fixed inset-0 z-[9999] overflow-y-auto">
       {/* Backdrop */}
       <div 
         className="fixed inset-0 bg-black/50 transition-opacity"
@@ -76,7 +76,7 @@ export default function FiltresModal({ isOpen, onClose, initialValues }: Filtres
       
       {/* Modal */}
       <div className="flex min-h-full items-center justify-center p-4">
-        <div className="relative bg-white rounded-xl shadow-2xl w-full max-w-3xl">
+        <div className="relative bg-white rounded-xl shadow-2xl w-full max-w-3xl z-[10000]">
           {/* Header */}
           <div className="flex items-center justify-between px-6 py-5 border-b border-neutral-200">
             <div className="flex items-center gap-3">

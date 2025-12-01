@@ -79,54 +79,96 @@ export default function RepetiteurMap({ repetiteurs }: RepetiteurMapProps) {
     return acc
   }, {} as Record<string, Repetiteur[]>)
 
+  // Identifier les villes sans coordonnées
+  const villesSansCoords = Object.keys(repetiteursParVille).filter(
+    ville => !COORDONNEES_VILLES[ville]
+  )
+
+  // Compter les répétiteurs affichés et non affichés
+  const repetiteursAffiches = repetiteurs.filter(rep => COORDONNEES_VILLES[rep.ville])
+  const repetiteursNonAffiches = repetiteurs.filter(rep => !COORDONNEES_VILLES[rep.ville])
+
   // Centre de la carte sur le Niger
   const center: [number, number] = [15.0, 8.0]
 
   return (
-    <div className="w-full h-[calc(100vh-180px)] rounded-lg overflow-hidden border border-neutral-200 shadow-sm">
-      <MapContainer
-        center={center}
-        zoom={6}
-        style={{ height: '100%', width: '100%' }}
-        scrollWheelZoom={true}
-      >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        
-        {Object.entries(repetiteursParVille).map(([ville, reps]) => {
-          const coords = COORDONNEES_VILLES[ville]
-          if (!coords) return null
+    <div className="space-y-4">
+      {/* Alerte pour les villes manquantes */}
+      {villesSansCoords.length > 0 && (
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+          <h3 className="text-sm font-bold text-amber-900 mb-2">
+            ⚠️ Villes sans coordonnées GPS ({repetiteursNonAffiches.length} répétiteur{repetiteursNonAffiches.length > 1 ? 's' : ''} non affiché{repetiteursNonAffiches.length > 1 ? 's' : ''})
+          </h3>
+          <p className="text-xs text-amber-800 mb-2">
+            Les villes suivantes n'apparaissent pas sur la carte car leurs coordonnées GPS ne sont pas encore enregistrées :
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {villesSansCoords.map(ville => (
+              <span key={ville} className="inline-flex items-center px-2 py-1 rounded bg-white text-xs font-medium text-amber-900 border border-amber-300">
+                {ville} ({repetiteursParVille[ville].length})
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
 
-          return (
-            <Marker key={ville} position={coords}>
-              <Popup>
-                <div className="p-2 min-w-[200px]">
-                  <h3 className="font-bold text-slate-900 mb-2 text-base">{ville}</h3>
-                  <p className="text-sm text-slate-600 mb-3">
-                    {reps.length} répétiteur{reps.length > 1 ? 's' : ''}
-                  </p>
-                  <div className="space-y-2 max-h-[200px] overflow-y-auto">
-                    {reps.map(rep => (
-                      <div key={rep.id} className="border-t border-neutral-200 pt-2">
-                        <a 
-                          href={`/repetiteur/${rep.id}`}
-                          className="font-semibold text-slate-800 hover:text-slate-900 text-sm"
-                        >
-                          {rep.prenom} {rep.nom}
-                        </a>
-                        <p className="text-xs text-slate-500">{rep.diplome}</p>
-                        <p className="text-xs text-slate-600 mt-1">{rep.telephone}</p>
-                      </div>
-                    ))}
+      {/* Statistiques */}
+      <div className="flex items-center justify-between text-sm text-slate-600 px-2">
+        <span>
+          <strong>{Object.keys(repetiteursParVille).length}</strong> villes · 
+          <strong className="text-green-600 ml-1">{repetiteursAffiches.length}</strong> affichés
+          {repetiteursNonAffiches.length > 0 && (
+            <> · <strong className="text-amber-600">{repetiteursNonAffiches.length}</strong> non affichés</>
+          )}
+        </span>
+      </div>
+
+      {/* Carte */}
+      <div className="w-full h-[calc(100vh-280px)] rounded-lg overflow-hidden border border-neutral-200 shadow-sm">
+        <MapContainer
+          center={center}
+          zoom={6}
+          style={{ height: '100%', width: '100%' }}
+          scrollWheelZoom={true}
+        >
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          
+          {Object.entries(repetiteursParVille).map(([ville, reps]) => {
+            const coords = COORDONNEES_VILLES[ville]
+            if (!coords) return null
+
+            return (
+              <Marker key={ville} position={coords}>
+                <Popup>
+                  <div className="p-2 min-w-[200px]">
+                    <h3 className="font-bold text-slate-900 mb-2 text-base">{ville}</h3>
+                    <p className="text-sm text-slate-600 mb-3">
+                      {reps.length} répétiteur{reps.length > 1 ? 's' : ''}
+                    </p>
+                    <div className="space-y-2 max-h-[200px] overflow-y-auto">
+                      {reps.map(rep => (
+                        <div key={rep.id} className="border-t border-neutral-200 pt-2">
+                          <a 
+                            href={`/repetiteur/${rep.id}`}
+                            className="font-semibold text-slate-800 hover:text-slate-900 text-sm"
+                          >
+                            {rep.prenom} {rep.nom}
+                          </a>
+                          <p className="text-xs text-slate-500">{rep.diplome}</p>
+                          <p className="text-xs text-slate-600 mt-1">{rep.telephone}</p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              </Popup>
-            </Marker>
-          )
-        })}
-      </MapContainer>
+                </Popup>
+              </Marker>
+            )
+          })}
+        </MapContainer>
+      </div>
     </div>
   )
 }

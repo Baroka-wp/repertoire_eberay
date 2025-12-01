@@ -9,7 +9,7 @@ import RepertoireHeader from './RepertoireHeader'
 const RepetiteurMap = dynamic(() => import('./RepetiteurMap'), {
   ssr: false,
   loading: () => (
-    <div className="w-full h-[calc(100vh-180px)] rounded-lg bg-neutral-100 flex items-center justify-center">
+    <div className="w-full h-[calc(100vh-200px)] rounded-lg bg-neutral-100 flex items-center justify-center">
       <p className="text-slate-500">Chargement de la carte...</p>
     </div>
   )
@@ -77,7 +77,7 @@ export default function RepertoireClient({
           children
         ) : (
           <Suspense fallback={
-            <div className="w-full h-[calc(100vh-180px)] rounded-lg bg-neutral-100 flex items-center justify-center">
+            <div className="w-full h-[calc(100vh-200px)] rounded-lg bg-neutral-100 flex items-center justify-center">
               <p className="text-slate-500">Chargement de la carte...</p>
             </div>
           }>
