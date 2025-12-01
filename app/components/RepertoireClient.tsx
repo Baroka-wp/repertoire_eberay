@@ -9,7 +9,7 @@ import RepertoireHeader from './RepertoireHeader'
 const RepetiteurMap = dynamic(() => import('./RepetiteurMap'), {
   ssr: false,
   loading: () => (
-    <div className="w-full h-[calc(100vh-200px)] rounded-lg bg-neutral-100 flex items-center justify-center">
+    <div className="w-full h-[calc(100vh-74px)] rounded-lg bg-neutral-100 flex items-center justify-center">
       <p className="text-slate-500">Chargement de la carte...</p>
     </div>
   )
@@ -45,7 +45,7 @@ export default function RepertoireClient({
         onViewModeChange={setViewMode}
       />
 
-      <main className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
+      <main className="max-w-7xl mx-auto px-6 lg:px-8 pt-6 pb-2">
         {/* Toggle Vue Mobile */}
         <div className="flex md:hidden items-center gap-2 bg-white rounded-lg border border-neutral-200 shadow-sm p-1 mb-6">
           <button
@@ -77,7 +77,7 @@ export default function RepertoireClient({
           children
         ) : (
           <Suspense fallback={
-            <div className="w-full h-[calc(100vh-200px)] rounded-lg bg-neutral-100 flex items-center justify-center">
+            <div className="w-full h-[calc(100vh-74px)] rounded-lg bg-neutral-100 flex items-center justify-center">
               <p className="text-slate-500">Chargement de la carte...</p>
             </div>
           }>

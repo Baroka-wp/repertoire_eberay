@@ -92,39 +92,9 @@ export default function RepetiteurMap({ repetiteurs }: RepetiteurMapProps) {
   const center: [number, number] = [15.0, 8.0]
 
   return (
-    <div className="space-y-4">
-      {/* Alerte pour les villes manquantes */}
-      {villesSansCoords.length > 0 && (
-        <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
-          <h3 className="text-sm font-bold text-amber-900 mb-2">
-            ⚠️ Villes sans coordonnées GPS ({repetiteursNonAffiches.length} répétiteur{repetiteursNonAffiches.length > 1 ? 's' : ''} non affiché{repetiteursNonAffiches.length > 1 ? 's' : ''})
-          </h3>
-          <p className="text-xs text-amber-800 mb-2">
-            Les villes suivantes n'apparaissent pas sur la carte car leurs coordonnées GPS ne sont pas encore enregistrées :
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {villesSansCoords.map(ville => (
-              <span key={ville} className="inline-flex items-center px-2 py-1 rounded bg-white text-xs font-medium text-amber-900 border border-amber-300">
-                {ville} ({repetiteursParVille[ville].length})
-              </span>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Statistiques */}
-      <div className="flex items-center justify-between text-sm text-slate-600 px-2">
-        <span>
-          <strong>{Object.keys(repetiteursParVille).length}</strong> villes · 
-          <strong className="text-green-600 ml-1">{repetiteursAffiches.length}</strong> affichés
-          {repetiteursNonAffiches.length > 0 && (
-            <> · <strong className="text-amber-600">{repetiteursNonAffiches.length}</strong> non affichés</>
-          )}
-        </span>
-      </div>
-
+    <div className="relative w-full h-[calc(100vh-74px)]">
       {/* Carte */}
-      <div className="w-full h-[calc(100vh-280px)] rounded-lg overflow-hidden border border-neutral-200 shadow-sm">
+      <div className="w-full h-full rounded-lg overflow-hidden border border-neutral-200 shadow-sm">
         <MapContainer
           center={center}
           zoom={6}
@@ -168,6 +138,18 @@ export default function RepetiteurMap({ repetiteurs }: RepetiteurMapProps) {
             )
           })}
         </MapContainer>
+      </div>
+
+      {/* Info discrète en bas */}
+      <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between text-xs text-slate-500 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded shadow-sm">
+        <span>
+          {Object.keys(repetiteursParVille).length} villes · {repetiteursAffiches.length} affichés
+        </span>
+        {villesSansCoords.length > 0 && (
+          <span className="text-amber-600" title={`Villes sans GPS: ${villesSansCoords.join(', ')}`}>
+            {repetiteursNonAffiches.length} non localisé{repetiteursNonAffiches.length > 1 ? 's' : ''}
+          </span>
+        )}
       </div>
     </div>
   )
