@@ -83,7 +83,7 @@ export default function RepetiteurMap({ repetiteurs }: RepetiteurMapProps) {
   const center: [number, number] = [15.0, 8.0]
 
   return (
-    <div className="w-full h-[600px] rounded-lg overflow-hidden border border-neutral-200 shadow-sm">
+    <div className="w-full h-[calc(100vh-180px)] rounded-lg overflow-hidden border border-neutral-200 shadow-sm">
       <MapContainer
         center={center}
         zoom={6}
