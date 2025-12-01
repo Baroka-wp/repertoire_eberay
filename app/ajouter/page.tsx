@@ -145,10 +145,10 @@ export default function AjouterPage() {
                             </Link>
                             <div className="h-6 w-px bg-neutral-300"></div>
                             <div className="flex items-center gap-3">
-                                <Image 
-                                    src="/logp_eberay.png" 
-                                    alt="Logo E-Beyray" 
-                                    width={40} 
+                                <Image
+                                    src="/logp_eberay.png"
+                                    alt="Logo E-Beyray"
+                                    width={40}
                                     height={40}
                                     className="object-contain"
                                 />
