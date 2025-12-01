@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { Phone, GraduationCap, Pencil } from 'lucide-react'
+import { GraduationCap, Pencil } from 'lucide-react'
 
 interface TableRowProps {
   repetiteur: {

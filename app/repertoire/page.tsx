@@ -23,10 +23,10 @@ export default async function RepertoirePage({
   const niveauFilter = params.niveau || ""
 
   // Construction des filtres Prisma côté backend
-  const whereConditions: any = {
+  const whereConditions = {
     AND: [
       { statut: 'Actif' }
-    ]
+    ] as Array<Record<string, unknown>>
   }
 
   // Filtre de recherche textuelle
@@ -134,7 +134,7 @@ export default async function RepertoirePage({
               {query && (
                 <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-neutral-200 text-sm text-slate-700">
                   <Search size={14} />
-                  <span className="font-medium">"{query}"</span>
+                  <span className="font-medium">&ldquo;{query}&rdquo;</span>
                 </span>
               )}
               {regionFilter && (

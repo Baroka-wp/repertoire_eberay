@@ -24,7 +24,16 @@ interface RepertoireClientProps {
     niveau: string
   }
   filtresActifs: number
-  repetiteurs: any[]
+  repetiteurs: Array<{
+    id: number
+    nom: string
+    prenom: string
+    ville: string
+    departement: string
+    telephone: string
+    matieres: string
+    diplome: string
+  }>
   children: React.ReactNode
 }
 

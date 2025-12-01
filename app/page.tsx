@@ -22,7 +22,7 @@ export default function HomePage() {
             E-BEYRAY
           </h1>
           <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-            Répertoire des Répétiteurs de l'Organisation E-Beyray
+            Répertoire des Répétiteurs de l&apos;Organisation E-Beyray
           </p>
         </div>
 
@@ -72,7 +72,7 @@ export default function HomePage() {
               </h2>
 
               <p className="text-slate-600 mb-6 leading-relaxed">
-                Inscrivez un nouveau répétiteur dans l'organisation E-Beyray avec ses informations et compétences.
+                Inscrivez un nouveau répétiteur dans l&apos;organisation E-Beyray avec ses informations et compétences.
               </p>
 
               <div className="inline-flex items-center text-slate-800 font-semibold group-hover:gap-3 gap-2 transition-all">

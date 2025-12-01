@@ -104,7 +104,6 @@ export default function AjouterPage() {
 
     const canProceedToStep2 = formData.nom.trim() !== '' && formData.prenom.trim() !== ''
     const canProceedToStep3 = formData.departement !== '' && formData.ville.trim() !== '' && formData.telephone.trim() !== ''
-    const canSubmit = matieresSelectionnees.length > 0 && classesSelectionnees.length > 0
 
     const toggleClasse = (classe: string) => {
         setClassesSelectionnees(prev =>
@@ -153,7 +152,7 @@ export default function AjouterPage() {
                                     height={40}
                                     className="object-contain"
                                 />
-                                <h1 className="text-xl font-bold text-slate-900">Inscription d'un Répétiteur</h1>
+                                <h1 className="text-xl font-bold text-slate-900">Inscription d&apos;un Répétiteur</h1>
                             </div>
                         </div>
                     </div>
@@ -255,7 +254,7 @@ export default function AjouterPage() {
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-semibold text-slate-700 mb-2">Année d'adhésion</label>
+                                    <label className="block text-sm font-semibold text-slate-700 mb-2">Année d&apos;adhésion</label>
                                     <input
                                         type="number"
                                         name="anneeEntree"
@@ -407,7 +406,7 @@ export default function AjouterPage() {
 
                                 {/* CYCLE */}
                                 <div>
-                                    <label className="block text-sm font-semibold text-slate-700 mb-4">Cycle d'enseignement</label>
+                                    <label className="block text-sm font-semibold text-slate-700 mb-4">Cycle d&apos;enseignement</label>
                                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                         {NIVEAUX.map((niv) => {
                                             const Icon = niv.icon

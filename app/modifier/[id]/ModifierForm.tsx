@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useFormStatus } from 'react-dom'
 import { updateRepetiteur } from '../../actions'
 import Image from 'next/image'
@@ -280,7 +280,7 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauInitial, cla
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">Année d'adhésion</label>
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">Année d&apos;adhésion</label>
                   <input
                     type="number"
                     name="anneeEntree"
@@ -454,7 +454,7 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauInitial, cla
 
                 {/* CYCLE */}
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-4">Cycle d'enseignement</label>
+                  <label className="block text-sm font-semibold text-slate-700 mb-4">Cycle d&apos;enseignement</label>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     {NIVEAUX.map((niv) => {
                       const Icon = niv.icon

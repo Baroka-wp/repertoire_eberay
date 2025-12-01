@@ -8,7 +8,6 @@ import {
   Mail,
   GraduationCap,
   MapPin,
-  Calendar,
   Briefcase,
   CheckCircle2,
   XCircle,
@@ -137,7 +136,7 @@ export default async function RepetiteurPage({ params }: PageProps) {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div className="flex items-start">
-                    <div className="w-32 text-sm text-slate-500 font-medium">Année d'adhésion</div>
+                    <div className="w-32 text-sm text-slate-500 font-medium">Année d&apos;adhésion</div>
                     <div className="flex-1 text-sm text-slate-900">{repetiteur.anneeEntree}</div>
                   </div>
                   <div className="flex items-start">
