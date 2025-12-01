@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { X, Search, MapPin, BookOpen, GraduationCap, Filter } from 'lucide-react'
+import { useState, useEffect, useTransition } from 'react'
+import { X, Search, MapPin, BookOpen, GraduationCap, Filter, Loader2 } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 const NIVEAUX = [
   { id: 'primaire', label: 'Primaire' },
@@ -43,6 +44,8 @@ interface FiltresModalProps {
 
 export default function FiltresModal({ isOpen, onClose, initialValues }: FiltresModalProps) {
   const [formData, setFormData] = useState(initialValues)
+  const [isPending, startTransition] = useTransition()
+  const router = useRouter()
 
   useEffect(() => {
     setFormData(initialValues)
@@ -56,12 +59,29 @@ export default function FiltresModal({ isOpen, onClose, initialValues }: Filtres
 
   const handleReset = () => {
     setFormData({ q: '', region: '', ville: '', matiere: '', niveau: '' })
+    startTransition(() => {
+      router.push('/repertoire')
+      onClose()
+    })
   }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    const form = e.target as HTMLFormElement
-    form.submit()
+    
+    // Construire l'URL avec les paramètres
+    const params = new URLSearchParams()
+    if (formData.q) params.set('q', formData.q)
+    if (formData.region) params.set('region', formData.region)
+    if (formData.ville) params.set('ville', formData.ville)
+    if (formData.matiere) params.set('matiere', formData.matiere)
+    if (formData.niveau) params.set('niveau', formData.niveau)
+    
+    const url = params.toString() ? `/repertoire?${params.toString()}` : '/repertoire'
+    
+    startTransition(() => {
+      router.push(url)
+      onClose()
+    })
   }
 
   if (!isOpen) return null
@@ -231,23 +251,28 @@ export default function FiltresModal({ isOpen, onClose, initialValues }: Filtres
               <button
                 type="button"
                 onClick={handleReset}
-                className="px-5 py-2.5 text-sm font-semibold text-slate-700 hover:text-slate-900 transition-colors"
+                disabled={isPending}
+                className="px-5 py-2.5 text-sm font-semibold text-slate-700 hover:text-slate-900 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
               >
+                {isPending && <Loader2 size={14} className="animate-spin" />}
                 Réinitialiser
               </button>
               <div className="flex items-center gap-3">
                 <button
                   type="button"
                   onClick={onClose}
-                  className="px-5 py-2.5 text-sm font-semibold text-slate-700 bg-white border border-neutral-300 rounded-lg hover:bg-neutral-50 transition-colors"
+                  disabled={isPending}
+                  className="px-5 py-2.5 text-sm font-semibold text-slate-700 bg-white border border-neutral-300 rounded-lg hover:bg-neutral-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Annuler
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2.5 text-sm font-semibold text-white bg-slate-800 hover:bg-slate-900 rounded-lg transition-colors shadow-sm"
+                  disabled={isPending}
+                  className="px-6 py-2.5 text-sm font-semibold text-white bg-slate-800 hover:bg-slate-900 rounded-lg transition-colors shadow-sm disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-2"
                 >
-                  Appliquer les filtres
+                  {isPending && <Loader2 size={16} className="animate-spin" />}
+                  {isPending ? 'Application...' : 'Appliquer les filtres'}
                 </button>
               </div>
             </div>
