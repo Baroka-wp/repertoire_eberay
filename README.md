@@ -2,11 +2,11 @@
 
 ![Logo E-BEYRAY](public/logp_eberay.png)
 
-Plateforme de gestion des répétiteurs de l'Organisation Eberay au Niger.
+Plateforme de gestion des répétiteurs de l'Organisation E-Beyray au Niger.
 
 ## 🎯 À propos
 
-E-BEYRAY est une application web moderne pour gérer le répertoire des répétiteurs inscrits à l'organisation Eberay. La plateforme permet de :
+E-BEYRAY est une application web moderne pour gérer le répertoire des répétiteurs inscrits à l'organisation E-Beyray. La plateforme permet de :
 
 - 📋 Consulter le répertoire complet des répétiteurs
 - ➕ Inscrire de nouveaux répétiteurs
@@ -70,7 +70,7 @@ model Repetiteur {
 ## 📱 Fonctionnalités principales
 
 ### Page d'accueil (Onboarding)
-- Design épuré avec logo Eberay
+- Design épuré avec logo E-Beyray
 - Deux actions principales : Consulter / Ajouter
 
 ### Répertoire
@@ -147,8 +147,8 @@ npx prisma studio
 
 ## 📄 Licence
 
-Propriété de l'Organisation Eberay - Tous droits réservés
+Propriété de l'Organisation E-Beyray - Tous droits réservés
 
 ## 👥 Contact
 
-Pour toute question concernant l'application, contactez l'Organisation Eberay.
+Pour toute question concernant l'application, contactez l'Organisation E-Beyray.

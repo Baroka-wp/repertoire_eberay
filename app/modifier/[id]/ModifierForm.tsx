@@ -169,7 +169,7 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauInitial, cla
               <div className="flex items-center gap-3">
                 <Image 
                   src="/logp_eberay.png" 
-                  alt="Logo Eberay" 
+                  alt="Logo E-Beyray" 
                   width={40} 
                   height={40}
                   className="object-contain"

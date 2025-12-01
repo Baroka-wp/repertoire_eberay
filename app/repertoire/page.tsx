@@ -142,12 +142,12 @@ export default async function RepertoirePage({
               <div className="flex items-center gap-3">
                 <Image 
                   src="/logp_eberay.png" 
-                  alt="Logo Eberay" 
+                  alt="Logo E-Beyray" 
                   width={40} 
                   height={40}
                   className="object-contain"
                 />
-                <h1 className="text-xl font-bold text-slate-900">Répertoire Eberay</h1>
+                <h1 className="text-xl font-bold text-slate-900">Répertoire E-Beyray</h1>
               </div>
             </div>
             <Link

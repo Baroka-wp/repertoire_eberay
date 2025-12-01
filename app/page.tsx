@@ -9,10 +9,10 @@ export default function HomePage() {
         {/* HEADER */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center justify-center mb-6">
-            <Image 
-              src="/logp_eberay.png" 
-              alt="Logo E-BEYRAY" 
-              width={180} 
+            <Image
+              src="/logp_eberay.png"
+              alt="Logo E-BEYRAY"
+              width={180}
               height={180}
               className="drop-shadow-lg"
               priority
@@ -22,7 +22,7 @@ export default function HomePage() {
             E-BEYRAY
           </h1>
           <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-            Répertoire des Répétiteurs de l'Organisation Eberay
+            Répertoire des Répétiteurs de l'Organisation E-Beyray
           </p>
         </div>
 
@@ -43,9 +43,9 @@ export default function HomePage() {
               <h2 className="text-2xl font-bold text-slate-900 mb-3">
                 Consulter le répertoire
               </h2>
-              
+
               <p className="text-slate-600 mb-6 leading-relaxed">
-                Accédez à la base de données des répétiteurs Eberay. Recherchez par région, matière, niveau ou nom.
+                Accédez à la base de données des répétiteurs E-Beyray. Recherchez par région, matière, niveau ou nom.
               </p>
 
               <div className="inline-flex items-center text-slate-800 font-semibold group-hover:gap-3 gap-2 transition-all">
@@ -70,9 +70,9 @@ export default function HomePage() {
               <h2 className="text-2xl font-bold text-slate-900 mb-3">
                 Ajouter un répétiteur
               </h2>
-              
+
               <p className="text-slate-600 mb-6 leading-relaxed">
-                Inscrivez un nouveau répétiteur dans l'organisation Eberay avec ses informations et compétences.
+                Inscrivez un nouveau répétiteur dans l'organisation E-Beyray avec ses informations et compétences.
               </p>
 
               <div className="inline-flex items-center text-slate-800 font-semibold group-hover:gap-3 gap-2 transition-all">
@@ -85,7 +85,7 @@ export default function HomePage() {
 
         {/* FOOTER INFO */}
         <div className="text-center text-sm text-slate-500">
-          <p>Plateforme de gestion des membres Eberay</p>
+          <p>Plateforme de gestion des membres E-Beyray</p>
         </div>
       </div>
     </div>
