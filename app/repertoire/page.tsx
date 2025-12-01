@@ -2,8 +2,8 @@ import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
 import { ArrowLeft, BookOpen, Plus, Users, Search, MapPin, GraduationCap, X } from 'lucide-react'
 import { TableRow } from '../components/TableRow'
-import RegionVilleSync from '../components/RegionVilleSync'
 import Image from 'next/image'
+import RegionVilleScript from '../components/RegionVilleScript'
 
 const NIVEAUX = [
   { id: 'primaire', label: 'Primaire' },
@@ -182,7 +182,6 @@ export default async function RepertoirePage({
 
         {/* BARRE DE RECHERCHE ET FILTRES */}
         <div className="bg-white rounded-lg border border-neutral-200 shadow-sm mb-8">
-          <RegionVilleSync />
           <form method="GET" action="/repertoire" className="p-6">
             <div className="space-y-6">
               {/* Recherche principale */}
@@ -395,6 +394,8 @@ export default async function RepertoirePage({
           )}
         </div>
       </main>
+      
+      <RegionVilleScript />
     </div>
   )
 }

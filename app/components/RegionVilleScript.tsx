@@ -13,23 +13,24 @@ const VILLES_PAR_REGION: Record<string, string[]> = {
   "Tillabéri": ["Tillabéri", "Tera", "Filingué", "Say", "Kollo"],
 }
 
-export default function RegionVilleSync() {
+export default function RegionVilleScript() {
   useEffect(() => {
     const regionSelect = document.getElementById('region') as HTMLSelectElement
     const villeSelect = document.getElementById('ville') as HTMLSelectElement
 
     if (!regionSelect || !villeSelect) return
 
-    const updateVilleOptions = () => {
-      const selectedRegion = regionSelect.value
-      const villes = selectedRegion ? VILLES_PAR_REGION[selectedRegion] || [] : []
-
-      // Sauvegarder la valeur actuelle
+    const handleRegionChange = () => {
+      const region = regionSelect.value
+      const villes = region ? VILLES_PAR_REGION[region] || [] : []
       const currentVille = villeSelect.value
 
-      // Effacer et reconstruire les options
-      villeSelect.innerHTML = '<option value="">Toutes les villes</option>'
-      
+      // Vider les options existantes sauf la première
+      while (villeSelect.options.length > 1) {
+        villeSelect.remove(1)
+      }
+
+      // Ajouter les nouvelles options
       villes.forEach(ville => {
         const option = document.createElement('option')
         option.value = ville
@@ -37,24 +38,20 @@ export default function RegionVilleSync() {
         villeSelect.appendChild(option)
       })
 
-      // Restaurer la sélection si toujours valide
+      // Restaurer la sélection si valide
       if (villes.includes(currentVille)) {
         villeSelect.value = currentVille
       } else {
-        villeSelect.value = ""
+        villeSelect.value = ''
       }
 
-      // Activer/désactiver le champ ville
-      villeSelect.disabled = !selectedRegion
+      villeSelect.disabled = !region
     }
 
-    regionSelect.addEventListener('change', updateVilleOptions)
-    
-    // Initialisation au chargement
-    updateVilleOptions()
+    regionSelect.addEventListener('change', handleRegionChange)
 
     return () => {
-      regionSelect.removeEventListener('change', updateVilleOptions)
+      regionSelect.removeEventListener('change', handleRegionChange)
     }
   }, [])
 
