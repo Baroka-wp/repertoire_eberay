@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { useFormStatus } from 'react-dom'
 import { updateRepetiteur } from '../../actions'
+import Image from 'next/image'
 import {
   ArrowLeft,
   Save,
@@ -159,11 +160,23 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauInitial, cla
       <header className="bg-white border-b border-neutral-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
-            <Link href={`/repetiteur/${repetiteur.id}`} className="flex items-center gap-3 text-slate-700 hover:text-slate-900 transition-colors">
-              <ArrowLeft size={20} />
-              <span className="font-semibold">Retour à la fiche</span>
-            </Link>
-            <h1 className="text-xl font-bold text-slate-900">Modifier le dossier</h1>
+            <div className="flex items-center gap-4">
+              <Link href={`/repetiteur/${repetiteur.id}`} className="flex items-center gap-2 text-slate-700 hover:text-slate-900 transition-colors px-3 py-2 rounded-lg hover:bg-neutral-100">
+                <ArrowLeft size={18} />
+                <span className="font-medium text-sm">Retour à la fiche</span>
+              </Link>
+              <div className="h-6 w-px bg-neutral-300"></div>
+              <div className="flex items-center gap-3">
+                <Image 
+                  src="/logp_eberay.png" 
+                  alt="Logo Eberay" 
+                  width={40} 
+                  height={40}
+                  className="object-contain"
+                />
+                <h1 className="text-xl font-bold text-slate-900">Modifier le Dossier Répétiteur</h1>
+              </div>
+            </div>
           </div>
         </div>
       </header>

@@ -1,197 +1,93 @@
 import Link from 'next/link'
-import { prisma } from '@/lib/prisma'
-import { BookOpen, Plus, Users } from 'lucide-react'
-import { TableRow } from './components/TableRow'
-import { FiltresInteractifs } from './components/FiltresInteractifs'
-import { Suspense } from 'react'
+import { BookOpen, UserPlus } from 'lucide-react'
+import Image from 'next/image'
 
-const DEPARTEMENTS = ["Niamey", "Dosso", "Maradi", "Tahoua", "Zinder", "Agadez", "Diffa", "Tillabéri"]
-
-const VILLES_PAR_REGION: Record<string, string[]> = {
-  "Niamey": ["Niamey", "Kollo", "Say", "Torodi"],
-  "Dosso": ["Dosso", "Gaya", "Dogondoutchi", "Loga", "Boboye"],
-  "Maradi": ["Maradi", "Tessaoua", "Madarounfa", "Guidan Roumdji", "Aguié"],
-  "Tahoua": ["Tahoua", "Birni-N'Konni", "Madaoua", "Illéla", "Keita"],
-  "Zinder": ["Zinder", "Mirriah", "Tanout", "Gouré", "Magaria"],
-  "Agadez": ["Agadez", "Arlit", "Tchirozérine", "Ingall", "Dirkou"],
-  "Diffa": ["Diffa", "N'Guigmi", "Maine-Soroa", "Goudoumaria", "N'Gourti"],
-  "Tillabéri": ["Tillabéri", "Ayorou", "Ouallam", "Téra", "Filingué"]
-}
-
-const MATIERES_LISTE = [
-  "Français", "Mathématiques", "Physique-Chimie (PC)", "SVT",
-  "Anglais", "Histoire-Géo", "Philosophie", "Espagnol", "Allemand",
-  "Arabe", "Comptabilité", "Économie", "Informatique",
-  "Toutes matières (Primaire)"
-]
-
-const NIVEAUX = [
-  { id: 'primaire', label: 'Primaire' },
-  { id: 'secondaire_inf', label: 'Collège' },
-  { id: 'secondaire_sup', label: 'Lycée' },
-]
-
-export default async function Home({ searchParams }: {
-  searchParams: Promise<{
-    q?: string
-    region?: string
-    ville?: string
-    matiere?: string
-    niveau?: string
-  }>
-}) {
-  const params = await searchParams
-  const query = params.q || ""
-  const regionFilter = params.region || ""
-  const villeFilter = params.ville || ""
-  const matiereFilter = params.matiere || ""
-  const niveauFilter = params.niveau || ""
-
-  // Construction de la requête de filtrage
-  const whereConditions: any[] = [
-    { statut: 'Actif' }
-  ]
-
-  // Filtre par recherche textuelle (nom, prénom)
-  if (query) {
-    whereConditions.push({
-      OR: [
-        { nom: { contains: query, mode: 'insensitive' } },
-        { prenom: { contains: query, mode: 'insensitive' } },
-      ],
-    })
-  }
-
-  // Filtre par région
-  if (regionFilter) {
-    whereConditions.push({ departement: { contains: regionFilter, mode: 'insensitive' } })
-  }
-
-  // Filtre par ville
-  if (villeFilter) {
-    whereConditions.push({ ville: { contains: villeFilter, mode: 'insensitive' } })
-  }
-
-  // Filtre par matière
-  if (matiereFilter) {
-    whereConditions.push({ matieres: { contains: matiereFilter, mode: 'insensitive' } })
-  }
-
-  // Filtre par niveau (dans le format stocké: "[niveau : ...]")
-  if (niveauFilter) {
-    whereConditions.push({ matieres: { contains: niveauFilter, mode: 'insensitive' } })
-  }
-
-  const repetiteurs = await prisma.repetiteur.findMany({
-    where: {
-      AND: whereConditions
-    },
-    orderBy: { id: 'desc' }
-  })
-
-  const totalEnseignants = repetiteurs.length
-
+export default function HomePage() {
   return (
-    <div className="min-h-screen bg-neutral-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-neutral-50 to-slate-100 flex items-center justify-center p-6">
+      <div className="max-w-5xl w-full">
+        {/* HEADER */}
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center justify-center mb-6">
+            <Image 
+              src="/logp_eberay.png" 
+              alt="Logo E-BEYRAY" 
+              width={180} 
+              height={180}
+              className="drop-shadow-lg"
+              priority
+            />
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
+            E-BEYRAY
+          </h1>
+          <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+            Répertoire des Répétiteurs de l'Organisation Eberay
+          </p>
+        </div>
 
-      {/* HEADER INSTITUTIONNEL */}
-      <header className="bg-white border-b border-neutral-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            <div className="flex items-center gap-4">
-              <div className="flex items-center justify-center w-12 h-12 bg-slate-800 rounded-lg">
-                <BookOpen size={24} className="text-white" />
+        {/* CARDS D'ACTION */}
+        <div className="grid md:grid-cols-2 gap-8 mb-8">
+          {/* CONSULTER LE RÉPERTOIRE */}
+          <Link
+            href="/repertoire"
+            className="group relative bg-white rounded-2xl border-2 border-neutral-200 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden"
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-800/5 to-slate-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+            <div className="relative p-10">
+              <div className="flex items-center justify-center w-16 h-16 rounded-xl bg-slate-800 text-white mb-6 group-hover:scale-110 transition-transform duration-300">
+                <BookOpen size={32} />
               </div>
-              <div>
-                <h1 className="text-2xl font-bold text-slate-900 tracking-tight">EBERAY</h1>
-                <p className="text-sm text-slate-600 font-medium">Répertoire National des Enseignants</p>
+
+              <h2 className="text-2xl font-bold text-slate-900 mb-3">
+                Consulter le répertoire
+              </h2>
+              
+              <p className="text-slate-600 mb-6 leading-relaxed">
+                Accédez à la base de données des répétiteurs Eberay. Recherchez par région, matière, niveau ou nom.
+              </p>
+
+              <div className="inline-flex items-center text-slate-800 font-semibold group-hover:gap-3 gap-2 transition-all">
+                <span>Voir le répertoire</span>
+                <span className="text-xl group-hover:translate-x-1 transition-transform">→</span>
               </div>
             </div>
+          </Link>
 
-            <Link
-              href="/ajouter"
-              className="flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors shadow-sm"
-            >
-              <Plus size={18} />
-              <span>Nouveau Dossier</span>
-            </Link>
-          </div>
-        </div>
-      </header>
+          {/* AJOUTER UN RÉPÉTITEUR */}
+          <Link
+            href="/ajouter"
+            className="group relative bg-white rounded-2xl border-2 border-neutral-200 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden"
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-800/5 to-slate-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-      <main className="max-w-7xl mx-auto px-6 lg:px-8 py-10">
+            <div className="relative p-10">
+              <div className="flex items-center justify-center w-16 h-16 rounded-xl bg-slate-800 text-white mb-6 group-hover:scale-110 transition-transform duration-300">
+                <UserPlus size={32} />
+              </div>
 
-        {/* STATISTIQUES */}
-        <div className="mb-6 flex items-center justify-between">
-          <div className="inline-flex items-center gap-2 text-sm text-slate-500">
-            <Users size={16} className="text-slate-400" />
-            <span className="font-medium text-slate-600">{totalEnseignants}</span>
-            <span>enseignants trouvés</span>
-          </div>
-        </div>
+              <h2 className="text-2xl font-bold text-slate-900 mb-3">
+                Ajouter un répétiteur
+              </h2>
+              
+              <p className="text-slate-600 mb-6 leading-relaxed">
+                Inscrivez un nouveau répétiteur dans l'organisation Eberay avec ses informations et compétences.
+              </p>
 
-        {/* FILTRES INTERACTIFS */}
-        <Suspense fallback={
-          <div className="bg-white rounded-lg border border-neutral-200 shadow-sm mb-8 p-6">
-            <div className="h-14 bg-neutral-100 rounded-lg animate-pulse" />
-          </div>
-        }>
-          <FiltresInteractifs
-            initialQuery={query}
-            initialRegion={regionFilter}
-            initialVille={villeFilter}
-            initialMatiere={matiereFilter}
-            initialNiveau={niveauFilter}
-          />
-        </Suspense>
-
-        {/* TABLEAU PROFESSIONNEL */}
-        <div className="bg-white rounded-lg border border-neutral-200 shadow-sm overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-neutral-200">
-              <thead className="bg-slate-50">
-                <tr>
-                  <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">
-                    Enseignant
-                  </th>
-                  <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">
-                    Contact
-                  </th>
-                  <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">
-                    Localisation
-                  </th>
-                  <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">
-                    Compétences
-                  </th>
-                  <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">
-                    Statut
-                  </th>
-                  <th scope="col" className="px-6 py-4 text-right text-xs font-bold text-slate-700 uppercase tracking-wider">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-neutral-200">
-                {repetiteurs.map((rep) => (
-                  <TableRow key={rep.id} repetiteur={rep} />
-                ))}
-
-                {repetiteurs.length === 0 && (
-                  <tr>
-                    <td colSpan={6} className="px-6 py-16 text-center">
-                      <div className="text-slate-500 text-base">
-                        <p className="font-medium mb-1">Aucun résultat trouvé</p>
-                        <p className="text-sm">Essayez de modifier vos critères de recherche</p>
-                      </div>
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+              <div className="inline-flex items-center text-slate-800 font-semibold group-hover:gap-3 gap-2 transition-all">
+                <span>Ajouter un profil</span>
+                <span className="text-xl group-hover:translate-x-1 transition-transform">→</span>
+              </div>
+            </div>
+          </Link>
         </div>
 
-      </main>
+        {/* FOOTER INFO */}
+        <div className="text-center text-sm text-slate-500">
+          <p>Plateforme de gestion des membres Eberay</p>
+        </div>
+      </div>
     </div>
   )
 }

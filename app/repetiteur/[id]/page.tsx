@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { prisma } from '@/lib/prisma'
 import { notFound } from 'next/navigation'
+import Image from 'next/image'
 import {
   ArrowLeft,
   Phone,
@@ -56,13 +57,26 @@ export default async function RepetiteurPage({ params }: PageProps) {
       <header className="bg-white border-b border-neutral-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
-            <Link
-              href="/"
-              className="flex items-center gap-3 text-slate-700 hover:text-slate-900 transition-colors font-semibold"
-            >
-              <ArrowLeft size={20} />
-              <span>Retour au répertoire</span>
-            </Link>
+            <div className="flex items-center gap-4">
+              <Link
+                href="/repertoire"
+                className="flex items-center gap-2 text-slate-700 hover:text-slate-900 transition-colors px-3 py-2 rounded-lg hover:bg-neutral-100"
+              >
+                <ArrowLeft size={18} />
+                <span className="font-medium text-sm">Retour au répertoire</span>
+              </Link>
+              <div className="h-6 w-px bg-neutral-300"></div>
+              <div className="flex items-center gap-3">
+                <Image 
+                  src="/logp_eberay.png" 
+                  alt="Logo Eberay" 
+                  width={40} 
+                  height={40}
+                  className="object-contain"
+                />
+                <h1 className="text-xl font-bold text-slate-900">Fiche Répétiteur</h1>
+              </div>
+            </div>
             <Link
               href={`/modifier/${repetiteur.id}`}
               className="flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors shadow-sm"

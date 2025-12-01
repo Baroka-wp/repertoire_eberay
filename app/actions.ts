@@ -48,8 +48,8 @@ export async function createRepetiteur(formData: FormData) {
     },
   })
 
-  revalidatePath('/')
-  redirect('/?toast=success&message=Enseignant ajouté avec succès')
+  revalidatePath('/repertoire')
+  redirect('/repertoire?toast=success&message=Répétiteur inscrit avec succès')
 }
 
 export async function updateRepetiteur(id: number, formData: FormData) {
@@ -98,7 +98,7 @@ export async function updateRepetiteur(id: number, formData: FormData) {
     },
   })
 
-  revalidatePath('/')
+  revalidatePath('/repertoire')
   revalidatePath(`/repetiteur/${id}`)
-  redirect(`/repetiteur/${id}?toast=success&message=Enseignant modifié avec succès`)
+  redirect(`/repetiteur/${id}?toast=success&message=Dossier répétiteur modifié avec succès`)
 }

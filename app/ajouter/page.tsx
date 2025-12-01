@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { useFormStatus } from 'react-dom'
 import { createRepetiteur } from '../actions'
+import Image from 'next/image'
 import {
     ArrowLeft,
     Save,
@@ -138,11 +139,23 @@ export default function AjouterPage() {
             <header className="bg-white border-b border-neutral-200 shadow-sm">
                 <div className="max-w-7xl mx-auto px-6 lg:px-8">
                     <div className="flex items-center justify-between h-20">
-                        <Link href="/" className="flex items-center gap-3 text-slate-700 hover:text-slate-900 transition-colors">
-                            <ArrowLeft size={20} />
-                            <span className="font-semibold">Retour au répertoire</span>
-                        </Link>
-                        <h1 className="text-xl font-bold text-slate-900">Nouveau Dossier</h1>
+                        <div className="flex items-center gap-4">
+                            <Link href="/repertoire" className="flex items-center gap-2 text-slate-700 hover:text-slate-900 transition-colors px-3 py-2 rounded-lg hover:bg-neutral-100">
+                                <ArrowLeft size={18} />
+                                <span className="font-medium text-sm">Retour au répertoire</span>
+                            </Link>
+                            <div className="h-6 w-px bg-neutral-300"></div>
+                            <div className="flex items-center gap-3">
+                                <Image 
+                                    src="/logp_eberay.png" 
+                                    alt="Logo Eberay" 
+                                    width={40} 
+                                    height={40}
+                                    className="object-contain"
+                                />
+                                <h1 className="text-xl font-bold text-slate-900">Inscription d'un Répétiteur</h1>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </header>
@@ -515,7 +528,7 @@ export default function AjouterPage() {
                                 </button>
                                 <div className="flex gap-4">
                                     <Link
-                                        href="/"
+                                        href="/repertoire"
                                         className="px-8 py-3 text-base font-semibold text-slate-700 bg-white border-2 border-neutral-300 rounded-lg hover:bg-neutral-50 transition-colors"
                                     >
                                         Annuler
