@@ -2,9 +2,9 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
-import { ArrowLeft, Save, Loader2, Shield, UserPlus } from 'lucide-react'
+import { Save, Loader2, UserPlus } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import AdminHeader from '@/app/components/AdminHeader'
 
 const ROLES = [
   { value: 'admin', label: 'Administrateur', desc: 'Tous les droits (gestion utilisateurs incluse)' },
@@ -69,33 +69,10 @@ export default function AjouterUtilisateurPage() {
 
   return (
     <div className="min-h-screen bg-neutral-50">
-      {/* HEADER */}
-      <header className="bg-white border-b border-neutral-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-4">
-              <Link 
-                href="/admin/utilisateurs"
-                className="flex items-center gap-2 text-slate-700 hover:text-slate-900 transition-colors px-2 py-1 rounded-lg hover:bg-neutral-100"
-              >
-                <ArrowLeft size={18} />
-                <span className="font-medium text-sm">Retour</span>
-              </Link>
-              <div className="h-6 w-px bg-neutral-300"></div>
-              <div className="flex items-center gap-3">
-                <Image 
-                  src="/logp_eberay.png" 
-                  alt="Logo E-Beyray" 
-                  width={32} 
-                  height={32}
-                  className="object-contain"
-                />
-                <h1 className="text-lg font-bold text-slate-900">Nouvel Utilisateur</h1>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
+      <AdminHeader
+        title="Nouvel Utilisateur"
+        subtitle="Création d'un compte"
+      />
 
       <main className="max-w-3xl mx-auto px-6 lg:px-8 py-10">
         <form onSubmit={handleSubmit}>
