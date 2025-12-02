@@ -26,14 +26,6 @@ export default function SidebarMenu() {
         <Menu size={24} />
       </button>
 
-      {/* Overlay */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-[9998] transition-opacity"
-          onClick={closeMenu}
-        />
-      )}
-
       {/* Sidebar */}
       <div
         className={`fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-[9999] transform transition-transform duration-300 ease-in-out ${
