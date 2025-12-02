@@ -1,154 +1,139 @@
-# E-BEYRAY - Répertoire des Répétiteurs
-
-![Logo E-BEYRAY](public/logp_eberay.png)
+# 🎓 E-Beyray - Répertoire des Répétiteurs
 
 Plateforme de gestion des répétiteurs de l'Organisation E-Beyray au Niger.
 
-## 🎯 À propos
+## 🚀 Démarrage rapide
 
-E-BEYRAY est une application web moderne pour gérer le répertoire des répétiteurs inscrits à l'organisation E-Beyray. La plateforme permet de :
+### Prérequis
+- Node.js 18+
+- PostgreSQL (ou Neon DB)
+- npm ou yarn
 
-- 📋 Consulter le répertoire complet des répétiteurs
-- ➕ Inscrire de nouveaux répétiteurs
-- ✏️ Modifier les informations existantes
-- 🔍 Rechercher et filtrer par région, ville, matière et niveau
-
-## 🚀 Technologies
-
-- **Framework**: [Next.js 16](https://nextjs.org/) avec App Router
-- **Base de données**: PostgreSQL avec [Prisma ORM](https://www.prisma.io/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **UI/UX**: Design institutionnel professionnel
-- **Notifications**: [Sonner](https://sonner.emilkowal.ski/) pour les toasts
-- **Icônes**: [Lucide React](https://lucide.dev/)
-
-## 📦 Installation
+### Installation
 
 ```bash
-# Cloner le repository
-git clone git@github.com:Baroka-wp/repertoire_eberay.git
+# 1. Cloner le projet
+git clone https://github.com/Baroka-wp/repertoire_eberay.git
 cd repertoire_eberay
 
-# Installer les dépendances
+# 2. Installer les dépendances
 npm install
 
-# Configurer la base de données
-# Créer un fichier .env avec :
-# DATABASE_URL="postgresql://user:password@localhost:5432/eberay"
+# 3. Configurer l'environnement
+# Créer un fichier .env à la racine
+DATABASE_URL="votre_connexion_postgresql"
+NEXTAUTH_SECRET="votre_secret_genere"
+NEXTAUTH_URL="http://localhost:3000"
 
-# Générer le client Prisma
+# 4. Synchroniser la base de données
+npx prisma db push
 npx prisma generate
 
-# Créer les tables
-npx prisma db push
-
-# Lancer le serveur de développement
+# 5. Lancer le serveur de développement
 npm run dev
 ```
 
-L'application sera accessible sur [http://localhost:3000](http://localhost:3000)
+Accédez à : **http://localhost:3000**
 
-## 🗄️ Structure de la base de données
+## 🔐 Premier démarrage
 
-```prisma
-model Repetiteur {
-  id            Int      @id @default(autoincrement())
-  nom           String
-  prenom        String
-  email         String?
-  telephone     String
-  ville         String
-  departement   String
-  matieres      String   // Format: "Math, PC - [Lycée : 2nde, 1ère]"
-  diplome       String
-  anneeEntree   Int
-  statut        String   @default("Actif")
-  createdAt     DateTime @default(now())
-}
-```
+1. Visitez `/setup-admin` pour créer le premier administrateur
+2. Connectez-vous sur `/login`
+3. Commencez à ajouter des répétiteurs !
 
-## 📱 Fonctionnalités principales
+## 📚 Documentation
 
-### Page d'accueil (Onboarding)
-- Design épuré avec logo E-Beyray
-- Deux actions principales : Consulter / Ajouter
+- **[WORKFLOW.md](./WORKFLOW.md)** - Workflow Git et conventions de commits
+- **[Prisma Schema](./prisma/schema.prisma)** - Structure de la base de données
 
-### Répertoire
-- Filtrage côté serveur avec Prisma (optimisé pour les performances)
-- Recherche par nom/prénom
-- Filtres avancés : région, ville, matière, niveau
-- Synchronisation dynamique région-ville
-- Tableau interactif avec liens vers les fiches détaillées
+## 🛠️ Technologies
 
-### Inscription de répétiteur
-- Formulaire multi-étapes (3 étapes)
-- Sélection multiple de matières et classes
-- Validation à chaque étape
-- UI moderne avec design institutionnel
+- **Framework** : Next.js 16 (App Router)
+- **Base de données** : PostgreSQL + Prisma ORM
+- **Authentification** : NextAuth.js v5
+- **UI** : Tailwind CSS
+- **Carte** : Leaflet + React-Leaflet
+- **TypeScript** : Type-safety
 
-### Fiche répétiteur
-- Affichage détaillé des informations
-- Design professionnel type "fiche bancaire"
-- Bouton de modification rapide
+## 📋 Fonctionnalités
 
-### Modification
-- Formulaire pré-rempli avec les données existantes
-- Possibilité de changer le statut (Actif/Suspendu)
-- Toast de confirmation après modification
+### ✅ Gestion des Répétiteurs
+- Ajout multi-étapes avec validation
+- Modification et consultation des profils
+- Filtrage avancé (région, ville, matière, niveau)
+- Vue liste et carte interactive
 
-## 🎨 Design
+### 👥 Gestion des Utilisateurs
+- 4 rôles : Admin, Editor, Creator, Viewer
+- Système de permissions granulaire
+- Traçabilité des actions
 
-L'application utilise une palette de couleurs professionnelle et institutionnelle :
-- Couleurs principales : Slate (800, 900) et Neutral (50-200)
-- Évite les couleurs vives pour un aspect sérieux
-- Design inspiré des "fiches bancaires" pour les profils
+### 🎨 Interface
+- Design institutionnel professionnel
+- Menu hamburger avec sidebar
+- Responsive (mobile/desktop)
+- Toast notifications
 
-## 🌍 Régions et villes
+## 🌿 Branches
 
-Le système gère 8 régions du Niger :
-- Niamey
-- Dosso
-- Maradi
-- Tahoua
-- Zinder
-- Agadez
-- Diffa
-- Tillabéri
+- **`main`** : Production (stable)
+- **`dev`** : Développement (nouvelles fonctionnalités)
 
-Chaque région a une liste de villes associées pour un filtrage précis.
+Voir [WORKFLOW.md](./WORKFLOW.md) pour plus de détails.
 
-## 📚 Niveaux d'enseignement
-
-- **Primaire** : CI, CP, CE1, CE2, CM1, CM2
-- **Collège** (secondaire_inf) : 6ème, 5ème, 4ème, 3ème
-- **Lycée** (secondaire_sup) : 2nde, 1ère, Terminale
-
-## 🔧 Scripts disponibles
+## 🚀 Scripts disponibles
 
 ```bash
-# Développement
-npm run dev
+npm run dev          # Serveur de développement
+npm run build        # Build production
+npm start            # Démarrer en production
+npm run lint         # Linter ESLint
+```
 
-# Build de production
+## 📝 Structure du projet
+
+```
+eberay-app/
+├── app/
+│   ├── (pages)           # Pages Next.js
+│   ├── api/              # API routes
+│   ├── components/       # Composants React
+│   └── actions.ts        # Server actions
+├── lib/
+│   ├── auth.ts           # Configuration NextAuth
+│   ├── prisma.ts         # Client Prisma
+│   └── permissions.ts    # Système de permissions
+├── prisma/
+│   └── schema.prisma     # Schéma de la base
+└── public/               # Assets statiques
+```
+
+## 🐛 Dépannage
+
+### "NEXTAUTH_SECRET missing"
+Ajoutez la variable dans votre `.env` :
+```bash
+openssl rand -base64 32
+```
+
+### "Cannot connect to database"
+Vérifiez votre `DATABASE_URL` dans le `.env`
+
+### Problèmes de build
+```bash
+rm -rf .next
 npm run build
-
-# Démarrer en production
-npm start
-
-# Linter
-npm run lint
-
-# Générer le client Prisma
-npx prisma generate
-
-# Ouvrir Prisma Studio
-npx prisma studio
 ```
 
 ## 📄 Licence
 
-Propriété de l'Organisation E-Beyray - Tous droits réservés
+Propriété de l'Organisation E-Beyray - Niger
 
-## 👥 Contact
+## 👥 Équipe
 
-Pour toute question concernant l'application, contactez l'Organisation E-Beyray.
+Développé pour l'Organisation E-Beyray
+
+---
+
+**Version** : 1.0.0  
+**Dernière mise à jour** : Décembre 2024
