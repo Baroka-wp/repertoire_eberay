@@ -11,9 +11,12 @@ export function ToastProvider() {
 
   useEffect(() => {
     const toastType = searchParams.get('toast')
-    const message = searchParams.get('message')
+    const messageParam = searchParams.get('message')
     
-    if (toastType && message) {
+    if (toastType && messageParam) {
+      // Décoder le message pour gérer correctement les caractères accentués
+      const message = decodeURIComponent(messageParam)
+      
       if (toastType === 'success') {
         toast.success(message)
       } else if (toastType === 'error') {

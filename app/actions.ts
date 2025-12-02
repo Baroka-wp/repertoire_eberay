@@ -49,7 +49,8 @@ export async function createRepetiteur(formData: FormData) {
   })
 
   revalidatePath('/repertoire')
-  redirect('/repertoire?toast=success&message=Répétiteur inscrit avec succès')
+  const message = encodeURIComponent('Répétiteur inscrit avec succès')
+  redirect(`/repertoire?toast=success&message=${message}`)
 }
 
 export async function updateRepetiteur(id: number, formData: FormData) {
@@ -100,5 +101,6 @@ export async function updateRepetiteur(id: number, formData: FormData) {
 
   revalidatePath('/repertoire')
   revalidatePath(`/repetiteur/${id}`)
-  redirect(`/repetiteur/${id}?toast=success&message=Dossier répétiteur modifié avec succès`)
+  const message = encodeURIComponent('Dossier répétiteur modifié avec succès')
+  redirect(`/repetiteur/${id}?toast=success&message=${message}`)
 }
