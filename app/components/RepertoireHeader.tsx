@@ -3,9 +3,11 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowLeft, Plus, Search, Filter, Map, List, LogOut, User as UserIcon, Shield } from 'lucide-react'
+import { ArrowLeft, Plus, Search, Filter, Map, List } from 'lucide-react'
 import FiltresModal from './FiltresModal'
-import { signOut, useSession } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
+import SidebarMenu from './SidebarMenu'
+import { hasPermission } from '@/lib/permissions-client'
 
 interface RepertoireHeaderProps {
   initialFilters: {
@@ -86,7 +88,7 @@ export default function RepertoireHeader({
 
             {/* Right: Actions */}
             <div className="flex items-center gap-3">
-              {/* Toggle Vue */}
+              {/* Toggle Vue Liste/Carte */}
               <div className="hidden md:flex items-center gap-1 bg-neutral-100 rounded-lg p-1">
                 <button
                   onClick={() => onViewModeChange('list')}
@@ -115,49 +117,19 @@ export default function RepertoireHeader({
               {/* Séparateur */}
               <div className="h-8 w-px bg-neutral-300"></div>
 
-              {/* Info Utilisateur */}
-              {session?.user && (
-                <div className="hidden lg:flex items-center gap-2 text-sm text-slate-700">
-                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-800 text-white text-xs font-bold">
-                    {session.user.name?.charAt(0).toUpperCase()}
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="font-medium text-xs">{session.user.name}</span>
-                    <span className="text-xs text-slate-500 capitalize">{session.user.role}</span>
-                  </div>
-                </div>
-              )}
-
-              {/* Lien Admin */}
-              {session?.user?.role === 'admin' && (
+              {/* Bouton Ajouter (si permissions) */}
+              {hasPermission(session?.user?.role, 'create') && (
                 <Link
-                  href="/admin/utilisateurs"
-                  className="flex items-center gap-2 text-slate-600 hover:text-slate-900 hover:bg-neutral-100 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
-                  title="Gérer les utilisateurs"
+                  href="/ajouter"
+                  className="flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors shadow-sm"
                 >
-                  <Shield size={18} />
-                  <span className="hidden xl:inline">Admin</span>
+                  <Plus size={18} />
+                  <span className="hidden sm:inline">Ajouter</span>
                 </Link>
               )}
 
-              {/* Bouton Ajouter */}
-              <Link
-                href="/ajouter"
-                className="flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors shadow-sm"
-              >
-                <Plus size={18} />
-                <span className="hidden sm:inline">Ajouter</span>
-              </Link>
-
-              {/* Bouton Déconnexion */}
-              <button
-                onClick={() => signOut({ callbackUrl: '/login' })}
-                className="flex items-center gap-2 text-slate-600 hover:text-slate-900 hover:bg-neutral-100 px-3 py-2 rounded-lg text-sm font-medium transition-colors"
-                title="Se déconnecter"
-              >
-                <LogOut size={18} />
-                <span className="hidden xl:inline">Déconnexion</span>
-              </button>
+              {/* Menu Hamburger */}
+              <SidebarMenu />
             </div>
           </div>
         </div>
