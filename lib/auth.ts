@@ -1,9 +1,9 @@
-import { NextAuthOptions } from 'next-auth'
+import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import bcrypt from 'bcryptjs'
 import { prisma } from './prisma'
 
-export const authOptions: NextAuthOptions = {
+export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
     CredentialsProvider({
       name: 'credentials',
@@ -16,15 +16,18 @@ export const authOptions: NextAuthOptions = {
           throw new Error('Email et mot de passe requis')
         }
 
+        const email = credentials.email as string
+        const password = credentials.password as string
+
         const user = await prisma.user.findUnique({
-          where: { email: credentials.email }
+          where: { email }
         })
 
         if (!user) {
           throw new Error('Email ou mot de passe incorrect')
         }
 
-        const passwordMatch = await bcrypt.compare(credentials.password, user.password)
+        const passwordMatch = await bcrypt.compare(password, user.password)
 
         if (!passwordMatch) {
           throw new Error('Email ou mot de passe incorrect')
@@ -33,7 +36,7 @@ export const authOptions: NextAuthOptions = {
         return {
           id: user.id,
           email: user.email,
-          name: user.name,
+          name: user.name || '',
           role: user.role
         }
       }
@@ -63,5 +66,5 @@ export const authOptions: NextAuthOptions = {
     maxAge: 30 * 24 * 60 * 60, // 30 jours
   },
   secret: process.env.NEXTAUTH_SECRET,
-}
+})
 

@@ -1,5 +1,4 @@
-import { getServerSession } from 'next-auth'
-import { authOptions } from './auth'
+import { auth } from './auth'
 
 export type UserRole = 'admin' | 'editor' | 'creator' | 'viewer'
 
@@ -45,7 +44,7 @@ export function getPermissions(role: UserRole): Permission {
 }
 
 export async function getCurrentUser() {
-  const session = await getServerSession(authOptions)
+  const session = await auth()
   return session?.user
 }
 
