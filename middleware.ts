@@ -8,6 +8,7 @@ export default authEdge((req) => {
   const publicPaths = [
     '/api/auth',
     '/api/setup-admin',
+    '/api/check-admin',
     '/login',
     '/inscription',
     '/inscription/merci',

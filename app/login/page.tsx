@@ -1,10 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import { Loader2, LogIn, AlertCircle } from 'lucide-react'
+import Link from 'next/link'
+import { Loader2, LogIn, AlertCircle, Settings } from 'lucide-react'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -12,6 +13,15 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [hasAdmin, setHasAdmin] = useState<boolean | null>(null)
+
+  useEffect(() => {
+    // Vérifier si un admin existe
+    fetch('/api/check-admin')
+      .then(res => res.json())
+      .then(data => setHasAdmin(data.hasAdmin))
+      .catch(() => setHasAdmin(null))
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -63,6 +73,30 @@ export default function LoginPage() {
 
         {/* Formulaire */}
         <div className="bg-white rounded-xl shadow-lg border border-neutral-200 p-8">
+          {/* Alerte si aucun admin n'existe */}
+          {hasAdmin === false && (
+            <div className="mb-6 bg-amber-50 border border-amber-200 rounded-lg p-4">
+              <div className="flex items-start gap-3 mb-3">
+                <Settings size={20} className="text-amber-600 flex-shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="text-sm font-semibold text-amber-900 mb-1">
+                    Configuration initiale requise
+                  </h3>
+                  <p className="text-sm text-amber-800">
+                    Aucun administrateur n&apos;a été créé. Veuillez d&apos;abord créer un compte administrateur.
+                  </p>
+                </div>
+              </div>
+              <Link
+                href="/setup-admin"
+                className="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors w-full justify-center"
+              >
+                <Settings size={18} />
+                Créer le premier administrateur
+              </Link>
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-6">
             {error && (
               <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-start gap-3">
