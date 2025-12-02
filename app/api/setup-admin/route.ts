@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import bcrypt from 'bcryptjs'
 
-export async function POST() {
+export async function POST(request: Request) {
   try {
     // Vérifier si un admin existe déjà
     const existingAdmins = await prisma.user.count({
@@ -16,14 +16,31 @@ export async function POST() {
       )
     }
 
+    const body = await request.json()
+    const { email, password, name } = body
+
+    if (!email || !password || !name) {
+      return NextResponse.json(
+        { error: 'Tous les champs sont requis' },
+        { status: 400 }
+      )
+    }
+
+    if (password.length < 8) {
+      return NextResponse.json(
+        { error: 'Le mot de passe doit contenir au moins 8 caractères' },
+        { status: 400 }
+      )
+    }
+
     // Créer l'administrateur
-    const hashedPassword = await bcrypt.hash('Admin123!', 10)
+    const hashedPassword = await bcrypt.hash(password, 10)
 
     const admin = await prisma.user.create({
       data: {
-        email: 'admin@eberay.ne',
+        email,
         password: hashedPassword,
-        name: 'Administrateur',
+        name,
         role: 'admin'
       }
     })
