@@ -4,15 +4,18 @@ import { notFound } from 'next/navigation'
 import ModifierUtilisateurForm from './ModifierUtilisateurForm'
 
 interface PageProps {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }
 
 export default async function ModifierUtilisateurPage({ params }: PageProps) {
   // Vérifier que l'utilisateur est admin
   await requirePermission('canManageUsers')
   
+  // Await params (Next.js 16 requirement)
+  const { id } = await params
+  
   const user = await prisma.user.findUnique({
-    where: { id: params.id },
+    where: { id },
     select: {
       id: true,
       name: true,
