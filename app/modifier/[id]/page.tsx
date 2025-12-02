@@ -1,12 +1,16 @@
 import { prisma } from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 import { ModifierForm } from './ModifierForm'
+import { requirePermission } from '@/lib/permissions'
 
 interface PageProps {
   params: Promise<{ id: string }>
 }
 
 export default async function ModifierPage({ params }: PageProps) {
+  // Vérifier que l'utilisateur a la permission de modifier
+  await requirePermission('canEdit')
+  
   const { id } = await params
   const repetiteurId = parseInt(id)
 
