@@ -1,9 +1,8 @@
 import { requirePermission } from '@/lib/permissions'
 import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
-import Image from 'next/image'
-import { ArrowLeft, Plus, Users, Shield, Edit2, CheckCircle2, XCircle } from 'lucide-react'
-import { signOut } from 'next-auth/react'
+import { Plus, Users, Shield, Edit2 } from 'lucide-react'
+import AdminHeader from '@/app/components/AdminHeader'
 
 export default async function UtilisateursPage() {
   // Vérifier que l'utilisateur est admin
@@ -42,43 +41,19 @@ export default async function UtilisateursPage() {
 
   return (
     <div className="min-h-screen bg-neutral-50">
-      {/* HEADER */}
-      <header className="bg-white border-b border-neutral-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <div className="flex items-center gap-4">
-              <Link 
-                href="/repertoire"
-                className="flex items-center gap-2 text-slate-700 hover:text-slate-900 transition-colors px-2 py-1 rounded-lg hover:bg-neutral-100"
-              >
-                <ArrowLeft size={18} />
-              </Link>
-              <div className="h-6 w-px bg-neutral-300"></div>
-              <div className="flex items-center gap-3">
-                <Image 
-                  src="/logp_eberay.png" 
-                  alt="Logo E-Beyray" 
-                  width={32} 
-                  height={32}
-                  className="object-contain"
-                />
-                <div>
-                  <h1 className="text-lg font-bold text-slate-900">Gestion des Utilisateurs</h1>
-                  <p className="text-xs text-slate-500">Administration E-Beyray</p>
-                </div>
-              </div>
-            </div>
-
-            <Link
-              href="/admin/utilisateurs/ajouter"
-              className="flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors shadow-sm"
-            >
-              <Plus size={18} />
-              <span>Ajouter un utilisateur</span>
-            </Link>
-          </div>
-        </div>
-      </header>
+      <AdminHeader
+        title="Gestion des Utilisateurs"
+        subtitle="Administration E-Beyray"
+        rightAction={
+          <Link
+            href="/admin/utilisateurs/ajouter"
+            className="flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors shadow-sm"
+          >
+            <Plus size={18} />
+            <span className="hidden sm:inline">Ajouter</span>
+          </Link>
+        }
+      />
 
       <main className="max-w-7xl mx-auto px-6 lg:px-8 py-10">
         {/* Stats */}

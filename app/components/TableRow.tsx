@@ -3,6 +3,8 @@
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { GraduationCap, Pencil } from 'lucide-react'
+import { useSession } from 'next-auth/react'
+import { hasPermission } from '@/lib/permissions-client'
 
 interface TableRowProps {
   repetiteur: {
@@ -21,6 +23,8 @@ interface TableRowProps {
 
 export function TableRow({ repetiteur }: TableRowProps) {
   const router = useRouter()
+  const { data: session } = useSession()
+  const canModify = hasPermission(session?.user?.role, 'modify')
 
   const handleRowClick = (e: React.MouseEvent) => {
     const target = e.target as HTMLElement
@@ -109,14 +113,18 @@ export function TableRow({ repetiteur }: TableRowProps) {
 
       {/* Colonne : Actions */}
       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-        <Link 
-          href={`/modifier/${repetiteur.id}`} 
-          onClick={(e) => e.stopPropagation()}
-          className="inline-flex items-center gap-1.5 text-slate-700 hover:text-slate-900 font-medium transition-colors"
-        >
-          <Pencil size={16} />
-          <span className="hidden lg:inline">Modifier</span>
-        </Link>
+        {canModify ? (
+          <Link 
+            href={`/modifier/${repetiteur.id}`} 
+            onClick={(e) => e.stopPropagation()}
+            className="inline-flex items-center gap-1.5 text-slate-700 hover:text-slate-900 font-medium transition-colors"
+          >
+            <Pencil size={16} />
+            <span className="hidden lg:inline">Modifier</span>
+          </Link>
+        ) : (
+          <span className="text-xs text-slate-400 italic">Lecture seule</span>
+        )}
       </td>
     </tr>
   )

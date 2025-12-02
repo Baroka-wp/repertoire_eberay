@@ -11,9 +11,9 @@ import {
   Briefcase,
   CheckCircle2,
   XCircle,
-  Edit,
   BookOpen
 } from 'lucide-react'
+import ModifierButton from '@/app/components/ModifierButton'
 
 interface PageProps {
   params: Promise<{ id: string }>
@@ -76,13 +76,7 @@ export default async function RepetiteurPage({ params }: PageProps) {
                 <h1 className="text-xl font-bold text-slate-900">Fiche Répétiteur</h1>
               </div>
             </div>
-            <Link
-              href={`/modifier/${repetiteur.id}`}
-              className="flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors shadow-sm"
-            >
-              <Edit size={18} />
-              <span>Modifier</span>
-            </Link>
+            <ModifierButton repetiteurId={repetiteur.id} />
           </div>
         </div>
       </header>

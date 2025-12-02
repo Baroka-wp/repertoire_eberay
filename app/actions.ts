@@ -154,3 +154,66 @@ export async function inscriptionRepetiteur(formData: FormData) {
   const message = encodeURIComponent('Inscription réussie ! Votre dossier sera vérifié par un administrateur.')
   redirect(`/inscription/merci?message=${message}`)
 }
+
+// ==========================
+// GESTION DES UTILISATEURS
+// ==========================
+
+export async function createUser(formData: FormData) {
+  // Vérifier que l'utilisateur est admin
+  await requirePermission('canManageUsers')
+  
+  const name = formData.get('name') as string
+  const email = formData.get('email') as string
+  const password = formData.get('password') as string
+  const role = formData.get('role') as string
+  
+  // Hasher le mot de passe
+  const bcrypt = require('bcryptjs')
+  const hashedPassword = await bcrypt.hash(password, 10)
+  
+  await prisma.user.create({
+    data: {
+      name,
+      email,
+      password: hashedPassword,
+      role,
+    },
+  })
+  
+  revalidatePath('/admin/utilisateurs')
+  const message = encodeURIComponent('Utilisateur créé avec succès')
+  redirect(`/admin/utilisateurs?toast=success&message=${message}`)
+}
+
+export async function updateUser(id: string, formData: FormData) {
+  // Vérifier que l'utilisateur est admin
+  await requirePermission('canManageUsers')
+  
+  const name = formData.get('name') as string
+  const email = formData.get('email') as string
+  const role = formData.get('role') as string
+  const password = formData.get('password') as string | null
+  
+  // Préparer les données à mettre à jour
+  const data: Record<string, string> = {
+    name,
+    email,
+    role,
+  }
+  
+  // Si un nouveau mot de passe est fourni, le hasher et l'ajouter
+  if (password && password.trim() !== '') {
+    const bcrypt = require('bcryptjs')
+    data.password = await bcrypt.hash(password, 10)
+  }
+  
+  await prisma.user.update({
+    where: { id },
+    data,
+  })
+  
+  revalidatePath('/admin/utilisateurs')
+  const message = encodeURIComponent('Utilisateur modifié avec succès')
+  redirect(`/admin/utilisateurs?toast=success&message=${message}`)
+}
