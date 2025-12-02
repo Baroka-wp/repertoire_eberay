@@ -14,17 +14,37 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  password      String
+  role          String    @default("viewer") // admin, editor, creator, viewer
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  repetiteursCreated  Repetiteur[] @relation("CreatedBy")
+  repetiteursUpdated  Repetiteur[] @relation("UpdatedBy")
+}
+
 model Repetiteur {
-  id            Int      @id @default(autoincrement())
+  id            Int       @id @default(autoincrement())
   nom           String
   prenom        String
-  email         String?  // Le ? veut dire optionnel
+  email         String?   // Le ? veut dire optionnel
   telephone     String
   ville         String
-  departement   String   // Niamey, Dosso, etc.
-  matieres      String   // Stocké comme texte "Maths, PC"
+  departement   String    // Niamey, Dosso, etc.
+  matieres      String    // Stocké comme texte "Maths, PC"
   diplome       String
   anneeEntree   Int
-  statut        String   @default("Actif") // Actif ou Suspendu
-  createdAt     DateTime @default(now())
+  statut        String    @default("Actif") // Actif ou Suspendu
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @default(now()) @updatedAt
+  
+  // Traçabilité
+  createdById   String?
+  createdBy     User?     @relation("CreatedBy", fields: [createdById], references: [id])
+  updatedById   String?
+  updatedBy     User?     @relation("UpdatedBy", fields: [updatedById], references: [id])
 }

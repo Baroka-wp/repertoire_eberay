@@ -3,8 +3,11 @@
 import { prisma } from '@/lib/prisma'
 import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
+import { requirePermission } from '@/lib/permissions'
 
 export async function createRepetiteur(formData: FormData) {
+  // Vérifier les permissions
+  const user = await requirePermission('canCreate')
   
   // Récupération des champs simples
   const nom = formData.get('nom') as string
@@ -45,6 +48,7 @@ export async function createRepetiteur(formData: FormData) {
       anneeEntree,
       matieres: competenceString, // On sauvegarde la chaîne formatée
       statut: 'Actif',
+      createdById: user.id,
     },
   })
 
@@ -54,6 +58,8 @@ export async function createRepetiteur(formData: FormData) {
 }
 
 export async function updateRepetiteur(id: number, formData: FormData) {
+  // Vérifier les permissions
+  const user = await requirePermission('canEdit')
   
   // Récupération des champs simples
   const nom = formData.get('nom') as string
@@ -96,6 +102,7 @@ export async function updateRepetiteur(id: number, formData: FormData) {
       anneeEntree,
       matieres: competenceString,
       statut,
+      updatedById: user.id,
     },
   })
 
@@ -103,4 +110,47 @@ export async function updateRepetiteur(id: number, formData: FormData) {
   revalidatePath(`/repetiteur/${id}`)
   const message = encodeURIComponent('Dossier répétiteur modifié avec succès')
   redirect(`/repetiteur/${id}?toast=success&message=${message}`)
+}
+
+// Action publique pour l'auto-inscription des répétiteurs (sans authentification)
+export async function inscriptionRepetiteur(formData: FormData) {
+  // Récupération des champs simples
+  const nom = formData.get('nom') as string
+  const prenom = formData.get('prenom') as string
+  const telephone = formData.get('telephone') as string
+  const ville = formData.get('ville') as string
+  const departement = formData.get('departement') as string
+  const diplome = formData.get('diplome') as string
+  const anneeEntree = Number(formData.get('anneeEntree'))
+  const email = formData.get('email') as string | null
+  
+  // Récupération des multiples
+  const niveau = formData.get('niveau') as string
+  const classes = formData.getAll('classes') as string[]
+  const matieresList = formData.getAll('matieres') as string[]
+
+  // Formatage
+  const matieresStr = matieresList.length > 0 ? matieresList.join(', ') : 'Non spécifié'
+  const classesStr = classes.length > 0 ? classes.join(', ') : 'Aucune'
+  const competenceString = `${matieresStr} - [${niveau} : ${classesStr}]`
+
+  await prisma.repetiteur.create({
+    data: {
+      nom,
+      prenom,
+      email,
+      telephone,
+      ville,
+      departement,
+      diplome,
+      anneeEntree,
+      matieres: competenceString,
+      statut: 'Actif',
+      // Pas de createdById pour les auto-inscriptions
+    },
+  })
+
+  revalidatePath('/repertoire')
+  const message = encodeURIComponent('Inscription réussie ! Votre dossier sera vérifié par un administrateur.')
+  redirect(`/inscription/merci?message=${message}`)
 }
