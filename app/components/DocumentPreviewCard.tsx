@@ -8,12 +8,14 @@ interface DocumentPreviewCardProps {
   verified: boolean
 }
 
-export default function DocumentPreviewCard({ 
-  title, 
-  url, 
-  verified 
+export default function DocumentPreviewCard({
+  title,
+  url,
+  verified
 }: DocumentPreviewCardProps) {
-  const fileName = url.split('/').pop() || 'document'
+  // Extraire le publicId à partir de l'URL Cloudinary
+  // Format: https://res.cloudinary.com/.../folder/publicId.ext
+  const publicId = url.split('/').pop()?.split('.')[0] || 'document'; // Enlever l'extension
 
   const getDocumentIcon = () => {
     return <File size={32} className="text-slate-600" />
@@ -25,11 +27,11 @@ export default function DocumentPreviewCard({
         <div className="bg-slate-50 p-2 rounded-lg">
           {getDocumentIcon()}
         </div>
-        
+
         <div className="flex-1 min-w-0">
           <h3 className="font-medium text-slate-800 truncate">{title}</h3>
-          <p className="text-xs text-slate-500 truncate mt-1">{fileName}</p>
-          
+          <p className="text-xs text-slate-500 truncate mt-1">{publicId}</p>
+
           {verified && (
             <div className="inline-flex items-center gap-1 mt-2 bg-green-50 text-green-700 px-2 py-1 rounded-full text-xs font-medium">
               <CheckCircle2 size={12} />
@@ -38,7 +40,7 @@ export default function DocumentPreviewCard({
           )}
         </div>
       </div>
-      
+
       <a
         href={url}
         target="_blank"
