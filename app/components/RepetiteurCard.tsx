@@ -22,6 +22,7 @@ interface RepetiteurCardProps {
         genre: string | null
         nationalite: string | null
         moyenTransport: string | null
+        photo: string | null
     }
 }
 
@@ -45,9 +46,17 @@ export function RepetiteurCard({ repetiteur }: RepetiteurCardProps) {
         >
             <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-3">
-                    <div className="h-12 w-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-700 font-bold text-lg border-2 border-slate-200">
-                        {repetiteur.prenom[0]}{repetiteur.nom[0]}
-                    </div>
+                    {repetiteur.photo ? (
+                        <img
+                            src={repetiteur.photo}
+                            alt={`${repetiteur.prenom} ${repetiteur.nom}`}
+                            className="h-12 w-12 rounded-full border-2 border-slate-200 object-cover"
+                        />
+                    ) : (
+                        <div className="h-12 w-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-700 font-bold text-lg border-2 border-slate-200">
+                            {repetiteur.prenom[0]}{repetiteur.nom[0]}
+                        </div>
+                    )}
                     <div>
                         <h3 className="font-bold text-slate-900 text-lg leading-tight">
                             {repetiteur.prenom} {repetiteur.nom.toUpperCase()}
@@ -59,8 +68,8 @@ export function RepetiteurCard({ repetiteur }: RepetiteurCardProps) {
                     </div>
                 </div>
                 <span className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-semibold ${repetiteur.statut === 'Actif'
-                        ? 'bg-green-50 text-green-700 border border-green-200'
-                        : 'bg-red-50 text-red-700 border border-red-200'
+                    ? 'bg-green-50 text-green-700 border border-green-200'
+                    : 'bg-red-50 text-red-700 border border-red-200'
                     }`}>
                     {repetiteur.statut}
                 </span>

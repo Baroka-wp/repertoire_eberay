@@ -20,6 +20,7 @@ import {
   ChevronLeft,
   Check
 } from 'lucide-react'
+import CloudinaryUpload from '@/app/components/CloudinaryUpload'
 
 const NIVEAUX = [
   { id: 'primaire', label: 'Primaire', icon: BookOpen, desc: 'CP, CE1, CM2...' },
@@ -74,6 +75,7 @@ interface ModifierFormProps {
     genre: string | null
     nationalite: string | null
     moyenTransport: string | null
+    photo: string | null
   }
   matieresInitiales: string[]
   niveauxInitiaux: string[]
@@ -122,6 +124,7 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauxInitiaux, c
     genre: repetiteur.genre || '',
     nationalite: repetiteur.nationalite || '',
     moyenTransport: repetiteur.moyenTransport || '',
+    photo: repetiteur.photo || '',
   })
 
   const updateFormData = (field: string, value: string) => {
@@ -252,6 +255,7 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauxInitiaux, c
               <input type="hidden" name="genre" value={formData.genre} />
               <input type="hidden" name="nationalite" value={formData.nationalite} />
               <input type="hidden" name="moyenTransport" value={formData.moyenTransport} />
+              <input type="hidden" name="photo" value={formData.photo} />
               {/* Hidden inputs for multiple cycles */}
               {niveauxSelectionnes.map((niveau, index) => (
                 <input key={index} type="hidden" name={`niveaux[${index}]`} value={niveau} />
@@ -417,11 +421,11 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauxInitiaux, c
                     className="w-full text-base text-slate-900 placeholder:text-slate-400 px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-800 focus:border-transparent transition-all bg-white"
                   />
                 </div>
-                
+
                 {/* Informations personnelles additionnelles */}
                 <div className="md:col-span-2 bg-slate-50 p-4 rounded-lg border border-neutral-200">
                   <h3 className="font-semibold text-slate-800 mb-4">Informations personnelles complémentaires</h3>
-                  
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-semibold text-slate-700 mb-2">Âge</label>
@@ -434,7 +438,7 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauxInitiaux, c
                         placeholder="Ex: 30"
                       />
                     </div>
-                    
+
                     <div>
                       <label className="block text-sm font-semibold text-slate-700 mb-2">Genre</label>
                       <select
@@ -449,7 +453,7 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauxInitiaux, c
                         <option value="Autre">Autre</option>
                       </select>
                     </div>
-                    
+
                     <div>
                       <label className="block text-sm font-semibold text-slate-700 mb-2">Nationalité</label>
                       <input
@@ -461,34 +465,44 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauxInitiaux, c
                         placeholder="Ex: Nigérienne"
                       />
                     </div>
-                    
+
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-semibold text-slate-700 mb-2">Photo de profil</label>
+                      <div className="flex flex-col items-center">
+                        <CloudinaryUpload
+                          onPhotoUpload={(url) => updateFormData('photo', url)}
+                          initialPhotoUrl={formData.photo}
+                        />
+                      </div>
+                    </div>
+
                     <div className="md:col-span-2">
                       <label className="block text-sm font-semibold text-slate-700 mb-2">Moyen de transport</label>
                       <div className="flex gap-4">
-                        <label className="flex items-center">
+                        <label className="flex items-center cursor-pointer">
                           <input
                             type="radio"
                             name="moyenTransport"
                             value="Non"
                             checked={formData.moyenTransport === 'Non' || !formData.moyenTransport}
                             onChange={(e) => updateFormData('moyenTransport', e.target.value)}
-                            className="mr-2"
+                            className="mr-2 w-4 h-4 text-slate-800 focus:ring-slate-800"
                           />
-                          Non
+                          <span className="text-sm text-slate-900 font-medium">Non</span>
                         </label>
-                        <label className="flex items-center">
+                        <label className="flex items-center cursor-pointer">
                           <input
                             type="radio"
                             name="moyenTransport"
                             value="Oui"
                             checked={formData.moyenTransport !== 'Non' && formData.moyenTransport !== ''}
-                            onChange={() => updateFormData('moyenTransport', 'Oui')} 
-                            className="mr-2"
+                            onChange={() => updateFormData('moyenTransport', 'Oui')}
+                            className="mr-2 w-4 h-4 text-slate-800 focus:ring-slate-800"
                           />
-                          Oui
+                          <span className="text-sm text-slate-900 font-medium">Oui</span>
                         </label>
                       </div>
-                      
+
                       {formData.moyenTransport !== 'Non' && formData.moyenTransport !== '' ? (
                         <div className="mt-3">
                           <label className="block text-sm text-slate-700 mb-1">Précisez le moyen de transport</label>

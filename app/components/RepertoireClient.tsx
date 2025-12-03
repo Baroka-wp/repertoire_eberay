@@ -40,6 +40,7 @@ interface RepertoireClientProps {
     genre: string | null
     nationalite: string | null
     moyenTransport: string | null
+    photo: string | null
   }>
   children: React.ReactNode
 }

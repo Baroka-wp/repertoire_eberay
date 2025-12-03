@@ -48,6 +48,7 @@ export default async function RepetiteurPage({ params }: PageProps) {
       genre: true,
       nationalite: true,
       moyenTransport: true,
+      photo: true,
     }
   })
 
@@ -110,9 +111,17 @@ export default async function RepetiteurPage({ params }: PageProps) {
           <div className="bg-white px-4 md:px-8 py-6 md:py-8 border-b-2 border-neutral-300">
             <div className="flex flex-col sm:flex-row items-start justify-between gap-4">
               <div className="flex items-start gap-4 md:gap-6 w-full">
-                <div className="h-14 w-14 md:h-16 md:w-16 rounded-full bg-slate-800 flex items-center justify-center text-white font-bold text-lg md:text-xl border-2 border-neutral-200 flex-shrink-0">
-                  {repetiteur.prenom[0]}{repetiteur.nom[0]}
-                </div>
+                {repetiteur.photo ? (
+                  <img
+                    src={repetiteur.photo}
+                    alt={`${repetiteur.prenom} ${repetiteur.nom}`}
+                    className="h-14 w-14 md:h-16 md:w-16 rounded-full border-2 border-neutral-200 object-cover flex-shrink-0"
+                  />
+                ) : (
+                  <div className="h-14 w-14 md:h-16 md:w-16 rounded-full bg-slate-800 flex items-center justify-center text-white font-bold text-lg md:text-xl border-2 border-neutral-200 flex-shrink-0">
+                    {repetiteur.prenom[0]}{repetiteur.nom[0]}
+                  </div>
+                )}
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2">
                     <h1 className="text-xl md:text-2xl font-bold text-slate-900 truncate">

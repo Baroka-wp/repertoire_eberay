@@ -41,6 +41,7 @@ model Repetiteur {
   genre         String?
   nationalite   String?
   moyenTransport String?
+  photo         String?   // URL de la photo de profil Cloudinary
   statut        String    @default("Actif") // Actif ou Suspendu
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @default(now()) @updatedAt
