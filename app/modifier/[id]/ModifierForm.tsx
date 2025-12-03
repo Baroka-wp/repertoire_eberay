@@ -70,6 +70,10 @@ interface ModifierFormProps {
     diplome: string
     anneeEntree: number
     statut: string
+    age: number | null
+    genre: string | null
+    nationalite: string | null
+    moyenTransport: string | null
   }
   matieresInitiales: string[]
   niveauxInitiaux: string[]
@@ -114,6 +118,10 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauxInitiaux, c
     telephone: repetiteur.telephone,
     diplome: repetiteur.diplome,
     statut: repetiteur.statut,
+    age: repetiteur.age?.toString() || '',
+    genre: repetiteur.genre || '',
+    nationalite: repetiteur.nationalite || '',
+    moyenTransport: repetiteur.moyenTransport || '',
   })
 
   const updateFormData = (field: string, value: string) => {
@@ -240,6 +248,10 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauxInitiaux, c
               <input type="hidden" name="telephone" value={formData.telephone} />
               <input type="hidden" name="statut" value={formData.statut} />
               <input type="hidden" name="diplome" value={formData.diplome} />
+              <input type="hidden" name="age" value={formData.age} />
+              <input type="hidden" name="genre" value={formData.genre} />
+              <input type="hidden" name="nationalite" value={formData.nationalite} />
+              <input type="hidden" name="moyenTransport" value={formData.moyenTransport} />
               {/* Hidden inputs for multiple cycles */}
               {niveauxSelectionnes.map((niveau, index) => (
                 <input key={index} type="hidden" name={`niveaux[${index}]`} value={niveau} />
@@ -404,6 +416,93 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauxInitiaux, c
                     required
                     className="w-full text-base text-slate-900 placeholder:text-slate-400 px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-800 focus:border-transparent transition-all bg-white"
                   />
+                </div>
+                
+                {/* Informations personnelles additionnelles */}
+                <div className="md:col-span-2 bg-slate-50 p-4 rounded-lg border border-neutral-200">
+                  <h3 className="font-semibold text-slate-800 mb-4">Informations personnelles complémentaires</h3>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-slate-700 mb-2">Âge</label>
+                      <input
+                        type="number"
+                        name="age"
+                        value={formData.age}
+                        onChange={(e) => updateFormData('age', e.target.value)}
+                        className="w-full text-base text-slate-900 px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-800 focus:border-transparent bg-white"
+                        placeholder="Ex: 30"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-semibold text-slate-700 mb-2">Genre</label>
+                      <select
+                        name="genre"
+                        value={formData.genre}
+                        onChange={(e) => updateFormData('genre', e.target.value)}
+                        className="w-full text-base text-slate-900 px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-800 focus:border-transparent bg-white"
+                      >
+                        <option value="">-- Sélectionner --</option>
+                        <option value="Homme">Homme</option>
+                        <option value="Femme">Femme</option>
+                        <option value="Autre">Autre</option>
+                      </select>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-semibold text-slate-700 mb-2">Nationalité</label>
+                      <input
+                        type="text"
+                        name="nationalite"
+                        value={formData.nationalite}
+                        onChange={(e) => updateFormData('nationalite', e.target.value)}
+                        className="w-full text-base text-slate-900 px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-800 focus:border-transparent bg-white"
+                        placeholder="Ex: Nigérienne"
+                      />
+                    </div>
+                    
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-semibold text-slate-700 mb-2">Moyen de transport</label>
+                      <div className="flex gap-4">
+                        <label className="flex items-center">
+                          <input
+                            type="radio"
+                            name="moyenTransport"
+                            value="Non"
+                            checked={formData.moyenTransport === 'Non' || !formData.moyenTransport}
+                            onChange={(e) => updateFormData('moyenTransport', e.target.value)}
+                            className="mr-2"
+                          />
+                          Non
+                        </label>
+                        <label className="flex items-center">
+                          <input
+                            type="radio"
+                            name="moyenTransport"
+                            value="Oui"
+                            checked={formData.moyenTransport !== 'Non' && formData.moyenTransport !== ''}
+                            onChange={() => updateFormData('moyenTransport', 'Oui')} 
+                            className="mr-2"
+                          />
+                          Oui
+                        </label>
+                      </div>
+                      
+                      {formData.moyenTransport !== 'Non' && formData.moyenTransport !== '' ? (
+                        <div className="mt-3">
+                          <label className="block text-sm text-slate-700 mb-1">Précisez le moyen de transport</label>
+                          <input
+                            type="text"
+                            value={formData.moyenTransport === 'Oui' ? '' : formData.moyenTransport}
+                            onChange={(e) => updateFormData('moyenTransport', e.target.value)}
+                            className="w-full text-base text-slate-900 px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-800 focus:border-transparent bg-white"
+                            placeholder="Ex: Moto, Vélo, Voiture..."
+                          />
+                        </div>
+                      ) : null}
+                    </div>
+                  </div>
                 </div>
               </div>
 

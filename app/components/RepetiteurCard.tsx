@@ -18,6 +18,10 @@ interface RepetiteurCardProps {
         matieres: string
         diplome: string
         statut: string
+        age: number | null
+        genre: string | null
+        nationalite: string | null
+        moyenTransport: string | null
     }
 }
 

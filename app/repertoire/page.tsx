@@ -86,6 +86,10 @@ export default async function RepertoirePage({
       matieres: true,
       diplome: true,
       statut: true,
+      age: true,
+      genre: true,
+      nationalite: true,
+      moyenTransport: true,
     }
   })
 
@@ -197,18 +201,7 @@ export default async function RepertoirePage({
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-neutral-200">
-                  {repetiteurs.map((repetiteur: {
-                    id: number
-                    nom: string
-                    prenom: string
-                    telephone: string
-                    email: string | null
-                    commune: string
-                    departement: string
-                    matieres: string
-                    diplome: string
-                    statut: string
-                  }) => (
+                  {repetiteurs.map((repetiteur) => (
                     <TableRow key={repetiteur.id} repetiteur={repetiteur} />
                   ))}
                 </tbody>

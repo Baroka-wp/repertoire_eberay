@@ -18,6 +18,10 @@ export async function createRepetiteur(formData: FormData) {
   const departement = formData.get('departement') as string
   const diplome = formData.get('diplome') as string
   const anneeEntree = Number(formData.get('anneeEntree'))
+  const age = formData.get('age') as string
+  const genre = formData.get('genre') as string
+  const nationalite = formData.get('nationalite') as string
+  const moyenTransport = formData.get('moyenTransport') as string
 
   // --- GESTION DES MULTIPLES ---
 
@@ -75,6 +79,10 @@ export async function createRepetiteur(formData: FormData) {
       departement,
       diplome,
       anneeEntree,
+      age: age ? parseInt(age) : null,
+      genre,
+      nationalite,
+      moyenTransport,
       matieres: competenceString, // On sauvegarde la chaîne formatée
       statut: 'Actif',
       createdById: user?.id || null,
@@ -109,6 +117,10 @@ export async function updateRepetiteur(id: number, formData: FormData) {
   const diplome = formData.get('diplome') as string
   const anneeEntree = Number(formData.get('anneeEntree'))
   const statut = formData.get('statut') as string || 'Actif'
+  const age = formData.get('age') as string
+  const genre = formData.get('genre') as string
+  const nationalite = formData.get('nationalite') as string
+  const moyenTransport = formData.get('moyenTransport') as string
 
   // --- GESTION DES MULTIPLES ---
 
@@ -167,6 +179,10 @@ export async function updateRepetiteur(id: number, formData: FormData) {
       departement,
       diplome,
       anneeEntree,
+      age: age ? parseInt(age) : null,
+      genre,
+      nationalite,
+      moyenTransport,
       matieres: competenceString,
       statut,
       updatedById: user?.id || null,
@@ -190,6 +206,10 @@ export async function inscriptionRepetiteur(formData: FormData) {
   const diplome = formData.get('diplome') as string
   const anneeEntree = Number(formData.get('anneeEntree'))
   const email = formData.get('email') as string | null
+  const age = formData.get('age') as string
+  const genre = formData.get('genre') as string
+  const nationalite = formData.get('nationalite') as string
+  const moyenTransport = formData.get('moyenTransport') as string
 
   // Récupération des multiples
   const niveaux = formData.getAll('niveaux') as string[]
@@ -240,6 +260,10 @@ export async function inscriptionRepetiteur(formData: FormData) {
       departement,
       diplome,
       anneeEntree,
+      age: age ? parseInt(age) : null,
+      genre,
+      nationalite,
+      moyenTransport,
       matieres: competenceString,
       statut: 'Actif',
       // Pas de createdById pour les auto-inscriptions
