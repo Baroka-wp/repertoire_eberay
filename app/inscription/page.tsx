@@ -1,12 +1,10 @@
 'use client'
 
-import Link from 'next/link'
 import { useState } from 'react'
 import { useFormStatus } from 'react-dom'
 import { inscriptionRepetiteur } from '../actions'
 import Image from 'next/image'
 import {
-    ArrowLeft,
     Save,
     User,
     MapPin,
@@ -84,7 +82,7 @@ function SubmitButton() {
 
 export default function AjouterPage() {
     const [currentStep, setCurrentStep] = useState(1)
-    const [niveauSelectionne, setNiveauSelectionne] = useState<string>('primaire')
+    const [niveauxSelectionnes, setNiveauxSelectionnes] = useState<string[]>(['primaire'])
     const [classesSelectionnees, setClassesSelectionnees] = useState<string[]>([])
     const [matieresSelectionnees, setMatieresSelectionnees] = useState<string[]>([])
 
@@ -114,6 +112,12 @@ export default function AjouterPage() {
     const toggleMatiere = (matiere: string) => {
         setMatieresSelectionnees(prev =>
             prev.includes(matiere) ? prev.filter(m => m !== matiere) : [...prev, matiere]
+        )
+    }
+
+    const toggleNiveau = (niveau: string) => {
+        setNiveauxSelectionnes(prev =>
+            prev.includes(niveau) ? prev.filter(n => n !== niveau) : [...prev, niveau]
         )
     }
 
@@ -204,6 +208,19 @@ export default function AjouterPage() {
                             <input type="hidden" name="departement" value={formData.departement} />
                             <input type="hidden" name="ville" value={formData.ville} />
                             <input type="hidden" name="telephone" value={formData.telephone} />
+                            <input type="hidden" name="diplome" value={formData.diplome} />
+                            {/* Hidden inputs for multiple cycles */}
+                            {niveauxSelectionnes.map((niveau, index) => (
+                                <input key={index} type="hidden" name={`niveaux[${index}]`} value={niveau} />
+                            ))}
+                            {/* Hidden inputs for multiple classes */}
+                            {classesSelectionnees.map((classe, index) => (
+                                <input key={index} type="hidden" name={`classes[${index}]`} value={classe} />
+                            ))}
+                            {/* Hidden inputs for multiple matieres */}
+                            {matieresSelectionnees.map((matiere, index) => (
+                                <input key={index} type="hidden" name={`matieres[${index}]`} value={matiere} />
+                            ))}
                         </>
                     )}
 
@@ -404,7 +421,7 @@ export default function AjouterPage() {
                                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                         {NIVEAUX.map((niv) => {
                                             const Icon = niv.icon
-                                            const isSelected = niveauSelectionne === niv.id
+                                            const isSelected = niveauxSelectionnes.includes(niv.id)
                                             return (
                                                 <label
                                                     key={niv.id}
@@ -414,13 +431,17 @@ export default function AjouterPage() {
                                                         }`}
                                                 >
                                                     <input
-                                                        type="radio"
-                                                        name="niveau"
+                                                        type="checkbox"
+                                                        name="niveaux"
                                                         value={niv.id}
                                                         checked={isSelected}
-                                                        onChange={(e) => {
-                                                            setNiveauSelectionne(e.target.value)
-                                                            setClassesSelectionnees([])
+                                                        onChange={() => {
+                                                            toggleNiveau(niv.id);
+                                                            // Don't reset classes when adding multiple cycles
+                                                            // Only reset classes if removing the currently selected one and no cycles remain
+                                                            if (niv.id === niveauxSelectionnes[0] && niveauxSelectionnes.length <= 1) {
+                                                                setClassesSelectionnees([]);
+                                                            }
                                                         }}
                                                         className="sr-only"
                                                     />
@@ -446,7 +467,7 @@ export default function AjouterPage() {
                                         Classes prises en charge <span className="text-slate-500 font-normal">(Sélection multiple)</span>
                                     </label>
                                     <div className="flex flex-wrap gap-2">
-                                        {CLASSES_PAR_NIVEAU[niveauSelectionne].map((classe) => {
+                                        {niveauxSelectionnes.flatMap(niveau => CLASSES_PAR_NIVEAU[niveau] || []).map((classe) => {
                                             const isChecked = classesSelectionnees.includes(classe)
                                             return (
                                                 <label
