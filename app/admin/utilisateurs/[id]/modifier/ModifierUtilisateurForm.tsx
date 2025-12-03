@@ -29,9 +29,9 @@ export default function ModifierUtilisateurForm({ user }: ModifierUtilisateurFor
         subtitle="Administration E-Beyray"
       />
 
-      <main className="max-w-2xl mx-auto px-6 lg:px-8 py-10">
-        <div className="bg-white rounded-lg border border-neutral-200 shadow-sm p-8">
-          <form action={updateUser.bind(null, user.id)} className="space-y-6">
+      <main className="max-w-2xl mx-auto px-4 md:px-6 lg:px-8 py-6 md:py-10">
+        <div className="bg-white rounded-lg border border-neutral-200 shadow-sm p-4 md:p-8">
+          <form action={updateUser.bind(null, user.id)} className="space-y-4 md:space-y-6">
             {/* Nom */}
             <div>
               <label htmlFor="name" className="block text-sm font-semibold text-slate-700 mb-2">
@@ -129,20 +129,20 @@ export default function ModifierUtilisateurForm({ user }: ModifierUtilisateurFor
             )}
 
             {/* Boutons d'action */}
-            <div className="flex gap-3 pt-6">
+            <div className="flex flex-col sm:flex-row gap-3 pt-6">
               <Link
                 href="/admin/utilisateurs"
-                className="flex-1 flex items-center justify-center gap-2 px-6 py-3 border border-neutral-300 rounded-lg text-base font-semibold text-slate-700 hover:bg-neutral-50 transition-colors"
+                className="flex-1 flex items-center justify-center gap-2 px-6 py-3 border border-neutral-300 rounded-lg text-base font-semibold text-slate-700 hover:bg-neutral-50 transition-colors order-2 sm:order-1"
               >
                 <X size={20} />
-                Annuler
+                <span className="hidden sm:inline">Annuler</span>
               </Link>
               <SubmitButton
                 loadingText="Enregistrement..."
-                className="flex-1 bg-slate-800 hover:bg-slate-900 text-white px-6 py-3 rounded-lg text-base font-semibold transition-colors shadow-sm flex items-center justify-center gap-2"
+                className="flex-1 bg-slate-800 hover:bg-slate-900 text-white px-6 py-3 rounded-lg text-base font-semibold transition-colors shadow-sm flex items-center justify-center gap-2 order-1 sm:order-2"
               >
                 <Save size={20} />
-                <span>Enregistrer les modifications</span>
+                <span>Enregistrer</span>
               </SubmitButton>
             </div>
           </form>

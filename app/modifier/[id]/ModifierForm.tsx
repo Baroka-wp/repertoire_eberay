@@ -82,7 +82,7 @@ function SubmitButton() {
     <button
       type="submit"
       disabled={pending}
-      className={`flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white px-8 py-3.5 rounded-lg text-base font-semibold transition-colors shadow-sm disabled:opacity-70 disabled:cursor-not-allowed min-w-[200px] justify-center ${pending ? 'opacity-70' : ''}`}
+      className={`flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white px-8 py-3.5 rounded-lg text-base font-semibold transition-colors shadow-sm disabled:opacity-70 disabled:cursor-not-allowed w-full lg:w-auto min-w-[200px] justify-center ${pending ? 'opacity-70' : ''}`}
     >
       {pending ? (
         <>
@@ -158,34 +158,34 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauInitial, cla
 
       {/* HEADER */}
       <header className="bg-white border-b border-neutral-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            <div className="flex items-center gap-4">
-              <Link href={`/repetiteur/${repetiteur.id}`} className="flex items-center gap-2 text-slate-700 hover:text-slate-900 transition-colors px-3 py-2 rounded-lg hover:bg-neutral-100">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16 md:h-20">
+            <div className="flex items-center gap-2 md:gap-4 flex-1 min-w-0">
+              <Link href={`/repetiteur/${repetiteur.id}`} className="flex items-center gap-1 md:gap-2 text-slate-700 hover:text-slate-900 transition-colors px-2 md:px-3 py-2 rounded-lg hover:bg-neutral-100 flex-shrink-0">
                 <ArrowLeft size={18} />
-                <span className="font-medium text-sm">Retour à la fiche</span>
+                <span className="font-medium text-xs md:text-sm hidden sm:inline">Retour</span>
               </Link>
-              <div className="h-6 w-px bg-neutral-300"></div>
-              <div className="flex items-center gap-3">
-                <Image 
-                  src="/logp_eberay.png" 
-                  alt="Logo E-Beyray" 
-                  width={40} 
-                  height={40}
-                  className="object-contain"
+              <div className="h-6 w-px bg-neutral-300 hidden sm:block"></div>
+              <div className="flex items-center gap-2 md:gap-3 min-w-0">
+                <Image
+                  src="/logp_eberay.png"
+                  alt="Logo E-Beyray"
+                  width={32}
+                  height={32}
+                  className="object-contain w-8 h-8 md:w-10 md:h-10 flex-shrink-0"
                 />
-                <h1 className="text-xl font-bold text-slate-900">Modifier le Dossier Répétiteur</h1>
+                <h1 className="text-base md:text-xl font-bold text-slate-900 truncate">Modifier le Dossier</h1>
               </div>
             </div>
           </div>
         </div>
       </header>
 
-      <main className="max-w-5xl mx-auto px-6 lg:px-8 py-10">
+      <main className="max-w-5xl mx-auto px-4 md:px-6 lg:px-8 py-6 md:py-10">
 
         {/* PROGRESS STEPS */}
-        <div className="bg-white rounded-lg border border-neutral-200 shadow-sm p-6 mb-8">
-          <div className="flex items-center justify-between">
+        <div className="bg-white rounded-lg border border-neutral-200 shadow-sm p-4 md:p-6 mb-6 md:mb-8 overflow-x-auto">
+          <div className="flex items-center justify-between min-w-[300px]">
             {STEPS.map((step, index) => {
               const Icon = step.icon
               const isActive = currentStep === step.id
@@ -194,25 +194,22 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauInitial, cla
               return (
                 <div key={step.id} className="flex items-center flex-1">
                   <div className="flex flex-col items-center flex-1">
-                    <div className={`flex items-center justify-center w-12 h-12 rounded-full border-2 transition-all ${
-                      isCompleted
-                        ? 'bg-slate-800 border-slate-800 text-white'
-                        : isActive
+                    <div className={`flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-full border-2 transition-all ${isCompleted
+                      ? 'bg-slate-800 border-slate-800 text-white'
+                      : isActive
                         ? 'bg-slate-800 border-slate-800 text-white shadow-md'
                         : 'bg-white border-neutral-300 text-neutral-400'
-                    }`}>
-                      {isCompleted ? <Check size={20} /> : <Icon size={20} />}
+                      }`}>
+                      {isCompleted ? <Check size={18} className="md:w-5 md:h-5" /> : <Icon size={18} className="md:w-5 md:h-5" />}
                     </div>
-                    <span className={`mt-2 text-sm font-semibold ${
-                      isActive ? 'text-slate-900' : isCompleted ? 'text-slate-700' : 'text-neutral-400'
-                    }`}>
+                    <span className={`mt-2 text-xs md:text-sm font-semibold whitespace-nowrap ${isActive ? 'text-slate-900' : isCompleted ? 'text-slate-700' : 'text-neutral-400'
+                      }`}>
                       {step.label}
                     </span>
                   </div>
                   {index < STEPS.length - 1 && (
-                    <div className={`flex-1 h-0.5 mx-4 transition-all ${
-                      isCompleted ? 'bg-slate-800' : 'bg-neutral-200'
-                    }`} />
+                    <div className={`flex-1 h-0.5 mx-2 md:mx-4 transition-all ${isCompleted ? 'bg-slate-800' : 'bg-neutral-200'
+                      }`} />
                   )}
                 </div>
               )
@@ -242,19 +239,19 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauInitial, cla
           {/* ÉTAPE 1 : IDENTITÉ */}
           {currentStep === 1 && (
             <div className="bg-white rounded-lg border border-neutral-200 shadow-sm overflow-hidden">
-              <div className="px-8 py-6 bg-slate-50 border-b border-neutral-200">
+              <div className="px-6 py-4 md:px-8 md:py-6 bg-slate-50 border-b border-neutral-200">
                 <div className="flex items-center gap-4">
-                  <div className="p-3 bg-slate-800 rounded-lg text-white">
-                    <User size={24} />
+                  <div className="p-2 md:p-3 bg-slate-800 rounded-lg text-white">
+                    <User size={20} className="md:w-6 md:h-6" />
                   </div>
                   <div>
-                    <h2 className="text-xl font-bold text-slate-900">Informations Personnelles</h2>
-                    <p className="text-sm text-slate-600 mt-1">Renseignez les informations de base</p>
+                    <h2 className="text-lg md:text-xl font-bold text-slate-900">Informations Personnelles</h2>
+                    <p className="text-xs md:text-sm text-slate-600 mt-0.5 md:mt-1">Renseignez les informations de base</p>
                   </div>
                 </div>
               </div>
 
-              <div className="p-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">Nom *</label>
                   <input
@@ -303,12 +300,12 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauInitial, cla
                 </div>
               </div>
 
-              <div className="px-8 py-6 bg-neutral-50 border-t border-neutral-200 flex justify-end">
+              <div className="px-6 py-4 md:px-8 md:py-6 bg-neutral-50 border-t border-neutral-200 flex justify-end">
                 <button
                   type="button"
                   onClick={nextStep}
                   disabled={!canProceedToStep2}
-                  className="flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white px-8 py-3 rounded-lg text-base font-semibold transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white px-6 py-3 md:px-8 md:py-3 rounded-lg text-base font-semibold transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed w-full md:w-auto justify-center"
                 >
                   Suivant
                   <ChevronRight size={18} />
@@ -320,19 +317,19 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauInitial, cla
           {/* ÉTAPE 2 : LOCALISATION */}
           {currentStep === 2 && (
             <div className="bg-white rounded-lg border border-neutral-200 shadow-sm overflow-hidden">
-              <div className="px-8 py-6 bg-slate-50 border-b border-neutral-200">
+              <div className="px-6 py-4 md:px-8 md:py-6 bg-slate-50 border-b border-neutral-200">
                 <div className="flex items-center gap-4">
-                  <div className="p-3 bg-slate-800 rounded-lg text-white">
-                    <MapPin size={24} />
+                  <div className="p-2 md:p-3 bg-slate-800 rounded-lg text-white">
+                    <MapPin size={20} className="md:w-6 md:h-6" />
                   </div>
                   <div>
-                    <h2 className="text-xl font-bold text-slate-900">Coordonnées & Localisation</h2>
-                    <p className="text-sm text-slate-600 mt-1">Informations de contact et localisation</p>
+                    <h2 className="text-lg md:text-xl font-bold text-slate-900">Coordonnées & Localisation</h2>
+                    <p className="text-xs md:text-sm text-slate-600 mt-0.5 md:mt-1">Informations de contact et localisation</p>
                   </div>
                 </div>
               </div>
 
-              <div className="p-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">Région *</label>
                   <select
@@ -368,8 +365,8 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauInitial, cla
                     {formData.departement && (() => {
                       const villesDisponibles = VILLES_PAR_REGION[formData.departement] || []
                       // Si la ville actuelle n'est pas dans la liste, l'ajouter
-                      const villesAffichees = villesDisponibles.includes(formData.ville) 
-                        ? villesDisponibles 
+                      const villesAffichees = villesDisponibles.includes(formData.ville)
+                        ? villesDisponibles
                         : [...villesDisponibles, formData.ville].filter(Boolean)
                       return villesAffichees.map(ville => (
                         <option key={ville} value={ville}>{ville}</option>
@@ -391,11 +388,11 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauInitial, cla
                 </div>
               </div>
 
-              <div className="px-8 py-6 bg-neutral-50 border-t border-neutral-200 flex justify-between">
+              <div className="px-6 py-4 md:px-8 md:py-6 bg-neutral-50 border-t border-neutral-200 flex justify-between gap-4">
                 <button
                   type="button"
                   onClick={prevStep}
-                  className="flex items-center gap-2 bg-neutral-200 hover:bg-neutral-300 text-slate-700 px-8 py-3 rounded-lg text-base font-semibold transition-colors"
+                  className="flex items-center gap-2 bg-neutral-200 hover:bg-neutral-300 text-slate-700 px-6 py-3 md:px-8 md:py-3 rounded-lg text-base font-semibold transition-colors w-full md:w-auto justify-center"
                 >
                   <ChevronLeft size={18} />
                   Précédent
@@ -404,7 +401,7 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauInitial, cla
                   type="button"
                   onClick={nextStep}
                   disabled={!canProceedToStep3}
-                  className="flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white px-8 py-3 rounded-lg text-base font-semibold transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white px-6 py-3 md:px-8 md:py-3 rounded-lg text-base font-semibold transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed w-full md:w-auto justify-center"
                 >
                   Suivant
                   <ChevronRight size={18} />
@@ -416,19 +413,19 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauInitial, cla
           {/* ÉTAPE 3 : COMPÉTENCES */}
           {currentStep === 3 && (
             <div className="bg-white rounded-lg border border-neutral-200 shadow-sm overflow-hidden">
-              <div className="px-8 py-6 bg-slate-50 border-b border-neutral-200">
+              <div className="px-6 py-4 md:px-8 md:py-6 bg-slate-50 border-b border-neutral-200">
                 <div className="flex items-center gap-4">
-                  <div className="p-3 bg-slate-800 rounded-lg text-white">
-                    <Briefcase size={24} />
+                  <div className="p-2 md:p-3 bg-slate-800 rounded-lg text-white">
+                    <Briefcase size={20} className="md:w-6 md:h-6" />
                   </div>
                   <div>
-                    <h2 className="text-xl font-bold text-slate-900">Compétences Pédagogiques</h2>
-                    <p className="text-sm text-slate-600 mt-1">Niveau, classes et matières enseignées</p>
+                    <h2 className="text-lg md:text-xl font-bold text-slate-900">Compétences Pédagogiques</h2>
+                    <p className="text-xs md:text-sm text-slate-600 mt-0.5 md:mt-1">Niveau, classes et matières enseignées</p>
                   </div>
                 </div>
               </div>
 
-              <div className="p-8 space-y-8">
+              <div className="p-6 md:p-8 space-y-6 md:space-y-8">
 
                 {/* DIPLÔME */}
                 <div>
@@ -462,11 +459,10 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauInitial, cla
                       return (
                         <label
                           key={niv.id}
-                          className={`relative flex flex-col items-center p-5 rounded-lg border-2 cursor-pointer transition-all ${
-                            isSelected
-                              ? 'border-slate-800 bg-slate-50 shadow-md'
-                              : 'border-neutral-200 bg-white hover:border-slate-300'
-                          }`}
+                          className={`relative flex flex-col items-center p-5 rounded-lg border-2 cursor-pointer transition-all ${isSelected
+                            ? 'border-slate-800 bg-slate-50 shadow-md'
+                            : 'border-neutral-200 bg-white hover:border-slate-300'
+                            }`}
                         >
                           <input
                             type="radio"
@@ -506,11 +502,10 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauInitial, cla
                       return (
                         <label
                           key={classe}
-                          className={`px-4 py-2 rounded-lg border-2 cursor-pointer transition-all text-sm font-medium ${
-                            isChecked
-                              ? 'bg-slate-800 border-slate-800 text-white'
-                              : 'bg-white border-neutral-300 text-slate-700 hover:border-slate-400'
-                          }`}
+                          className={`px-4 py-2 rounded-lg border-2 cursor-pointer transition-all text-sm font-medium ${isChecked
+                            ? 'bg-slate-800 border-slate-800 text-white'
+                            : 'bg-white border-neutral-300 text-slate-700 hover:border-slate-400'
+                            }`}
                         >
                           <input
                             type="checkbox"
@@ -538,11 +533,10 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauInitial, cla
                       return (
                         <label
                           key={matiere}
-                          className={`px-3 py-2 rounded-lg border-2 cursor-pointer transition-all text-sm font-medium text-center ${
-                            isChecked
-                              ? 'bg-slate-800 border-slate-800 text-white'
-                              : 'bg-white border-neutral-300 text-slate-700 hover:border-slate-400'
-                          }`}
+                          className={`px-3 py-2 rounded-lg border-2 cursor-pointer transition-all text-sm font-medium text-center ${isChecked
+                            ? 'bg-slate-800 border-slate-800 text-white'
+                            : 'bg-white border-neutral-300 text-slate-700 hover:border-slate-400'
+                            }`}
                         >
                           <input
                             type="checkbox"
@@ -561,24 +555,16 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauInitial, cla
 
               </div>
 
-              <div className="px-8 py-6 bg-neutral-50 border-t border-neutral-200 flex justify-between">
+              <div className="px-6 py-4 md:px-8 md:py-6 bg-neutral-50 border-t border-neutral-200 flex flex-col lg:flex-row justify-between gap-4">
                 <button
                   type="button"
                   onClick={prevStep}
-                  className="flex items-center gap-2 bg-neutral-200 hover:bg-neutral-300 text-slate-700 px-8 py-3 rounded-lg text-base font-semibold transition-colors"
+                  className="flex items-center gap-2 bg-neutral-200 hover:bg-neutral-300 text-slate-700 px-6 py-3 md:px-8 md:py-3 rounded-lg text-base font-semibold transition-colors w-full lg:w-auto justify-center"
                 >
                   <ChevronLeft size={18} />
                   Précédent
                 </button>
-                <div className="flex gap-4">
-                  <Link
-                    href={`/repetiteur/${repetiteur.id}`}
-                    className="px-8 py-3 text-base font-semibold text-slate-700 bg-white border-2 border-neutral-300 rounded-lg hover:bg-neutral-50 transition-colors"
-                  >
-                    Annuler
-                  </Link>
-                  <SubmitButton />
-                </div>
+                <SubmitButton />
               </div>
             </div>
           )}

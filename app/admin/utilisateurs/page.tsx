@@ -55,7 +55,7 @@ export default async function UtilisateursPage() {
         }
       />
 
-      <main className="max-w-7xl mx-auto px-6 lg:px-8 py-10">
+      <main className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-6 md:py-10">
         {/* Stats */}
         <div className="mb-6">
           <div className="inline-flex items-center gap-2 text-sm text-slate-500">
@@ -65,79 +65,123 @@ export default async function UtilisateursPage() {
           </div>
         </div>
 
-        {/* Tableau */}
+        {/* Tableau Desktop / Cartes Mobile */}
         <div className="bg-white rounded-lg border border-neutral-200 shadow-sm overflow-hidden">
           {users.length > 0 ? (
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-neutral-200">
-                <thead className="bg-neutral-50">
-                  <tr>
-                    <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">
-                      Utilisateur
-                    </th>
-                    <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">
-                      Email
-                    </th>
-                    <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">
-                      Rôle
-                    </th>
-                    <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">
-                      Statistiques
-                    </th>
-                    <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">
-                      Créé le
-                    </th>
-                    <th scope="col" className="relative px-6 py-4">
-                      <span className="sr-only">Actions</span>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-neutral-200">
-                  {users.map((user) => (
-                    <tr key={user.id} className="hover:bg-neutral-50 transition-colors">
-                      <td className="whitespace-nowrap px-6 py-4 text-sm">
-                        <div className="flex items-center gap-3">
-                          <div className="flex items-center justify-center w-10 h-10 rounded-full bg-slate-800 text-white text-sm font-bold">
-                            {user.name.charAt(0).toUpperCase()}
-                          </div>
-                          <div className="font-semibold text-slate-900">{user.name}</div>
-                        </div>
-                      </td>
-                      <td className="whitespace-nowrap px-6 py-4 text-sm text-slate-600">
-                        {user.email}
-                      </td>
-                      <td className="whitespace-nowrap px-6 py-4 text-sm">
-                        <span className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset ${roleColors[user.role]}`}>
-                          {roleLabels[user.role] || user.role}
-                        </span>
-                      </td>
-                      <td className="whitespace-nowrap px-6 py-4 text-sm text-slate-600">
-                        <div className="flex items-center gap-3 text-xs">
-                          <span className="text-green-600">
-                            {user._count.repetiteursCreated} créés
-                          </span>
-                          <span className="text-blue-600">
-                            {user._count.repetiteursUpdated} modifiés
-                          </span>
-                        </div>
-                      </td>
-                      <td className="whitespace-nowrap px-6 py-4 text-sm text-slate-600">
-                        {new Date(user.createdAt).toLocaleDateString('fr-FR')}
-                      </td>
-                      <td className="relative whitespace-nowrap py-4 pl-3 pr-6 text-right text-sm font-medium">
-                        <Link
-                          href={`/admin/utilisateurs/${user.id}/modifier`}
-                          className="text-slate-600 hover:text-slate-900 flex items-center justify-end gap-1"
-                        >
-                          <Edit2 size={16} />
-                          <span className="hidden lg:inline">Modifier</span>
-                        </Link>
-                      </td>
+            <>
+              {/* Vue Desktop : Tableau */}
+              <div className="hidden md:block overflow-x-auto">
+                <table className="min-w-full divide-y divide-neutral-200">
+                  <thead className="bg-neutral-50">
+                    <tr>
+                      <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">
+                        Utilisateur
+                      </th>
+                      <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">
+                        Email
+                      </th>
+                      <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">
+                        Rôle
+                      </th>
+                      <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">
+                        Statistiques
+                      </th>
+                      <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-slate-700 uppercase tracking-wider">
+                        Créé le
+                      </th>
+                      <th scope="col" className="relative px-6 py-4">
+                        <span className="sr-only">Actions</span>
+                      </th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-neutral-200">
+                    {users.map((user) => (
+                      <tr key={user.id} className="hover:bg-neutral-50 transition-colors">
+                        <td className="whitespace-nowrap px-6 py-4 text-sm">
+                          <div className="flex items-center gap-3">
+                            <div className="flex items-center justify-center w-10 h-10 rounded-full bg-slate-800 text-white text-sm font-bold">
+                              {user.name.charAt(0).toUpperCase()}
+                            </div>
+                            <div className="font-semibold text-slate-900">{user.name}</div>
+                          </div>
+                        </td>
+                        <td className="whitespace-nowrap px-6 py-4 text-sm text-slate-600">
+                          {user.email}
+                        </td>
+                        <td className="whitespace-nowrap px-6 py-4 text-sm">
+                          <span className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset ${roleColors[user.role]}`}>
+                            {roleLabels[user.role] || user.role}
+                          </span>
+                        </td>
+                        <td className="whitespace-nowrap px-6 py-4 text-sm text-slate-600">
+                          <div className="flex items-center gap-3 text-xs">
+                            <span className="text-green-600">
+                              {user._count.repetiteursCreated} créés
+                            </span>
+                            <span className="text-blue-600">
+                              {user._count.repetiteursUpdated} modifiés
+                            </span>
+                          </div>
+                        </td>
+                        <td className="whitespace-nowrap px-6 py-4 text-sm text-slate-600">
+                          {new Date(user.createdAt).toLocaleDateString('fr-FR')}
+                        </td>
+                        <td className="relative whitespace-nowrap py-4 pl-3 pr-6 text-right text-sm font-medium">
+                          <Link
+                            href={`/admin/utilisateurs/${user.id}/modifier`}
+                            className="text-slate-600 hover:text-slate-900 flex items-center justify-end gap-1"
+                          >
+                            <Edit2 size={16} />
+                            <span className="hidden lg:inline">Modifier</span>
+                          </Link>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Vue Mobile : Cartes */}
+              <div className="md:hidden divide-y divide-neutral-200">
+                {users.map((user) => (
+                  <div key={user.id} className="p-4 hover:bg-neutral-50 transition-colors">
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-center gap-3 flex-1 min-w-0">
+                        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-slate-800 text-white text-sm font-bold flex-shrink-0">
+                          {user.name.charAt(0).toUpperCase()}
+                        </div>
+                        <div className="min-w-0">
+                          <div className="font-semibold text-slate-900 truncate">{user.name}</div>
+                          <div className="text-xs text-slate-600 truncate">{user.email}</div>
+                        </div>
+                      </div>
+                      <Link
+                        href={`/admin/utilisateurs/${user.id}/modifier`}
+                        className="text-slate-600 hover:text-slate-900 p-2 rounded-lg hover:bg-neutral-100 flex-shrink-0"
+                      >
+                        <Edit2 size={16} />
+                      </Link>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-2 mb-2">
+                      <span className={`inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset ${roleColors[user.role]}`}>
+                        {roleLabels[user.role] || user.role}
+                      </span>
+                      <span className="text-xs text-slate-500">
+                        {new Date(user.createdAt).toLocaleDateString('fr-FR')}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-3 text-xs text-slate-600">
+                      <span className="text-green-600">
+                        {user._count.repetiteursCreated} créés
+                      </span>
+                      <span className="text-blue-600">
+                        {user._count.repetiteursUpdated} modifiés
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
           ) : (
             <div className="text-center py-16 px-6">
               <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-neutral-100 mb-4">
