@@ -39,6 +39,18 @@ export default async function UtilisateursPage() {
     viewer: 'bg-neutral-100 text-neutral-700 ring-neutral-600/20',
   }
 
+  interface UserWithStats {
+    id: string
+    name: string
+    email: string
+    role: string
+    createdAt: Date
+    _count: {
+      repetiteursCreated: number
+      repetiteursUpdated: number
+    }
+  }
+
   return (
     <div className="min-h-screen bg-neutral-50">
       <AdminHeader
@@ -95,7 +107,7 @@ export default async function UtilisateursPage() {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-neutral-200">
-                    {users.map((user) => (
+                    {users.map((user: UserWithStats) => (
                       <tr key={user.id} className="hover:bg-neutral-50 transition-colors">
                         <td className="whitespace-nowrap px-6 py-4 text-sm">
                           <div className="flex items-center gap-3">
@@ -143,7 +155,7 @@ export default async function UtilisateursPage() {
 
               {/* Vue Mobile : Cartes */}
               <div className="md:hidden divide-y divide-neutral-200">
-                {users.map((user) => (
+                {users.map((user: UserWithStats) => (
                   <div key={user.id} className="p-4 hover:bg-neutral-50 transition-colors">
                     <div className="flex items-start justify-between mb-3">
                       <div className="flex items-center gap-3 flex-1 min-w-0">
