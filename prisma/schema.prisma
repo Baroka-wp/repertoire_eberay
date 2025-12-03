@@ -37,6 +37,10 @@ model Repetiteur {
   matieres      String    // Stocké comme texte "Maths, PC"
   diplome       String
   anneeEntree   Int
+  age           Int?
+  genre         String?
+  nationalite   String?
+  moyenTransport String?
   statut        String    @default("Actif") // Actif ou Suspendu
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @default(now()) @updatedAt

@@ -28,7 +28,27 @@ export default async function RepetiteurPage({ params }: PageProps) {
   }
 
   const repetiteur = await prisma.repetiteur.findUnique({
-    where: { id: repetiteurId }
+    where: { id: repetiteurId },
+    select: {
+      id: true,
+      nom: true,
+      prenom: true,
+      email: true,
+      telephone: true,
+      commune: true,
+      departement: true,
+      matieres: true,
+      diplome: true,
+      anneeEntree: true,
+      statut: true,
+      createdAt: true,
+      createdById: true,
+      updatedById: true,
+      age: true,
+      genre: true,
+      nationalite: true,
+      moyenTransport: true,
+    }
   })
 
   if (!repetiteur) {
@@ -185,6 +205,41 @@ export default async function RepetiteurPage({ params }: PageProps) {
                   </div>
                 </div>
               </div>
+
+              {/* SECTION 2.5 : INFORMATIONS PERSONNELLES */}
+              {(repetiteur.age || repetiteur.genre || repetiteur.nationalite || repetiteur.moyenTransport) && (
+                <div className="mb-6 md:mb-8">
+                  <h2 className="text-xs md:text-sm font-bold text-slate-500 uppercase tracking-wider mb-3 md:mb-4 pb-2 border-b border-neutral-200">
+                    Informations Personnelles
+                  </h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                    {repetiteur.age && (
+                      <div className="flex items-start flex-col sm:flex-row">
+                        <div className="w-full sm:w-40 text-sm text-slate-500 font-medium mb-1 sm:mb-0">Âge</div>
+                        <div className="flex-1 text-sm text-slate-900">{repetiteur.age} ans</div>
+                      </div>
+                    )}
+                    {repetiteur.genre && (
+                      <div className="flex items-start flex-col sm:flex-row">
+                        <div className="w-full sm:w-40 text-sm text-slate-500 font-medium mb-1 sm:mb-0">Genre</div>
+                        <div className="flex-1 text-sm text-slate-900">{repetiteur.genre}</div>
+                      </div>
+                    )}
+                    {repetiteur.nationalite && (
+                      <div className="flex items-start flex-col sm:flex-row">
+                        <div className="w-full sm:w-40 text-sm text-slate-500 font-medium mb-1 sm:mb-0">Nationalité</div>
+                        <div className="flex-1 text-sm text-slate-900">{repetiteur.nationalite}</div>
+                      </div>
+                    )}
+                    {repetiteur.moyenTransport && (
+                      <div className="flex items-start flex-col sm:flex-row md:col-span-2">
+                        <div className="w-full sm:w-40 text-sm text-slate-500 font-medium mb-1 sm:mb-0">Moyen de transport</div>
+                        <div className="flex-1 text-sm text-slate-900">{repetiteur.moyenTransport}</div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* SECTION 3 : COMPÉTENCES PÉDAGOGIQUES */}

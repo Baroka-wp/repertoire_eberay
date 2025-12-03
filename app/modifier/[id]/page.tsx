@@ -19,7 +19,24 @@ export default async function ModifierPage({ params }: PageProps) {
   }
 
   const repetiteur = await prisma.repetiteur.findUnique({
-    where: { id: repetiteurId }
+    where: { id: repetiteurId },
+    select: {
+      id: true,
+      nom: true,
+      prenom: true,
+      email: true,
+      telephone: true,
+      commune: true,
+      departement: true,
+      matieres: true,
+      diplome: true,
+      anneeEntree: true,
+      statut: true,
+      age: true,
+      genre: true,
+      nationalite: true,
+      moyenTransport: true,
+    }
   })
 
   if (!repetiteur) {

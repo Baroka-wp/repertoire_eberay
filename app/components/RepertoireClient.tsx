@@ -36,6 +36,10 @@ interface RepertoireClientProps {
     diplome: string
     statut: string
     email: string | null
+    age: number | null
+    genre: string | null
+    nationalite: string | null
+    moyenTransport: string | null
   }>
   children: React.ReactNode
 }
