@@ -103,6 +103,8 @@ export default function DocumentUpload({
       formData.append('file', file)
       formData.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!)
       formData.append('public_id', publicId)
+      // Explicitly set access mode to public for documents
+      formData.append('access_mode', 'public')
 
       // Upload to Cloudinary
       const response = await fetch(uploadPath, {
