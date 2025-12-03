@@ -19,7 +19,7 @@ export default authEdge((req) => {
   if (
     pathname.startsWith('/_next') ||
     pathname.startsWith('/favicon.ico') ||
-    pathname.startsWith('/logp_eberay.png') ||
+    pathname.startsWith('/logo_eberay.png') ||
     /\.(svg|png|jpg|jpeg|gif|webp|ico)$/.test(pathname)
   ) {
     return NextResponse.next()

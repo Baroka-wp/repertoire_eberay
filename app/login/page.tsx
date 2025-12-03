@@ -54,10 +54,10 @@ export default function LoginPage() {
         {/* Logo et Titre */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center mb-6">
-            <Image 
-              src="/logp_eberay.png" 
-              alt="Logo E-Beyray" 
-              width={100} 
+            <Image
+              src="/logo_eberay.png"
+              alt="Logo E-Beyray"
+              width={100}
               height={100}
               className="drop-shadow-lg"
               priority
