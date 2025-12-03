@@ -132,8 +132,8 @@ export default function AjouterPage() {
     }
 
     // Validation for documents: casier judiciaire required and at least carteIdentite or passeport
-    const canSubmit = formData.casierJudiciaire.trim() !== '' && 
-                     (formData.carteIdentite.trim() !== '' || formData.passeport.trim() !== '')
+    const canSubmit = formData.casierJudiciaire.trim() !== '' &&
+        (formData.carteIdentite.trim() !== '' || formData.passeport.trim() !== '')
 
     return (
         <div className="min-h-screen bg-neutral-50">
@@ -222,15 +222,15 @@ export default function AjouterPage() {
                             <input type="hidden" name="photo" value={formData.photo} />
                             {/* Hidden inputs for multiple cycles */}
                             {niveauxSelectionnes.map((niveau, index) => (
-                                <input key={index} type="hidden" name={`niveaux[${index}]`} value={niveau} />
+                                <input key={index} type="hidden" name="niveaux" value={niveau} />
                             ))}
                             {/* Hidden inputs for multiple classes */}
                             {classesSelectionnees.map((classe, index) => (
-                                <input key={index} type="hidden" name={`classes[${index}]`} value={classe} />
+                                <input key={index} type="hidden" name="classes" value={classe} />
                             ))}
                             {/* Hidden inputs for multiple matieres */}
                             {matieresSelectionnees.map((matiere, index) => (
-                                <input key={index} type="hidden" name={`matieres[${index}]`} value={matiere} />
+                                <input key={index} type="hidden" name="matieres" value={matiere} />
                             ))}
                         </>
                     )}
@@ -690,7 +690,7 @@ export default function AjouterPage() {
                                         <span className="text-xs text-amber-700 bg-amber-100 px-2 py-0.5 rounded">Obligatoire</span>
                                     </div>
                                     <p className="text-xs text-slate-600 mb-4">Veuillez fournir votre casier judiciaire r&eacute;cent (moins de 3 mois)</p>
-                                    <DocumentUpload 
+                                    <DocumentUpload
                                         onDocumentUpload={(url) => updateFormData('casierJudiciaire', url)}
                                         initialDocumentUrl={formData.casierJudiciaire}
                                         documentType="casier"
@@ -704,7 +704,7 @@ export default function AjouterPage() {
                                         <div>
                                             <label className="block text-sm font-semibold text-slate-700 mb-2">Carte d&apos;identité</label>
                                             <p className="text-xs text-slate-600 mb-4">Joindre une copie de votre carte d&apos;identité nationale</p>
-                                            <DocumentUpload 
+                                            <DocumentUpload
                                                 onDocumentUpload={(url) => updateFormData('carteIdentite', url)}
                                                 initialDocumentUrl={formData.carteIdentite}
                                                 documentType="id_card"
@@ -714,7 +714,7 @@ export default function AjouterPage() {
                                         <div>
                                             <label className="block text-sm font-semibold text-slate-700 mb-2">Passeport</label>
                                             <p className="text-xs text-slate-600 mb-4">Joindre une copie de votre passeport (si applicable)</p>
-                                            <DocumentUpload 
+                                            <DocumentUpload
                                                 onDocumentUpload={(url) => updateFormData('passeport', url)}
                                                 initialDocumentUrl={formData.passeport}
                                                 documentType="passport"

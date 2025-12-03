@@ -76,6 +76,17 @@ export async function createRepetiteur(formData: FormData) {
   
   const competenceString = `${matieresStr} - [${cyclesFormates}]`
 
+  // Vérifier que l'utilisateur existe dans la base de données avant de l'utiliser comme référence
+  let validCreatedById: string | null = null;
+  if (user?.id) {
+    const existingUser = await prisma.user.findUnique({
+      where: { id: user.id }
+    });
+    if (existingUser) {
+      validCreatedById = user.id;
+    }
+  }
+
   await prisma.repetiteur.create({
     data: {
       nom,
@@ -96,7 +107,7 @@ export async function createRepetiteur(formData: FormData) {
       documentsVerifies: false, // Par défaut non vérifié
       matieres: competenceString, // On sauvegarde la chaîne formatée
       statut: 'Actif',
-      createdById: user?.id || null,
+      createdById: validCreatedById,
     },
   })
 
@@ -186,6 +197,17 @@ export async function updateRepetiteur(id: number, formData: FormData) {
   
   const competenceString = `${matieresStr} - [${cyclesFormates}]`
 
+  // Vérifier que l'utilisateur existe dans la base de données avant de l'utiliser comme référence
+  let validUpdatedById: string | null = null;
+  if (user?.id) {
+    const existingUser = await prisma.user.findUnique({
+      where: { id: user.id }
+    });
+    if (existingUser) {
+      validUpdatedById = user.id;
+    }
+  }
+
   await prisma.repetiteur.update({
     where: { id },
     data: {
@@ -206,7 +228,7 @@ export async function updateRepetiteur(id: number, formData: FormData) {
       passeport,
       matieres: competenceString,
       statut,
-      updatedById: user?.id || null,
+      updatedById: validUpdatedById,
     },
   })
 
