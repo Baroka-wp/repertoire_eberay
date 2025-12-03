@@ -23,6 +23,11 @@ export async function createRepetiteur(formData: FormData) {
   const nationalite = formData.get('nationalite') as string
   const moyenTransport = formData.get('moyenTransport') as string
   const photo = formData.get('photo') as string
+  
+  // Récupération des nouveaux champs de documents
+  const casierJudiciaire = formData.get('casierJudiciaire') as string
+  const carteIdentite = formData.get('carteIdentite') as string
+  const passeport = formData.get('passeport') as string
 
   // --- GESTION DES MULTIPLES ---
 
@@ -85,6 +90,10 @@ export async function createRepetiteur(formData: FormData) {
       nationalite,
       moyenTransport,
       photo,
+      casierJudiciaire,
+      carteIdentite,
+      passeport,
+      documentsVerifies: false, // Par défaut non vérifié
       matieres: competenceString, // On sauvegarde la chaîne formatée
       statut: 'Actif',
       createdById: user?.id || null,
@@ -124,6 +133,11 @@ export async function updateRepetiteur(id: number, formData: FormData) {
   const nationalite = formData.get('nationalite') as string
   const moyenTransport = formData.get('moyenTransport') as string
   const photo = formData.get('photo') as string
+  
+  // Récupération des nouveaux champs de documents
+  const casierJudiciaire = formData.get('casierJudiciaire') as string
+  const carteIdentite = formData.get('carteIdentite') as string
+  const passeport = formData.get('passeport') as string
 
   // --- GESTION DES MULTIPLES ---
 
@@ -187,6 +201,9 @@ export async function updateRepetiteur(id: number, formData: FormData) {
       nationalite,
       moyenTransport,
       photo,
+      casierJudiciaire,
+      carteIdentite,
+      passeport,
       matieres: competenceString,
       statut,
       updatedById: user?.id || null,
@@ -215,6 +232,11 @@ export async function inscriptionRepetiteur(formData: FormData) {
   const nationalite = formData.get('nationalite') as string
   const moyenTransport = formData.get('moyenTransport') as string
   const photo = formData.get('photo') as string
+  
+  // Récupération des nouveaux champs de documents
+  const casierJudiciaire = formData.get('casierJudiciaire') as string
+  const carteIdentite = formData.get('carteIdentite') as string
+  const passeport = formData.get('passeport') as string
 
   // Récupération des multiples
   const niveaux = formData.getAll('niveaux') as string[]
@@ -270,6 +292,10 @@ export async function inscriptionRepetiteur(formData: FormData) {
       nationalite,
       moyenTransport,
       photo,
+      casierJudiciaire,
+      carteIdentite,
+      passeport,
+      documentsVerifies: false, // Par défaut non vérifié
       matieres: competenceString,
       statut: 'Actif',
       // Pas de createdById pour les auto-inscriptions

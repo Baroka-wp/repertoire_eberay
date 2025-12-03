@@ -14,6 +14,7 @@ import {
   BookOpen
 } from 'lucide-react'
 import ModifierButton from '@/app/components/ModifierButton'
+import DocumentPreviewCard from '@/app/components/DocumentPreviewCard'
 
 interface PageProps {
   params: Promise<{ id: string }>
@@ -49,6 +50,10 @@ export default async function RepetiteurPage({ params }: PageProps) {
       nationalite: true,
       moyenTransport: true,
       photo: true,
+      casierJudiciaire: true,
+      carteIdentite: true,
+      passeport: true,
+      documentsVerifies: true,
     }
   })
 
@@ -293,6 +298,52 @@ export default async function RepetiteurPage({ params }: PageProps) {
                 )}
               </div>
             </div>
+
+            {/* SECTION 4 : DOCUMENTS JUSTIFICATIFS */}
+            {(repetiteur.casierJudiciaire || repetiteur.carteIdentite || repetiteur.passeport) && (
+              <div className="mb-6 md:mb-8">
+                <h2 className="text-xs md:text-sm font-bold text-slate-500 uppercase tracking-wider mb-3 md:mb-4 pb-2 border-b border-neutral-200">
+                  Documents Justificatifs
+                </h2>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {/* Casier Judiciaire */}
+                  {repetiteur.casierJudiciaire && (
+                    <DocumentPreviewCard 
+                      title="Casier judiciaire"
+                      url={repetiteur.casierJudiciaire}
+                      verified={repetiteur.documentsVerifies}
+                    />
+                  )}
+                  
+                  {/* Carte d'identite */}
+                  {repetiteur.carteIdentite && (
+                    <DocumentPreviewCard 
+                      title="Carte d&apos;identité"
+                      url={repetiteur.carteIdentite}
+                      verified={repetiteur.documentsVerifies}
+                    />
+                  )}
+                  
+                  {/* Passeport */}
+                  {repetiteur.passeport && (
+                    <DocumentPreviewCard 
+                      title="Passeport"
+                      url={repetiteur.passeport}
+                      verified={repetiteur.documentsVerifies}
+                    />
+                  )}
+                </div>
+                
+                {/* Badge de vérification */}
+                {repetiteur.documentsVerifies && (
+                  <div className="mt-4 inline-flex items-center gap-2 bg-green-50 text-green-700 px-3 py-2 rounded-lg text-sm font-medium">
+                    <CheckCircle2 size={16} />
+                    Documents vérifiés par l&apos;administration
+                  </div>
+                )}
+              </div>
+            )}
 
           </div>
         </div>

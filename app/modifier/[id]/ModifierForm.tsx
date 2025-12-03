@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { useFormStatus } from 'react-dom'
 import { updateRepetiteur } from '../../actions'
 import Image from 'next/image'
 import {
@@ -18,9 +17,11 @@ import {
   School,
   ChevronRight,
   ChevronLeft,
-  Check
+  Check,
+  FileText
 } from 'lucide-react'
 import CloudinaryUpload from '@/app/components/CloudinaryUpload'
+import DocumentUpload from '@/app/components/DocumentUpload'
 
 const NIVEAUX = [
   { id: 'primaire', label: 'Primaire', icon: BookOpen, desc: 'CP, CE1, CM2...' },
@@ -58,6 +59,7 @@ const STEPS = [
   { id: 1, label: 'Identité', icon: User },
   { id: 2, label: 'Localisation', icon: MapPin },
   { id: 3, label: 'Compétences', icon: Briefcase },
+  { id: 4, label: 'Documents', icon: FileText },
 ]
 
 interface ModifierFormProps {
@@ -76,33 +78,14 @@ interface ModifierFormProps {
     nationalite: string | null
     moyenTransport: string | null
     photo: string | null
+    casierJudiciaire: string | null
+    carteIdentite: string | null
+    passeport: string | null
+    documentsVerifies: boolean
   }
   matieresInitiales: string[]
   niveauxInitiaux: string[]
   classesInitiales: string[]
-}
-
-function SubmitButton() {
-  const { pending } = useFormStatus()
-  return (
-    <button
-      type="submit"
-      disabled={pending}
-      className={`flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white px-8 py-3.5 rounded-lg text-base font-semibold transition-colors shadow-sm disabled:opacity-70 disabled:cursor-not-allowed w-full lg:w-auto min-w-[200px] justify-center ${pending ? 'opacity-70' : ''}`}
-    >
-      {pending ? (
-        <>
-          <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-          Enregistrement...
-        </>
-      ) : (
-        <>
-          <Save size={18} />
-          Enregistrer
-        </>
-      )}
-    </button>
-  )
 }
 
 export function ModifierForm({ repetiteur, matieresInitiales, niveauxInitiaux, classesInitiales }: ModifierFormProps) {
@@ -125,6 +108,9 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauxInitiaux, c
     nationalite: repetiteur.nationalite || '',
     moyenTransport: repetiteur.moyenTransport || '',
     photo: repetiteur.photo || '',
+    casierJudiciaire: repetiteur.casierJudiciaire || '',
+    carteIdentite: repetiteur.carteIdentite || '',
+    passeport: repetiteur.passeport || '',
   })
 
   const updateFormData = (field: string, value: string) => {
@@ -133,6 +119,8 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauxInitiaux, c
 
   const canProceedToStep2 = formData.nom.trim() !== '' && formData.prenom.trim() !== ''
   const canProceedToStep3 = formData.departement !== '' && formData.commune.trim() !== '' && formData.telephone.trim() !== ''
+  // For step 4, we'll allow proceeding without document validation since they can be added later
+  const canProceedToStep4 = classesSelectionnees.length > 0 && matieresSelectionnees.length > 0
 
   const toggleClasse = (classe: string) => {
     setClassesSelectionnees(prev =>
@@ -157,6 +145,8 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauxInitiaux, c
       setCurrentStep(2)
     } else if (currentStep === 2 && canProceedToStep3) {
       setCurrentStep(3)
+    } else if (currentStep === 3 && canProceedToStep4) {
+      setCurrentStep(4)
     }
   }
 
@@ -166,9 +156,15 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauxInitiaux, c
     }
   }
 
+  // Validation for documents: casier judiciaire required and at least carteIdentite or passeport
+  const canSubmit = formData.casierJudiciaire.trim() !== '' && 
+                   (formData.carteIdentite.trim() !== '' || formData.passeport.trim() !== '')
+
   async function handleSubmit(formData: FormData) {
     await updateRepetiteur(repetiteur.id, formData)
   }
+
+  // SubmitButton function was removed as it's only used in step 4 now
 
   return (
     <div className="min-h-screen bg-neutral-50">
@@ -268,6 +264,13 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauxInitiaux, c
               {matieresSelectionnees.map((matiere, index) => (
                 <input key={index} type="hidden" name={`matieres[${index}]`} value={matiere} />
               ))}
+            </>
+          )}
+          {currentStep > 3 && (
+            <>
+              <input type="hidden" name="casierJudiciaire" value={formData.casierJudiciaire} />
+              <input type="hidden" name="carteIdentite" value={formData.carteIdentite} />
+              <input type="hidden" name="passeport" value={formData.passeport} />
             </>
           )}
 
@@ -691,6 +694,85 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauxInitiaux, c
 
               </div>
 
+              <div className="px-6 py-4 md:px-8 md:py-6 bg-neutral-50 border-t border-neutral-200 flex justify-between">
+                <button
+                  type="button"
+                  onClick={prevStep}
+                  className="flex items-center gap-2 bg-neutral-200 hover:bg-neutral-300 text-slate-700 px-6 py-3 rounded-lg text-base font-semibold transition-colors"
+                >
+                  <ChevronLeft size={18} />
+                  Précédent
+                </button>
+                <button
+                  type="button"
+                  onClick={nextStep}
+                  className="flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white px-6 py-3 rounded-lg text-base font-semibold transition-colors"
+                >
+                  Suivant
+                  <ChevronRight size={18} />
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* ÉTAPE 4 : DOCUMENTS */}
+          {currentStep === 4 && (
+            <div className="bg-white rounded-lg border border-neutral-200 shadow-sm overflow-hidden">
+              <div className="px-6 py-4 md:px-8 md:py-6 bg-slate-50 border-b border-neutral-200">
+                <div className="flex items-center gap-4">
+                  <div className="p-2 md:p-3 bg-slate-800 rounded-lg text-white">
+                    <FileText size={20} className="md:w-6 md:h-6" />
+                  </div>
+                  <div>
+                    <h2 className="text-lg md:text-xl font-bold text-slate-900">Documents Justificatifs</h2>
+                    <p className="text-xs md:text-sm text-slate-600 mt-0.5 md:mt-1">Téléchargez vos documents officiels</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-6 md:p-8 space-y-6 md:space-y-8">
+                {/* Casier Judiciaire - Required */}
+                <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <label className="block text-sm font-semibold text-slate-700">Casier judiciaire *</label>
+                    <span className="text-xs text-amber-700 bg-amber-100 px-2 py-0.5 rounded">Obligatoire</span>
+                  </div>
+                  <p className="text-xs text-slate-600 mb-4">Veuillez fournir votre casier judiciaire récent (moins de 3 mois)</p>
+                  <DocumentUpload 
+                    onDocumentUpload={(url) => updateFormData('casierJudiciaire', url)}
+                    initialDocumentUrl={formData.casierJudiciaire}
+                    documentType="casier"
+                  />
+                </div>
+
+                {/* Carte d&apos;identite and Passeport */}
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-4">Pièce d&apos;identité</label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-semibold text-slate-700 mb-2">Carte d&apos;identité</label>
+                      <p className="text-xs text-slate-600 mb-4">Joindre une copie de votre carte d&apos;identité nationale</p>
+                      <DocumentUpload 
+                        onDocumentUpload={(url) => updateFormData('carteIdentite', url)}
+                        initialDocumentUrl={formData.carteIdentite}
+                        documentType="id_card"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-semibold text-slate-700 mb-2">Passeport</label>
+                      <p className="text-xs text-slate-600 mb-4">Joindre une copie de votre passeport (si applicable)</p>
+                      <DocumentUpload 
+                        onDocumentUpload={(url) => updateFormData('passeport', url)}
+                        initialDocumentUrl={formData.passeport}
+                        documentType="passport"
+                      />
+                    </div>
+                  </div>
+                  <p className="text-xs text-slate-500 mt-3">* Au moins l&apos;une de ces deux pièces est requise en plus du casier judiciaire</p>
+                </div>
+              </div>
+
               <div className="px-6 py-4 md:px-8 md:py-6 bg-neutral-50 border-t border-neutral-200 flex flex-col lg:flex-row justify-between gap-4">
                 <button
                   type="button"
@@ -700,7 +782,14 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauxInitiaux, c
                   <ChevronLeft size={18} />
                   Précédent
                 </button>
-                <SubmitButton />
+                <button
+                  type="submit"
+                  disabled={!canSubmit}
+                  className="flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white px-6 py-3 md:px-8 md:py-3 rounded-lg text-base font-semibold transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed w-full lg:w-auto justify-center"
+                >
+                  <Save size={18} />
+                  Enregistrer
+                </button>
               </div>
             </div>
           )}
