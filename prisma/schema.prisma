@@ -43,7 +43,7 @@ model Repetiteur {
   moyenTransport String?
   photo         String?   // URL de la photo de profil Cloudinary
   
-  // Nouveaux champs pour les documents
+  // Documents justificatifs
   casierJudiciaire     String?   // URL Cloudinary du casier judiciaire
   carteIdentite        String?   // URL Cloudinary de la carte d'identité
   passeport            String?   // URL Cloudinary du passeport

@@ -10,11 +10,11 @@ interface DocumentUploadProps {
   className?: string
 }
 
-export default function DocumentUpload({ 
-  onDocumentUpload, 
-  initialDocumentUrl, 
+export default function DocumentUpload({
+  onDocumentUpload,
+  initialDocumentUrl,
   documentType,
-  className = '' 
+  className = ''
 }: DocumentUploadProps) {
   const [loading, setLoading] = useState(false)
   const [uploadProgress, setUploadProgress] = useState(0)
@@ -74,7 +74,7 @@ export default function DocumentUpload({
 
       // Determine document type for naming
       let documentTypeStr = ''
-      switch(documentType) {
+      switch (documentType) {
         case 'casier':
           documentTypeStr = 'casier_judiciaire'
           break
@@ -92,19 +92,15 @@ export default function DocumentUpload({
       const timestamp = Date.now()
       const publicId = `documents/repetiteur_${timestamp}_${documentTypeStr}`
 
-      // Determine if it's an image or pdf for upload path
-      const isImage = file.type.startsWith('image/')
-      const uploadPath = isImage 
-        ? `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`
-        : `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/raw/upload`
+      // Use auto upload for all file types to let Cloudinary handle resource type detection
+      const uploadPath = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/auto/upload`
 
       // Create form data for Cloudinary
       const formData = new FormData()
       formData.append('file', file)
       formData.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!)
       formData.append('public_id', publicId)
-      // Explicitly set access mode to public for documents
-      formData.append('access_mode', 'public')
+      // Remove explicit access_mode as it might conflict with preset settings
 
       // Upload to Cloudinary
       const response = await fetch(uploadPath, {
@@ -115,7 +111,9 @@ export default function DocumentUpload({
       clearInterval(progressInterval)
 
       if (!response.ok) {
-        throw new Error('Échec du téléchargement du document')
+        const errorData = await response.json()
+        console.error('Cloudinary error details:', errorData)
+        throw new Error(errorData.error?.message || 'Échec du téléchargement du document')
       }
 
       const data = await response.json()
@@ -209,7 +207,7 @@ export default function DocumentUpload({
 
   // Get document type label for UI
   const getDocumentLabel = () => {
-    switch(documentType) {
+    switch (documentType) {
       case 'casier':
         return 'Casier judiciaire'
       case 'id_card':
@@ -236,7 +234,7 @@ export default function DocumentUpload({
           {previewUrl ? (
             /* Document Preview */
             <div className="relative group w-full h-full">
-              <div 
+              <div
                 className="w-full h-full flex flex-col items-center justify-center rounded-xl border-2 border-slate-200 bg-slate-50 shadow-md transition-all duration-300 group-hover:shadow-lg cursor-pointer"
                 onClick={() => window.open(previewUrl, '_blank')}
               >
