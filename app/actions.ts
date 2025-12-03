@@ -21,9 +21,9 @@ export async function createRepetiteur(formData: FormData) {
 
   // --- GESTION DES MULTIPLES ---
 
-  // 1. Récupérer le niveau (ex: "Lycée")
-  const niveau = formData.get('niveau') as string
-
+  // 1. Récupérer TOUS les cycles cochés (ex: ["primaire", "secondaire_inf"])
+  const niveaux = formData.getAll('niveaux') as string[]
+  
   // 2. Récupérer TOUTES les classes cochées (ex: ["2nde", "1ère"])
   const classes = formData.getAll('classes') as string[]
 
@@ -31,12 +31,40 @@ export async function createRepetiteur(formData: FormData) {
   const matieresList = formData.getAll('matieres') as string[]
 
   // --- FORMATAGE POUR LA BASE DE DONNÉES ---
-  // Format : "Maths, PC - [Lycée : 2nde, 1ère]"
+  // Format : "Maths, PC - [Primaire: CI, CP...; Collège: 6ème, 5ème...]"
 
   const matieresStr = matieresList.length > 0 ? matieresList.join(', ') : 'Non spécifié'
-  const classesStr = classes.length > 0 ? classes.join(', ') : 'Aucune'
-
-  const competenceString = `${matieresStr} - [${niveau} : ${classesStr}]`
+  
+  // Convertir les IDs des cycles en libellés lisibles
+  const niveauLabels: Record<string, string> = {
+    'primaire': 'Primaire',
+    'secondaire_inf': 'Collège',
+    'secondaire_sup': 'Lycée'
+  }
+  
+  // Créer un objet pour regrouper les classes par cycle
+  const classesParNiveau: Record<string, string[]> = {}
+  
+  // Pour chaque cycle sélectionné
+  for (const niveauId of niveaux) {
+    // Obtenir la liste des classes pour ce cycle
+    const classesDuNiveau = getClassesForNiveau(niveauId)
+    // Filtrer les classes qui sont sélectionnées
+    const classesSelectionneesDuNiveau = classes.filter(classe => classesDuNiveau.includes(classe))
+    if (classesSelectionneesDuNiveau.length > 0) {
+      classesParNiveau[niveauId] = classesSelectionneesDuNiveau
+    }
+  }
+  
+  // Formater les cycles et classes
+  const cyclesFormates = Object.entries(classesParNiveau)
+    .map(([niveauId, classesNiveau]) => {
+      const niveauLabel = niveauLabels[niveauId] || niveauId
+      return `${niveauLabel}: ${classesNiveau.join(', ')}`
+    })
+    .join('; ')
+  
+  const competenceString = `${matieresStr} - [${cyclesFormates}]`
 
   await prisma.repetiteur.create({
     data: {
@@ -58,6 +86,16 @@ export async function createRepetiteur(formData: FormData) {
   redirect(`/repertoire?toast=success&message=${message}`)
 }
 
+// Fonction utilitaire pour obtenir les classes pour un niveau spécifique
+function getClassesForNiveau(niveauId: string): string[] {
+  const classesParNiveau: Record<string, string[]> = {
+    primaire: ['CI', 'CP', 'CE1', 'CE2', 'CM1', 'CM2'],
+    secondaire_inf: ['6ème', '5ème', '4ème', '3ème'],
+    secondaire_sup: ['2nde', '1ère', 'Terminale'],
+  }
+  return classesParNiveau[niveauId] || []
+}
+
 export async function updateRepetiteur(id: number, formData: FormData) {
   // Vérifier les permissions
   const user = await requirePermission('canEdit')
@@ -74,9 +112,9 @@ export async function updateRepetiteur(id: number, formData: FormData) {
 
   // --- GESTION DES MULTIPLES ---
 
-  // 1. Récupérer le niveau (ex: "Lycée")
-  const niveau = formData.get('niveau') as string
-
+  // 1. Récupérer TOUS les cycles cochés (ex: ["primaire", "secondaire_inf"])
+  const niveaux = formData.getAll('niveaux') as string[]
+  
   // 2. Récupérer TOUTES les classes cochées (ex: ["2nde", "1ère"])
   const classes = formData.getAll('classes') as string[]
 
@@ -84,12 +122,40 @@ export async function updateRepetiteur(id: number, formData: FormData) {
   const matieresList = formData.getAll('matieres') as string[]
 
   // --- FORMATAGE POUR LA BASE DE DONNÉES ---
-  // Format : "Maths, PC - [Lycée : 2nde, 1ère]"
+  // Format : "Maths, PC - [Primaire: CI, CP...; Collège: 6ème, 5ème...]"
 
   const matieresStr = matieresList.length > 0 ? matieresList.join(', ') : 'Non spécifié'
-  const classesStr = classes.length > 0 ? classes.join(', ') : 'Aucune'
-
-  const competenceString = `${matieresStr} - [${niveau} : ${classesStr}]`
+  
+  // Convertir les IDs des cycles en libellés lisibles
+  const niveauLabels: Record<string, string> = {
+    'primaire': 'Primaire',
+    'secondaire_inf': 'Collège',
+    'secondaire_sup': 'Lycée'
+  }
+  
+  // Créer un objet pour regrouper les classes par cycle
+  const classesParNiveau: Record<string, string[]> = {}
+  
+  // Pour chaque cycle sélectionné
+  for (const niveauId of niveaux) {
+    // Obtenir la liste des classes pour ce cycle
+    const classesDuNiveau = getClassesForNiveau(niveauId)
+    // Filtrer les classes qui sont sélectionnées
+    const classesSelectionneesDuNiveau = classes.filter(classe => classesDuNiveau.includes(classe))
+    if (classesSelectionneesDuNiveau.length > 0) {
+      classesParNiveau[niveauId] = classesSelectionneesDuNiveau
+    }
+  }
+  
+  // Formater les cycles et classes
+  const cyclesFormates = Object.entries(classesParNiveau)
+    .map(([niveauId, classesNiveau]) => {
+      const niveauLabel = niveauLabels[niveauId] || niveauId
+      return `${niveauLabel}: ${classesNiveau.join(', ')}`
+    })
+    .join('; ')
+  
+  const competenceString = `${matieresStr} - [${cyclesFormates}]`
 
   await prisma.repetiteur.update({
     where: { id },
@@ -126,14 +192,43 @@ export async function inscriptionRepetiteur(formData: FormData) {
   const email = formData.get('email') as string | null
 
   // Récupération des multiples
-  const niveau = formData.get('niveau') as string
+  const niveaux = formData.getAll('niveaux') as string[]
   const classes = formData.getAll('classes') as string[]
   const matieresList = formData.getAll('matieres') as string[]
 
   // Formatage
   const matieresStr = matieresList.length > 0 ? matieresList.join(', ') : 'Non spécifié'
-  const classesStr = classes.length > 0 ? classes.join(', ') : 'Aucune'
-  const competenceString = `${matieresStr} - [${niveau} : ${classesStr}]`
+  
+  // Convertir les IDs des cycles en libellés lisibles
+  const niveauLabels: Record<string, string> = {
+    'primaire': 'Primaire',
+    'secondaire_inf': 'Collège',
+    'secondaire_sup': 'Lycée'
+  }
+  
+  // Créer un objet pour regrouper les classes par cycle
+  const classesParNiveau: Record<string, string[]> = {}
+  
+  // Pour chaque cycle sélectionné
+  for (const niveauId of niveaux) {
+    // Obtenir la liste des classes pour ce cycle
+    const classesDuNiveau = getClassesForNiveau(niveauId)
+    // Filtrer les classes qui sont sélectionnées
+    const classesSelectionneesDuNiveau = classes.filter(classe => classesDuNiveau.includes(classe))
+    if (classesSelectionneesDuNiveau.length > 0) {
+      classesParNiveau[niveauId] = classesSelectionneesDuNiveau
+    }
+  }
+  
+  // Formater les cycles et classes
+  const cyclesFormates = Object.entries(classesParNiveau)
+    .map(([niveauId, classesNiveau]) => {
+      const niveauLabel = niveauLabels[niveauId] || niveauId
+      return `${niveauLabel}: ${classesNiveau.join(', ')}`
+    })
+    .join('; ')
+  
+  const competenceString = `${matieresStr} - [${cyclesFormates}]`
 
   await prisma.repetiteur.create({
     data: {

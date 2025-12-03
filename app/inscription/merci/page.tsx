@@ -1,7 +1,9 @@
 import Image from 'next/image'
 import { CheckCircle2 } from 'lucide-react'
 
-export default function MerciPage({ searchParams }: { searchParams: Promise<{ message?: string }> }) {
+export default async function MerciPage({ searchParams }: { searchParams: Promise<{ message?: string }> }) {
+  const { message } = await searchParams;
+  
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-neutral-50 to-slate-100 flex items-center justify-center p-6">
       <div className="w-full max-w-2xl text-center">
@@ -26,7 +28,7 @@ export default function MerciPage({ searchParams }: { searchParams: Promise<{ me
           </h1>
 
           <p className="text-lg text-slate-600 mb-6">
-            Merci de votre inscription au répertoire E-Beyray.
+            {message || 'Merci de votre inscription au répertoire E-Beyray.'}
           </p>
 
           <div className="bg-neutral-50 rounded-lg p-6 mb-8 text-left">

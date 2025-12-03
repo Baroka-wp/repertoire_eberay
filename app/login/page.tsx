@@ -11,7 +11,7 @@ export default function LoginPage() {
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
+  const [error, setError] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [hasAdmin, setHasAdmin] = useState<boolean | null>(null)
 
@@ -37,13 +37,14 @@ export default function LoginPage() {
 
       if (result?.error) {
         setError('Email ou mot de passe incorrect')
+        setIsLoading(false)
       } else {
         router.push('/repertoire')
         router.refresh()
       }
-    } catch (error) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (err) {
       setError('Une erreur est survenue')
-    } finally {
       setIsLoading(false)
     }
   }
