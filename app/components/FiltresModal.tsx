@@ -19,16 +19,16 @@ const MATIERES_LISTE = [
 
 const DEPARTEMENTS = ["Niamey", "Dosso", "Maradi", "Tahoua", "Zinder", "Agadez", "Diffa", "Tillabéri"]
 
-const VILLES_PAR_REGION: Record<string, string[]> = {
-  "Niamey": ["Niamey"],
-  "Dosso": ["Dosso", "Gaya", "Doutchi", "Loga"],
-  "Maradi": ["Maradi", "Tessaoua", "Dakoro", "Mayahi"],
-  "Tahoua": ["Tahoua", "Abalak", "Birni-N'Konni", "Madaoua"],
-  "Zinder": ["Zinder", "Magaria", "Gouré", "Mirriah"],
-  "Agadez": ["Agadez", "Arlit", "Bilma", "Tchirozérine"],
-  "Diffa": ["Diffa", "N'Guigmi", "Maïné-Soroa"],
-  "Tillabéri": ["Tillabéri", "Tera", "Filingué", "Say", "Kollo"],
-}
+const COMMUNES_PAR_REGION: Record<string, string[]> = {
+  "Niamey": ["ACN1", "ACN2", "ACN3", "ACN4", "ACN5"],
+  "Dosso": ["Dosso Ville", "Gaya", "Dogondoutchi", "Loga", "Boboye"],
+  "Maradi": ["Maradi Ville", "Tessaoua", "Madarounfa", "Guidan Roumdji", "Aguié"],
+  "Tahoua": ["Tahoua Ville", "Birni-N'Konni", "Madaoua", "Illéla", "Keita"],
+  "Zinder": ["Zinder Ville", "Mirriah", "Tanout", "Gouré", "Magaria"],
+  "Agadez": ["Agadez Ville", "Arlit", "Tchirozérine", "Ingall", "Dirkou"],
+  "Diffa": ["Diffa Ville", "N'Guigmi", "Maine-Soroa", "Goudoumaria", "N'Gourti"],
+  "Tillabéri": ["Tillabéri Ville", "Ayorou", "Ouallam", "Téra", "Filingué", "Kollo", "Say", "Torodi", "Hamdallaye", "Balleyara", "Damana", "Bonkoukou"]
+};
 
 interface FiltresModalProps {
   isOpen: boolean
@@ -36,7 +36,7 @@ interface FiltresModalProps {
   initialValues: {
     q: string
     region: string
-    ville: string
+    commune: string
     matiere: string
     niveau: string
   }
@@ -52,13 +52,13 @@ export default function FiltresModal({ isOpen, onClose, initialValues }: Filtres
   }, [initialValues])
 
   const handleRegionChange = (region: string) => {
-    setFormData({ ...formData, region, ville: '' })
+    setFormData({ ...formData, region, commune: '' })
   }
 
-  const villesDisponibles = formData.region ? VILLES_PAR_REGION[formData.region] || [] : []
+  const villesDisponibles = formData.region ? COMMUNES_PAR_REGION[formData.region] || [] : []
 
   const handleReset = () => {
-    setFormData({ q: '', region: '', ville: '', matiere: '', niveau: '' })
+    setFormData({ q: '', region: '', commune: '', matiere: '', niveau: '' })
     startTransition(() => {
       router.push('/repertoire')
       onClose()
@@ -67,17 +67,17 @@ export default function FiltresModal({ isOpen, onClose, initialValues }: Filtres
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    
+
     // Construire l'URL avec les paramètres
     const params = new URLSearchParams()
     if (formData.q) params.set('q', formData.q)
     if (formData.region) params.set('region', formData.region)
-    if (formData.ville) params.set('ville', formData.ville)
+    if (formData.commune) params.set('commune', formData.commune)
     if (formData.matiere) params.set('matiere', formData.matiere)
     if (formData.niveau) params.set('niveau', formData.niveau)
-    
+
     const url = params.toString() ? `/repertoire?${params.toString()}` : '/repertoire'
-    
+
     startTransition(() => {
       router.push(url)
       onClose()
@@ -89,11 +89,11 @@ export default function FiltresModal({ isOpen, onClose, initialValues }: Filtres
   return (
     <div className="fixed inset-0 z-[9999] overflow-y-auto">
       {/* Backdrop */}
-      <div 
+      <div
         className="fixed inset-0 bg-black/50 transition-opacity"
         onClick={onClose}
       />
-      
+
       {/* Modal */}
       <div className="flex min-h-full items-center justify-center p-4">
         <div className="relative bg-white rounded-xl shadow-2xl w-full max-w-3xl z-[10000]">
@@ -170,24 +170,24 @@ export default function FiltresModal({ isOpen, onClose, initialValues }: Filtres
                     </div>
                   </div>
 
-                  {/* Ville */}
+                  {/* Commune */}
                   <div>
-                    <label htmlFor="modal-ville" className="block text-sm font-semibold text-slate-700 mb-2">
-                      Ville
+                    <label htmlFor="modal-commune" className="block text-sm font-semibold text-slate-700 mb-2">
+                      Commune
                     </label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <MapPin size={18} className="text-slate-400" />
                       </div>
                       <select
-                        id="modal-ville"
-                        name="ville"
-                        value={formData.ville}
-                        onChange={(e) => setFormData({ ...formData, ville: e.target.value })}
+                        id="modal-commune"
+                        name="commune"
+                        value={formData.commune}
+                        onChange={(e) => setFormData({ ...formData, commune: e.target.value })}
                         disabled={!formData.region}
                         className="block w-full pl-10 pr-10 py-3 border border-neutral-300 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-800 focus:border-transparent appearance-none bg-white text-base cursor-pointer disabled:bg-neutral-100 disabled:text-slate-400 disabled:cursor-not-allowed"
                       >
-                        <option value="">Toutes les villes</option>
+                        <option value="">Toutes les communes</option>
                         {villesDisponibles.map(v => (
                           <option key={v} value={v}>{v}</option>
                         ))}

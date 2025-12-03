@@ -13,7 +13,7 @@ interface TableRowProps {
     prenom: string
     telephone: string
     email: string | null
-    ville: string
+    commune: string
     departement: string
     matieres: string
     diplome: string
@@ -69,7 +69,7 @@ export function TableRow({ repetiteur }: TableRowProps) {
 
       {/* Colonne : Localisation */}
       <td className="px-6 py-4 whitespace-nowrap">
-        <div className="text-sm text-slate-900 font-medium">{repetiteur.ville}</div>
+        <div className="text-sm text-slate-900 font-medium">{repetiteur.commune}</div>
         <div className="text-xs text-slate-600">{repetiteur.departement}</div>
       </td>
 

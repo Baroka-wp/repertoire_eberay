@@ -55,7 +55,7 @@ export default async function UtilisateursPage() {
     <div className="min-h-screen bg-neutral-50">
       <AdminHeader
         title="Gestion des Utilisateurs"
-        subtitle="Administration E-Beyray"
+        subtitle="Administration Groupe SP"
         rightAction={
           <Link
             href="/admin/utilisateurs/ajouter"

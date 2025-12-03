@@ -13,7 +13,7 @@ interface RepetiteurCardProps {
         prenom: string
         telephone: string
         email: string | null
-        ville: string
+        commune: string
         departement: string
         matieres: string
         diplome: string
@@ -65,7 +65,7 @@ export function RepetiteurCard({ repetiteur }: RepetiteurCardProps) {
             <div className="space-y-2 mb-4">
                 <div className="flex items-center gap-2 text-sm text-slate-600">
                     <MapPin size={16} className="text-slate-400" />
-                    <span>{repetiteur.ville}, {repetiteur.departement}</span>
+                    <span>{repetiteur.commune}, {repetiteur.departement}</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-slate-600">
                     <Phone size={16} className="text-slate-400" />

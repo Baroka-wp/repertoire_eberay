@@ -40,16 +40,16 @@ const MATIERES_LISTE = [
 
 const DEPARTEMENTS = ["Niamey", "Dosso", "Maradi", "Tahoua", "Zinder", "Agadez", "Diffa", "Tillabéri"]
 
-const VILLES_PAR_REGION: Record<string, string[]> = {
-    "Niamey": ["Niamey", "Kollo", "Say", "Torodi"],
-    "Dosso": ["Dosso", "Gaya", "Dogondoutchi", "Loga", "Boboye"],
-    "Maradi": ["Maradi", "Tessaoua", "Madarounfa", "Guidan Roumdji", "Aguié"],
-    "Tahoua": ["Tahoua", "Birni-N'Konni", "Madaoua", "Illéla", "Keita"],
-    "Zinder": ["Zinder", "Mirriah", "Tanout", "Gouré", "Magaria"],
-    "Agadez": ["Agadez", "Arlit", "Tchirozérine", "Ingall", "Dirkou"],
-    "Diffa": ["Diffa", "N'Guigmi", "Maine-Soroa", "Goudoumaria", "N'Gourti"],
-    "Tillabéri": ["Tillabéri", "Ayorou", "Ouallam", "Téra", "Filingué"]
-}
+const COMMUNES_PAR_REGION: Record<string, string[]> = {
+    "Niamey": ["ACN1", "ACN2", "ACN3", "ACN4", "ACN5"],
+    "Dosso": ["Dosso Ville", "Gaya", "Dogondoutchi", "Loga", "Boboye"],
+    "Maradi": ["Maradi Ville", "Tessaoua", "Madarounfa", "Guidan Roumdji", "Aguié"],
+    "Tahoua": ["Tahoua Ville", "Birni-N'Konni", "Madaoua", "Illéla", "Keita"],
+    "Zinder": ["Zinder Ville", "Mirriah", "Tanout", "Gouré", "Magaria"],
+    "Agadez": ["Agadez Ville", "Arlit", "Tchirozérine", "Ingall", "Dirkou"],
+    "Diffa": ["Diffa Ville", "N'Guigmi", "Maine-Soroa", "Goudoumaria", "N'Gourti"],
+    "Tillabéri": ["Tillabéri Ville", "Ayorou", "Ouallam", "Téra", "Filingué", "Kollo", "Say", "Torodi", "Hamdallaye", "Balleyara", "Damana", "Bonkoukou"]
+};
 
 const STEPS = [
     { id: 1, label: 'Identité', icon: User },
@@ -91,7 +91,7 @@ export default function AjouterPage() {
         prenom: '',
         anneeEntree: new Date().getFullYear().toString(),
         departement: '',
-        ville: '',
+        commune: '',
         telephone: '',
         diplome: '',
     })
@@ -101,7 +101,7 @@ export default function AjouterPage() {
     }
 
     const canProceedToStep2 = formData.nom.trim() !== '' && formData.prenom.trim() !== ''
-    const canProceedToStep3 = formData.departement !== '' && formData.ville.trim() !== '' && formData.telephone.trim() !== ''
+    const canProceedToStep3 = formData.departement !== '' && formData.commune.trim() !== '' && formData.telephone.trim() !== ''
 
     const toggleClasse = (classe: string) => {
         setClassesSelectionnees(prev =>
@@ -144,13 +144,13 @@ export default function AjouterPage() {
                     <div className="flex items-center justify-center h-20 gap-4">
                         <Image
                             src="/logo_eberay.png"
-                            alt="Logo E-Beyray"
+                            alt="Logo Groupe SP"
                             width={50}
                             height={50}
                             className="object-contain"
                         />
                         <div>
-                            <h1 className="text-xl font-bold text-slate-900">Inscription au Répertoire E-Beyray</h1>
+                            <h1 className="text-xl font-bold text-slate-900">Inscription au Répertoire Groupe SP</h1>
                             <p className="text-sm text-slate-600">Formulaire d&apos;inscription pour répétiteurs</p>
                         </div>
                     </div>
@@ -206,7 +206,7 @@ export default function AjouterPage() {
                     {currentStep > 2 && (
                         <>
                             <input type="hidden" name="departement" value={formData.departement} />
-                            <input type="hidden" name="ville" value={formData.ville} />
+                            <input type="hidden" name="commune" value={formData.commune} />
                             <input type="hidden" name="telephone" value={formData.telephone} />
                             <input type="hidden" name="diplome" value={formData.diplome} />
                             {/* Hidden inputs for multiple cycles */}
@@ -313,7 +313,7 @@ export default function AjouterPage() {
                                         value={formData.departement}
                                         onChange={(e) => {
                                             updateFormData('departement', e.target.value)
-                                            updateFormData('ville', '') // Réinitialiser la ville quand la région change
+                                            updateFormData('commune', '') // Réinitialiser la commune quand la région change
                                         }}
                                         required
                                         className="w-full text-base text-slate-900 px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-800 focus:border-transparent bg-white"
@@ -325,17 +325,17 @@ export default function AjouterPage() {
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-semibold text-slate-700 mb-2">Ville *</label>
+                                    <label className="block text-sm font-semibold text-slate-700 mb-2">Commune *</label>
                                     <select
-                                        name="ville"
-                                        value={formData.ville}
-                                        onChange={(e) => updateFormData('ville', e.target.value)}
+                                        name="commune"
+                                        value={formData.commune}
+                                        onChange={(e) => updateFormData('commune', e.target.value)}
                                         required
                                         disabled={!formData.departement}
                                         className="w-full text-base text-slate-900 px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-800 focus:border-transparent bg-white disabled:bg-neutral-100 disabled:cursor-not-allowed"
                                     >
-                                        <option value="">-- Choisir une ville --</option>
-                                        {formData.departement && VILLES_PAR_REGION[formData.departement]?.map(ville => (
+                                        <option value="">-- Choisir une commune --</option>
+                                        {formData.departement && COMMUNES_PAR_REGION[formData.departement]?.map(ville => (
                                             <option key={ville} value={ville}>{ville}</option>
                                         ))}
                                     </select>

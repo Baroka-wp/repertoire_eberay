@@ -3,7 +3,7 @@ import { CheckCircle2 } from 'lucide-react'
 
 export default async function MerciPage({ searchParams }: { searchParams: Promise<{ message?: string }> }) {
   const { message } = await searchParams;
-  
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-neutral-50 to-slate-100 flex items-center justify-center p-6">
       <div className="w-full max-w-2xl text-center">
@@ -11,7 +11,7 @@ export default async function MerciPage({ searchParams }: { searchParams: Promis
           <div className="inline-flex items-center justify-center mb-6">
             <Image
               src="/logo_eberay.png"
-              alt="Logo E-Beyray"
+              alt="Logo Groupe SP"
               width={100}
               height={100}
               className="drop-shadow-lg"
@@ -28,7 +28,7 @@ export default async function MerciPage({ searchParams }: { searchParams: Promis
           </h1>
 
           <p className="text-lg text-slate-600 mb-6">
-            {message || 'Merci de votre inscription au répertoire E-Beyray.'}
+            {message || 'Merci de votre inscription au répertoire Groupe SP.'}
           </p>
 
           <div className="bg-neutral-50 rounded-lg p-6 mb-8 text-left">
@@ -54,7 +54,7 @@ export default async function MerciPage({ searchParams }: { searchParams: Promis
           </div>
 
           <p className="text-sm text-slate-500">
-            Pour toute question, contactez l&apos;organisation E-Beyray
+            Pour toute question, contactez l&apos;organisation Groupe SP
           </p>
         </div>
       </div>

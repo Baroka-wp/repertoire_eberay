@@ -68,7 +68,7 @@ export default async function RepetiteurPage({ params }: PageProps) {
               <div className="flex items-center gap-2 md:gap-3 min-w-0">
                 <Image
                   src="/logo_eberay.png"
-                  alt="Logo E-Beyray"
+                  alt="Logo Groupe SP"
                   width={32}
                   height={32}
                   className="object-contain w-8 h-8 md:w-10 md:h-10 flex-shrink-0"
@@ -175,9 +175,9 @@ export default async function RepetiteurPage({ params }: PageProps) {
                   <div className="flex items-start flex-col sm:flex-row">
                     <div className="w-full sm:w-40 text-sm text-slate-500 font-medium flex items-center gap-2 mb-1 sm:mb-0">
                       <MapPin size={14} className="text-slate-400" />
-                      Ville
+                      Commune
                     </div>
-                    <div className="flex-1 text-sm text-slate-900">{repetiteur.ville}</div>
+                    <div className="flex-1 text-sm text-slate-900">{repetiteur.commune}</div>
                   </div>
                   <div className="flex items-start flex-col sm:flex-row">
                     <div className="w-full sm:w-40 text-sm text-slate-500 font-medium mb-1 sm:mb-0">Région</div>

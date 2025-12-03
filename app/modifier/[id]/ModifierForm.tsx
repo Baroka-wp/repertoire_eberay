@@ -42,16 +42,16 @@ const MATIERES_LISTE = [
 
 const DEPARTEMENTS = ["Niamey", "Dosso", "Maradi", "Tahoua", "Zinder", "Agadez", "Diffa", "Tillabéri"]
 
-const VILLES_PAR_REGION: Record<string, string[]> = {
-  "Niamey": ["Niamey", "Kollo", "Say", "Torodi"],
-  "Dosso": ["Dosso", "Gaya", "Dogondoutchi", "Loga", "Boboye"],
-  "Maradi": ["Maradi", "Tessaoua", "Madarounfa", "Guidan Roumdji", "Aguié"],
-  "Tahoua": ["Tahoua", "Birni-N'Konni", "Madaoua", "Illéla", "Keita"],
-  "Zinder": ["Zinder", "Mirriah", "Tanout", "Gouré", "Magaria"],
-  "Agadez": ["Agadez", "Arlit", "Tchirozérine", "Ingall", "Dirkou"],
-  "Diffa": ["Diffa", "N'Guigmi", "Maine-Soroa", "Goudoumaria", "N'Gourti"],
-  "Tillabéri": ["Tillabéri", "Ayorou", "Ouallam", "Téra", "Filingué"]
-}
+const COMMUNES_PAR_REGION: Record<string, string[]> = {
+  "Niamey": ["ACN1", "ACN2", "ACN3", "ACN4", "ACN5"],
+  "Dosso": ["Dosso Ville", "Gaya", "Dogondoutchi", "Loga", "Boboye"],
+  "Maradi": ["Maradi Ville", "Tessaoua", "Madarounfa", "Guidan Roumdji", "Aguié"],
+  "Tahoua": ["Tahoua Ville", "Birni-N'Konni", "Madaoua", "Illéla", "Keita"],
+  "Zinder": ["Zinder Ville", "Mirriah", "Tanout", "Gouré", "Magaria"],
+  "Agadez": ["Agadez Ville", "Arlit", "Tchirozérine", "Ingall", "Dirkou"],
+  "Diffa": ["Diffa Ville", "N'Guigmi", "Maine-Soroa", "Goudoumaria", "N'Gourti"],
+  "Tillabéri": ["Tillabéri Ville", "Ayorou", "Ouallam", "Téra", "Filingué", "Kollo", "Say", "Torodi", "Hamdallaye", "Balleyara", "Damana", "Bonkoukou"]
+};
 
 const STEPS = [
   { id: 1, label: 'Identité', icon: User },
@@ -65,7 +65,7 @@ interface ModifierFormProps {
     nom: string
     prenom: string
     telephone: string
-    ville: string
+    commune: string
     departement: string
     diplome: string
     anneeEntree: number
@@ -110,7 +110,7 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauxInitiaux, c
     prenom: repetiteur.prenom,
     anneeEntree: repetiteur.anneeEntree.toString(),
     departement: repetiteur.departement,
-    ville: repetiteur.ville,
+    commune: repetiteur.commune,
     telephone: repetiteur.telephone,
     diplome: repetiteur.diplome,
     statut: repetiteur.statut,
@@ -121,7 +121,7 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauxInitiaux, c
   }
 
   const canProceedToStep2 = formData.nom.trim() !== '' && formData.prenom.trim() !== ''
-  const canProceedToStep3 = formData.departement !== '' && formData.ville.trim() !== '' && formData.telephone.trim() !== ''
+  const canProceedToStep3 = formData.departement !== '' && formData.commune.trim() !== '' && formData.telephone.trim() !== ''
 
   const toggleClasse = (classe: string) => {
     setClassesSelectionnees(prev =>
@@ -175,7 +175,7 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauxInitiaux, c
               <div className="flex items-center gap-2 md:gap-3 min-w-0">
                 <Image
                   src="/logo_eberay.png"
-                  alt="Logo E-Beyray"
+                  alt="Logo Groupe SP"
                   width={32}
                   height={32}
                   className="object-contain w-8 h-8 md:w-10 md:h-10 flex-shrink-0"
@@ -236,7 +236,7 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauxInitiaux, c
           {currentStep > 2 && (
             <>
               <input type="hidden" name="departement" value={formData.departement} />
-              <input type="hidden" name="ville" value={formData.ville} />
+              <input type="hidden" name="commune" value={formData.commune} />
               <input type="hidden" name="telephone" value={formData.telephone} />
               <input type="hidden" name="statut" value={formData.statut} />
               <input type="hidden" name="diplome" value={formData.diplome} />
@@ -356,9 +356,9 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauxInitiaux, c
                     value={formData.departement}
                     onChange={(e) => {
                       updateFormData('departement', e.target.value)
-                      // Si la ville actuelle n'est pas dans la nouvelle région, réinitialiser
-                      if (e.target.value && VILLES_PAR_REGION[e.target.value] && !VILLES_PAR_REGION[e.target.value].includes(formData.ville)) {
-                        updateFormData('ville', '')
+                      // Si la commune actuelle n'est pas dans la nouvelle région, réinitialiser
+                      if (e.target.value && COMMUNES_PAR_REGION[e.target.value] && !COMMUNES_PAR_REGION[e.target.value].includes(formData.commune)) {
+                        updateFormData('commune', '')
                       }
                     }}
                     required
@@ -371,22 +371,22 @@ export function ModifierForm({ repetiteur, matieresInitiales, niveauxInitiaux, c
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">Ville *</label>
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">Commune *</label>
                   <select
-                    name="ville"
-                    value={formData.ville}
-                    onChange={(e) => updateFormData('ville', e.target.value)}
+                    name="commune"
+                    value={formData.commune}
+                    onChange={(e) => updateFormData('commune', e.target.value)}
                     required
                     disabled={!formData.departement}
                     className="w-full text-base text-slate-900 px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-800 focus:border-transparent bg-white disabled:bg-neutral-100 disabled:cursor-not-allowed"
                   >
-                    <option value="">-- Choisir une ville --</option>
+                    <option value="">-- Choisir une commune --</option>
                     {formData.departement && (() => {
-                      const villesDisponibles = VILLES_PAR_REGION[formData.departement] || []
-                      // Si la ville actuelle n'est pas dans la liste, l'ajouter
-                      const villesAffichees = villesDisponibles.includes(formData.ville)
+                      const villesDisponibles = COMMUNES_PAR_REGION[formData.departement] || []
+                      // Si la commune actuelle n'est pas dans la liste, l'ajouter
+                      const villesAffichees = villesDisponibles.includes(formData.commune)
                         ? villesDisponibles
-                        : [...villesDisponibles, formData.ville].filter(Boolean)
+                        : [...villesDisponibles, formData.commune].filter(Boolean)
                       return villesAffichees.map(ville => (
                         <option key={ville} value={ville}>{ville}</option>
                       ))

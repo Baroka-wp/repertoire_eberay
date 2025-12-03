@@ -32,7 +32,7 @@ model Repetiteur {
   prenom        String
   email         String?   // Le ? veut dire optionnel
   telephone     String
-  ville         String
+  commune       String
   departement   String    // Niamey, Dosso, etc.
   matieres      String    // Stocké comme texte "Maths, PC"
   diplome       String

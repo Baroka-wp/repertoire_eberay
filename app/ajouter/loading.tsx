@@ -22,7 +22,7 @@ export default function Loading() {
           <div className="flex flex-col items-center gap-4">
             <Image
               src="/logo_eberay.png"
-              alt="Logo E-Beyray"
+              alt="Logo Groupe SP"
               width={80}
               height={80}
               className="animate-pulse"

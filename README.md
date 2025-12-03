@@ -1,6 +1,6 @@
-# 🎓 E-Beyray - Répertoire des Répétiteurs
+# 🎓 Groupe SP - Répertoire des Répétiteurs
 
-Plateforme de gestion des répétiteurs de l'Organisation E-Beyray au Niger.
+Plateforme de gestion des répétiteurs de l'Organisation Groupe SP au Niger.
 
 ## 🚀 Démarrage rapide
 
@@ -60,7 +60,7 @@ Accédez à : **http://localhost:3000**
 ### ✅ Gestion des Répétiteurs
 - Ajout multi-étapes avec validation
 - Modification et consultation des profils
-- Filtrage avancé (région, ville, matière, niveau)
+- Filtrage avancé (région, commune, matière, niveau)
 - Vue liste et carte interactive
 
 ### 👥 Gestion des Utilisateurs
@@ -127,11 +127,11 @@ npm run build
 
 ## 📄 Licence
 
-Propriété de l'Organisation E-Beyray - Niger
+Propriété de l'Organisation Groupe SP - Niger
 
 ## 👥 Équipe
 
-Développé pour l'Organisation E-Beyray
+Développé pour l'Organisation Groupe SP
 
 ---
 
