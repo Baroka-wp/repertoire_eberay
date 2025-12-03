@@ -90,7 +90,7 @@ export default function SetupAdminPage() {
           <div className="inline-flex items-center justify-center mb-6">
             <Image
               src="/logo_eberay.png"
-              alt="Logo E-Beyray"
+              alt="Logo Groupe SP"
               width={100}
               height={100}
               className="drop-shadow-lg"

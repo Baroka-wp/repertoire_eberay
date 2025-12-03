@@ -28,7 +28,7 @@ export default function AdminHeader({ title, subtitle, rightAction }: AdminHeade
             <div className="flex items-center gap-2 md:gap-3 min-w-0">
               <Image
                 src="/logo_eberay.png"
-                alt="Logo E-Beyray"
+                alt="Logo Groupe SP"
                 width={24}
                 height={24}
                 className="object-contain w-6 h-6 md:w-8 md:h-8 flex-shrink-0"

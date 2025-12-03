@@ -13,7 +13,7 @@ interface RepertoireHeaderProps {
   initialFilters: {
     q: string
     region: string
-    ville: string
+    commune: string
     matiere: string
     niveau: string
   }
@@ -48,12 +48,12 @@ export default function RepertoireHeader({
               <div className="flex items-center gap-2 md:gap-3">
                 <Image
                   src="/logo_eberay.png"
-                  alt="Logo E-Beyray"
+                  alt="Logo Groupe SP"
                   width={32}
                   height={32}
                   className="object-contain w-8 h-8"
                 />
-                <h1 className="text-lg font-bold text-slate-900 hidden sm:block">Répertoire E-Beyray</h1>
+                <h1 className="text-lg font-bold text-slate-900 hidden sm:block">Répertoire Groupe SP</h1>
               </div>
             </div>
 

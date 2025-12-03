@@ -17,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "E-BEYRAY - Répertoire des Répétiteurs",
-  description: "Plateforme de gestion des répétiteurs de l'Organisation E-Beyray",
+  title: "Groupe SP - Répertoire des Répétiteurs",
+  description: "Plateforme de gestion des répétiteurs de l'Organisation Groupe SP",
 };
 
 export default function RootLayout({

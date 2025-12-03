@@ -10,7 +10,7 @@ export default async function RepertoirePage({
   searchParams: Promise<{ 
     q?: string
     region?: string
-    ville?: string
+    commune?: string
     matiere?: string
     niveau?: string
   }> 
@@ -18,7 +18,7 @@ export default async function RepertoirePage({
   const params = await searchParams
   const query = params.q || ""
   const regionFilter = params.region || ""
-  const villeFilter = params.ville || ""
+  const communeFilter = params.commune || ""
   const matiereFilter = params.matiere || ""
   const niveauFilter = params.niveau || ""
 
@@ -46,10 +46,10 @@ export default async function RepertoirePage({
     })
   }
 
-  // Filtre par ville
-  if (villeFilter) {
+  // Filtre par commune
+  if (communeFilter) {
     whereConditions.AND.push({
-      ville: { equals: villeFilter }
+      commune: { equals: communeFilter }
     })
   }
 
@@ -81,7 +81,7 @@ export default async function RepertoirePage({
       prenom: true,
       telephone: true,
       email: true,
-      ville: true,
+      commune: true,
       departement: true,
       matieres: true,
       diplome: true,
@@ -92,12 +92,12 @@ export default async function RepertoirePage({
   const totalEnseignants = repetiteurs.length
 
   // Compter les filtres actifs
-  const filtresActifs = [query, regionFilter, villeFilter, matiereFilter, niveauFilter].filter(f => f).length
+  const filtresActifs = [query, regionFilter, communeFilter, matiereFilter, niveauFilter].filter(f => f).length
 
   const initialFilters = {
     q: query,
     region: regionFilter,
-    ville: villeFilter,
+    commune: communeFilter,
     matiere: matiereFilter,
     niveau: niveauFilter
   }
@@ -143,10 +143,10 @@ export default async function RepertoirePage({
                   <span className="font-medium">{regionFilter}</span>
                 </span>
               )}
-              {villeFilter && (
+              {communeFilter && (
                 <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-neutral-200 text-sm text-slate-700">
-                  <span className="text-slate-500">Ville:</span>
-                  <span className="font-medium">{villeFilter}</span>
+                  <span className="text-slate-500">Commune:</span>
+                  <span className="font-medium">{communeFilter}</span>
                 </span>
               )}
               {matiereFilter && (
@@ -203,7 +203,7 @@ export default async function RepertoirePage({
                     prenom: string
                     telephone: string
                     email: string | null
-                    ville: string
+                    commune: string
                     departement: string
                     matieres: string
                     diplome: string

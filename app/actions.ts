@@ -14,7 +14,7 @@ export async function createRepetiteur(formData: FormData) {
   const nom = formData.get('nom') as string
   const prenom = formData.get('prenom') as string
   const telephone = formData.get('telephone') as string
-  const ville = formData.get('ville') as string
+  const commune = formData.get('commune') as string
   const departement = formData.get('departement') as string
   const diplome = formData.get('diplome') as string
   const anneeEntree = Number(formData.get('anneeEntree'))
@@ -71,13 +71,13 @@ export async function createRepetiteur(formData: FormData) {
       nom,
       prenom,
       telephone,
-      ville,
+      commune,
       departement,
       diplome,
       anneeEntree,
       matieres: competenceString, // On sauvegarde la chaîne formatée
       statut: 'Actif',
-      createdById: user.id,
+      createdById: user?.id || null,
     },
   })
 
@@ -104,7 +104,7 @@ export async function updateRepetiteur(id: number, formData: FormData) {
   const nom = formData.get('nom') as string
   const prenom = formData.get('prenom') as string
   const telephone = formData.get('telephone') as string
-  const ville = formData.get('ville') as string
+  const commune = formData.get('commune') as string
   const departement = formData.get('departement') as string
   const diplome = formData.get('diplome') as string
   const anneeEntree = Number(formData.get('anneeEntree'))
@@ -163,13 +163,13 @@ export async function updateRepetiteur(id: number, formData: FormData) {
       nom,
       prenom,
       telephone,
-      ville,
+      commune,
       departement,
       diplome,
       anneeEntree,
       matieres: competenceString,
       statut,
-      updatedById: user.id,
+      updatedById: user?.id || null,
     },
   })
 
@@ -185,7 +185,7 @@ export async function inscriptionRepetiteur(formData: FormData) {
   const nom = formData.get('nom') as string
   const prenom = formData.get('prenom') as string
   const telephone = formData.get('telephone') as string
-  const ville = formData.get('ville') as string
+  const commune = formData.get('commune') as string
   const departement = formData.get('departement') as string
   const diplome = formData.get('diplome') as string
   const anneeEntree = Number(formData.get('anneeEntree'))
@@ -236,7 +236,7 @@ export async function inscriptionRepetiteur(formData: FormData) {
       prenom,
       email,
       telephone,
-      ville,
+      commune,
       departement,
       diplome,
       anneeEntree,

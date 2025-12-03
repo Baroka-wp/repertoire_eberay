@@ -11,7 +11,7 @@ export default function HomePage() {
           <div className="inline-flex items-center justify-center mb-4 md:mb-6">
             <Image
               src="/logo_eberay.png"
-              alt="Logo E-BEYRAY"
+              alt="Logo Groupe SP"
               width={180}
               height={180}
               className="drop-shadow-lg w-32 h-32 md:w-[180px] md:h-[180px]"
@@ -19,10 +19,10 @@ export default function HomePage() {
             />
           </div>
           <h1 className="text-3xl md:text-5xl font-bold text-slate-900 mb-2 md:mb-4">
-            E-BEYRAY
+            Groupe SP
           </h1>
           <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto px-2">
-            Répertoire des Répétiteurs de l&apos;Organisation E-Beyray
+            Répertoire des Répétiteurs de l&apos;Organisation Groupe SP
           </p>
         </div>
 
@@ -45,7 +45,7 @@ export default function HomePage() {
               </h2>
 
               <p className="text-sm md:text-base text-slate-600 mb-4 md:mb-6 leading-relaxed">
-                Accédez à la base de données des répétiteurs E-Beyray. Recherchez par région, matière, niveau ou nom.
+                Accédez à la base de données des répétiteurs Groupe SP. Recherchez par région, matière, niveau ou nom.
               </p>
 
               <div className="inline-flex items-center text-slate-800 font-semibold group-hover:gap-3 gap-2 transition-all text-sm md:text-base">
@@ -72,7 +72,7 @@ export default function HomePage() {
               </h2>
 
               <p className="text-sm md:text-base text-slate-600 mb-4 md:mb-6 leading-relaxed">
-                Inscrivez un nouveau répétiteur dans l&apos;organisation E-Beyray avec ses informations et compétences.
+                Inscrivez un nouveau répétiteur dans l&apos;organisation Groupe SP avec ses informations et compétences.
               </p>
 
               <div className="inline-flex items-center text-slate-800 font-semibold group-hover:gap-3 gap-2 transition-all text-sm md:text-base">
@@ -85,7 +85,7 @@ export default function HomePage() {
 
         {/* FOOTER INFO */}
         <div className="text-center text-xs md:text-sm text-slate-500">
-          <p>Plateforme de gestion des membres E-Beyray</p>
+          <p>Plateforme de gestion des membres Groupe SP</p>
         </div>
       </div>
     </div>

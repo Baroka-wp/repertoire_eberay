@@ -28,9 +28,8 @@ export default function SidebarMenu() {
 
       {/* Sidebar */}
       <div
-        className={`fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-[9999] transform transition-transform duration-300 ease-in-out ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
+        className={`fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-[9999] transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
       >
         <div className="flex flex-col h-full">
           {/* Header de la Sidebar */}
@@ -111,7 +110,7 @@ export default function SidebarMenu() {
           {/* Footer */}
           <div className="p-4 border-t border-neutral-200 bg-neutral-50">
             <p className="text-xs text-slate-500 text-center">
-              E-Beyray © {new Date().getFullYear()}
+              Groupe SP © {new Date().getFullYear()}
             </p>
           </div>
         </div>

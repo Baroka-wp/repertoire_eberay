@@ -26,7 +26,7 @@ export default function ModifierUtilisateurForm({ user }: ModifierUtilisateurFor
     <div className="min-h-screen bg-neutral-50">
       <AdminHeader
         title="Modifier un utilisateur"
-        subtitle="Administration E-Beyray"
+        subtitle="Administration Groupe SP"
       />
 
       <main className="max-w-2xl mx-auto px-4 md:px-6 lg:px-8 py-6 md:py-10">

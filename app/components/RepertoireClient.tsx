@@ -20,7 +20,7 @@ interface RepertoireClientProps {
   initialFilters: {
     q: string
     region: string
-    ville: string
+    commune: string
     matiere: string
     niveau: string
   }
@@ -29,7 +29,7 @@ interface RepertoireClientProps {
     id: number
     nom: string
     prenom: string
-    ville: string
+    commune: string
     departement: string
     telephone: string
     matieres: string

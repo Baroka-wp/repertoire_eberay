@@ -51,7 +51,7 @@ interface Repetiteur {
   id: number
   nom: string
   prenom: string
-  ville: string
+  commune: string
   departement: string
   telephone: string
   matieres: string
@@ -71,23 +71,23 @@ export default function RepetiteurMap({ repetiteurs }: RepetiteurMapProps) {
     return () => clearTimeout(timer)
   }, [])
 
-  // Grouper les répétiteurs par ville
-  const repetiteursParVille = repetiteurs.reduce((acc, rep) => {
-    if (!acc[rep.ville]) {
-      acc[rep.ville] = []
+  // Grouper les répétiteurs par commune
+  const repetiteursParCommune = repetiteurs.reduce((acc, rep) => {
+    if (!acc[rep.commune]) {
+      acc[rep.commune] = []
     }
-    acc[rep.ville].push(rep)
+    acc[rep.commune].push(rep)
     return acc
   }, {} as Record<string, Repetiteur[]>)
 
-  // Identifier les villes sans coordonnées
-  const villesSansCoords = Object.keys(repetiteursParVille).filter(
-    ville => !COORDONNEES_VILLES[ville]
+  // Identifier les communes sans coordonnées
+  const communesSansCoords = Object.keys(repetiteursParCommune).filter(
+    commune => !COORDONNEES_VILLES[commune]
   )
 
   // Compter les répétiteurs affichés et non affichés
-  const repetiteursAffiches = repetiteurs.filter(rep => COORDONNEES_VILLES[rep.ville])
-  const repetiteursNonAffiches = repetiteurs.filter(rep => !COORDONNEES_VILLES[rep.ville])
+  const repetiteursAffiches = repetiteurs.filter(rep => COORDONNEES_VILLES[rep.commune])
+  const repetiteursNonAffiches = repetiteurs.filter(rep => !COORDONNEES_VILLES[rep.commune])
 
   // Centre de la carte sur le Niger
   const center: [number, number] = [15.0, 8.0]
@@ -107,15 +107,15 @@ export default function RepetiteurMap({ repetiteurs }: RepetiteurMapProps) {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           
-          {Object.entries(repetiteursParVille).map(([ville, reps]) => {
-            const coords = COORDONNEES_VILLES[ville]
+          {Object.entries(repetiteursParCommune).map(([commune, reps]) => {
+            const coords = COORDONNEES_VILLES[commune]
             if (!coords) return null
 
             return (
-              <Marker key={ville} position={coords}>
+              <Marker key={commune} position={coords}>
                 <Popup>
                   <div className="p-2 min-w-[200px]">
-                    <h3 className="font-bold text-slate-900 mb-2 text-base">{ville}</h3>
+                    <h3 className="font-bold text-slate-900 mb-2 text-base">{commune}</h3>
                     <p className="text-sm text-slate-600 mb-3">
                       {reps.length} répétiteur{reps.length > 1 ? 's' : ''}
                     </p>
@@ -144,10 +144,10 @@ export default function RepetiteurMap({ repetiteurs }: RepetiteurMapProps) {
       {/* Info discrète en bas */}
       <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between text-xs text-slate-500 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded shadow-sm">
         <span>
-          {Object.keys(repetiteursParVille).length} villes · {repetiteursAffiches.length} affichés
+          {Object.keys(repetiteursParCommune).length} communes · {repetiteursAffiches.length} affichés
         </span>
-        {villesSansCoords.length > 0 && (
-          <span className="text-amber-600" title={`Villes sans GPS: ${villesSansCoords.join(', ')}`}>
+        {communesSansCoords.length > 0 && (
+          <span className="text-amber-600" title={`Communes sans GPS: ${communesSansCoords.join(', ')}`}>
             {repetiteursNonAffiches.length} non localisé{repetiteursNonAffiches.length > 1 ? 's' : ''}
           </span>
         )}
