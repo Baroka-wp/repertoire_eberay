@@ -89,6 +89,7 @@ interface ModifierFormProps {
 }
 
 export function ModifierForm({ repetiteur, matieresInitiales, niveauxInitiaux, classesInitiales }: ModifierFormProps) {
+
   const [currentStep, setCurrentStep] = useState(1)
   const [niveauxSelectionnes, setNiveauxSelectionnes] = useState<string[]>(niveauxInitiaux)
   const [classesSelectionnees, setClassesSelectionnees] = useState<string[]>(classesInitiales)
