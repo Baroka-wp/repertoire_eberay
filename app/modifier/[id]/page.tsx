@@ -10,7 +10,7 @@ interface PageProps {
 export default async function ModifierPage({ params }: PageProps) {
   // Vérifier que l'utilisateur a la permission de modifier
   await requirePermission('canEdit')
-  
+
   const { id } = await params
   const repetiteurId = parseInt(id)
 
@@ -27,15 +27,15 @@ export default async function ModifierPage({ params }: PageProps) {
   }
 
   // Parsing des données existantes
-  const matieresList = repetiteur.matieres.split(' - ')[0]?.split(',').map(m => m.trim()).filter(m => m && m !== 'Non spécifié') || []
-  const competencesInfo = repetiteur.matieres.includes('[') 
+  const matieresList = repetiteur.matieres.split(' - ')[0]?.split(',').map((m: string) => m.trim()).filter((m: string) => m && m !== 'Non spécifié') || []
+  const competencesInfo = repetiteur.matieres.includes('[')
     ? repetiteur.matieres.split('[')[1]?.replace(']', '') || ''
     : ''
 
   // Extraire le niveau et les classes
   let niveauInitial = 'primaire'
   let classesInitiales: string[] = []
-  
+
   if (competencesInfo) {
     // Le format est "[primaire : CP, CE1]" ou "[secondaire_inf : 6ème, 5ème]"
     // Le niveau est stocké comme ID (primaire, secondaire_inf, secondaire_sup)
@@ -51,11 +51,11 @@ export default async function ModifierPage({ params }: PageProps) {
         else if (niveauStr.toLowerCase().includes('lycée') || niveauStr.toLowerCase().includes('secondaire_sup')) niveauInitial = 'secondaire_sup'
       }
     }
-    
+
     // Extraire les classes après ":"
     const classesMatch = competencesInfo.match(/:\s*(.+)/)
     if (classesMatch) {
-      classesInitiales = classesMatch[1].split(',').map(c => c.trim()).filter(c => c && c !== 'Aucune')
+      classesInitiales = classesMatch[1].split(',').map((c: string) => c.trim()).filter((c: string) => c && c !== 'Aucune')
     }
   }
 
