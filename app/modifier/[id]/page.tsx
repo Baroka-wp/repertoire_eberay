@@ -37,6 +37,10 @@ export default async function ModifierPage({ params }: PageProps) {
       nationalite: true,
       moyenTransport: true,
       photo: true,
+      casierJudiciaire: true,
+      carteIdentite: true,
+      passeport: true,
+      documentsVerifies: true,
     }
   })
 
