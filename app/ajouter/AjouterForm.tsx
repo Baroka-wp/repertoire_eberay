@@ -65,7 +65,7 @@ function SubmitButton() {
         <button
             type="submit"
             disabled={pending}
-            className={`flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white px-8 py-3.5 rounded-lg text-base font-semibold transition-colors shadow-sm disabled:opacity-70 disabled:cursor-not-allowed min-w-[200px] justify-center ${pending ? 'opacity-70' : ''}`}
+            className={`flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white px-8 py-3.5 rounded-lg text-base font-semibold transition-colors shadow-sm disabled:opacity-70 disabled:cursor-not-allowed w-full lg:w-auto min-w-[200px] justify-center ${pending ? 'opacity-70' : ''}`}
         >
             {pending ? (
                 <>
@@ -136,30 +136,30 @@ export default function AjouterPage() {
 
             {/* HEADER */}
             <header className="bg-white border-b border-neutral-200 shadow-sm">
-                <div className="max-w-7xl mx-auto px-6 lg:px-8">
-                    <div className="flex items-center justify-between h-20">
-                        <div className="flex items-center gap-4">
-                            <Link href="/repertoire" className="flex items-center gap-2 text-slate-700 hover:text-slate-900 transition-colors px-3 py-2 rounded-lg hover:bg-neutral-100">
+                <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+                    <div className="flex items-center justify-between h-16 md:h-20">
+                        <div className="flex items-center gap-2 md:gap-4 flex-1 min-w-0">
+                            <Link href="/repertoire" className="flex items-center gap-1 md:gap-2 text-slate-700 hover:text-slate-900 transition-colors px-2 md:px-3 py-2 rounded-lg hover:bg-neutral-100 flex-shrink-0">
                                 <ArrowLeft size={18} />
-                                <span className="font-medium text-sm">Retour au répertoire</span>
+                                <span className="font-medium text-xs md:text-sm hidden sm:inline">Retour</span>
                             </Link>
-                            <div className="h-6 w-px bg-neutral-300"></div>
-                            <div className="flex items-center gap-3">
+                            <div className="h-6 w-px bg-neutral-300 hidden sm:block"></div>
+                            <div className="flex items-center gap-2 md:gap-3 min-w-0">
                                 <Image
                                     src="/logp_eberay.png"
                                     alt="Logo E-Beyray"
-                                    width={40}
-                                    height={40}
-                                    className="object-contain"
+                                    width={32}
+                                    height={32}
+                                    className="object-contain w-8 h-8 md:w-10 md:h-10 flex-shrink-0"
                                 />
-                                <h1 className="text-xl font-bold text-slate-900">Inscription d&apos;un Répétiteur</h1>
+                                <h1 className="text-base md:text-xl font-bold text-slate-900 truncate">Inscription Répétiteur</h1>
                             </div>
                         </div>
                     </div>
                 </div>
             </header>
 
-            <main className="max-w-5xl mx-auto px-6 lg:px-8 py-10">
+            <main className="max-w-5xl mx-auto px-4 md:px-6 lg:px-8 py-6 md:py-10">
 
                 {/* PROGRESS STEPS */}
                 <div className="bg-white rounded-lg border border-neutral-200 shadow-sm p-6 mb-8">
@@ -516,24 +516,16 @@ export default function AjouterPage() {
 
                             </div>
 
-                            <div className="px-8 py-6 bg-neutral-50 border-t border-neutral-200 flex justify-between">
+                            <div className="px-8 py-6 bg-neutral-50 border-t border-neutral-200 flex flex-col lg:flex-row justify-between gap-4">
                                 <button
                                     type="button"
                                     onClick={prevStep}
-                                    className="flex items-center gap-2 bg-neutral-200 hover:bg-neutral-300 text-slate-700 px-8 py-3 rounded-lg text-base font-semibold transition-colors"
+                                    className="flex items-center gap-2 bg-neutral-200 hover:bg-neutral-300 text-slate-700 px-6 py-3 md:px-8 md:py-3 rounded-lg text-base font-semibold transition-colors w-full lg:w-auto justify-center"
                                 >
                                     <ChevronLeft size={18} />
                                     Précédent
                                 </button>
-                                <div className="flex gap-4">
-                                    <Link
-                                        href="/repertoire"
-                                        className="px-8 py-3 text-base font-semibold text-slate-700 bg-white border-2 border-neutral-300 rounded-lg hover:bg-neutral-50 transition-colors"
-                                    >
-                                        Annuler
-                                    </Link>
-                                    <SubmitButton />
-                                </div>
+                                <SubmitButton />
                             </div>
                         </div>
                     )}
