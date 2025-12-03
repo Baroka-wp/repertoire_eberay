@@ -90,6 +90,7 @@ export default async function RepertoirePage({
       genre: true,
       nationalite: true,
       moyenTransport: true,
+      photo: true,
     }
   })
 

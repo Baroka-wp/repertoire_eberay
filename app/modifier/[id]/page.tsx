@@ -36,6 +36,7 @@ export default async function ModifierPage({ params }: PageProps) {
       genre: true,
       nationalite: true,
       moyenTransport: true,
+      photo: true,
     }
   })
 

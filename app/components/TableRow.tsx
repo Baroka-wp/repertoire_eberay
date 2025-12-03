@@ -22,6 +22,7 @@ interface TableRowProps {
     genre: string | null
     nationalite: string | null
     moyenTransport: string | null
+    photo: string | null
   }
 }
 
@@ -39,16 +40,24 @@ export function TableRow({ repetiteur }: TableRowProps) {
   }
 
   return (
-    <tr 
+    <tr
       onClick={handleRowClick}
       className="hover:bg-slate-50 transition-colors cursor-pointer group"
     >
       {/* Colonne : Nom + Avatar */}
       <td className="px-6 py-4 whitespace-nowrap">
         <div className="flex items-center">
-          <div className="h-11 w-11 flex-shrink-0 rounded-full bg-slate-100 flex items-center justify-center text-slate-700 font-bold text-sm border-2 border-slate-200">
-            {repetiteur.prenom[0]}{repetiteur.nom[0]}
-          </div>
+          {repetiteur.photo ? (
+            <img
+              src={repetiteur.photo}
+              alt={`${repetiteur.prenom} ${repetiteur.nom}`}
+              className="h-11 w-11 flex-shrink-0 rounded-full border-2 border-slate-200 object-cover"
+            />
+          ) : (
+            <div className="h-11 w-11 flex-shrink-0 rounded-full bg-slate-100 flex items-center justify-center text-slate-700 font-bold text-sm border-2 border-slate-200">
+              {repetiteur.prenom[0]}{repetiteur.nom[0]}
+            </div>
+          )}
           <div className="ml-4">
             <div className="text-sm font-semibold text-slate-900">
               {repetiteur.prenom} {repetiteur.nom.toUpperCase()}
@@ -86,8 +95,8 @@ export function TableRow({ repetiteur }: TableRowProps) {
             return (
               <>
                 {matieresList.slice(0, 2).map((m, i) => (
-                  <span 
-                    key={i} 
+                  <span
+                    key={i}
                     className="inline-flex items-center px-2.5 py-1 rounded-md bg-slate-100 text-xs font-medium text-slate-700 border border-slate-200"
                   >
                     {m}
@@ -106,11 +115,10 @@ export function TableRow({ repetiteur }: TableRowProps) {
 
       {/* Colonne : Statut */}
       <td className="px-6 py-4 whitespace-nowrap">
-        <span className={`inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold ${
-          repetiteur.statut === 'Actif' 
-            ? 'bg-green-50 text-green-700 border border-green-200' 
+        <span className={`inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold ${repetiteur.statut === 'Actif'
+            ? 'bg-green-50 text-green-700 border border-green-200'
             : 'bg-red-50 text-red-700 border border-red-200'
-        }`}>
+          }`}>
           {repetiteur.statut}
         </span>
       </td>
@@ -118,8 +126,8 @@ export function TableRow({ repetiteur }: TableRowProps) {
       {/* Colonne : Actions */}
       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
         {canModify ? (
-          <Link 
-            href={`/modifier/${repetiteur.id}`} 
+          <Link
+            href={`/modifier/${repetiteur.id}`}
             onClick={(e) => e.stopPropagation()}
             className="inline-flex items-center gap-1.5 text-slate-700 hover:text-slate-900 font-medium transition-colors"
           >
