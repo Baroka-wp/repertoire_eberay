@@ -47,7 +47,7 @@ export default function RepertoireHeader({
               <div className="h-6 w-px bg-neutral-300 hidden md:block"></div>
               <div className="flex items-center gap-2 md:gap-3">
                 <Image
-                  src="/logp_eberay.png"
+                  src="/logo_eberay.png"
                   alt="Logo E-Beyray"
                   width={32}
                   height={32}
@@ -93,8 +93,8 @@ export default function RepertoireHeader({
                 <button
                   onClick={() => onViewModeChange('list')}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${viewMode === 'list'
-                      ? 'bg-white text-slate-900 shadow-sm'
-                      : 'text-slate-600 hover:text-slate-900'
+                    ? 'bg-white text-slate-900 shadow-sm'
+                    : 'text-slate-600 hover:text-slate-900'
                     }`}
                 >
                   <List size={16} />
@@ -103,8 +103,8 @@ export default function RepertoireHeader({
                 <button
                   onClick={() => onViewModeChange('map')}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${viewMode === 'map'
-                      ? 'bg-white text-slate-900 shadow-sm'
-                      : 'text-slate-600 hover:text-slate-900'
+                    ? 'bg-white text-slate-900 shadow-sm'
+                    : 'text-slate-600 hover:text-slate-900'
                     }`}
                 >
                   <Map size={16} />

@@ -7,16 +7,16 @@ export default function MerciPage({ searchParams }: { searchParams: Promise<{ me
       <div className="w-full max-w-2xl text-center">
         <div className="bg-white rounded-xl shadow-lg border border-neutral-200 p-12">
           <div className="inline-flex items-center justify-center mb-6">
-            <Image 
-              src="/logp_eberay.png" 
-              alt="Logo E-Beyray" 
-              width={100} 
+            <Image
+              src="/logo_eberay.png"
+              alt="Logo E-Beyray"
+              width={100}
               height={100}
               className="drop-shadow-lg"
               priority
             />
           </div>
-          
+
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-100 mb-6">
             <CheckCircle2 size={40} className="text-green-600" />
           </div>

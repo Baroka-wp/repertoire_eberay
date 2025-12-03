@@ -10,7 +10,7 @@ export default function HomePage() {
         <div className="text-center mb-8 md:mb-12">
           <div className="inline-flex items-center justify-center mb-4 md:mb-6">
             <Image
-              src="/logp_eberay.png"
+              src="/logo_eberay.png"
               alt="Logo E-BEYRAY"
               width={180}
               height={180}

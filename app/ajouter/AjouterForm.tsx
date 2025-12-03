@@ -146,7 +146,7 @@ export default function AjouterPage() {
                             <div className="h-6 w-px bg-neutral-300 hidden sm:block"></div>
                             <div className="flex items-center gap-2 md:gap-3 min-w-0">
                                 <Image
-                                    src="/logp_eberay.png"
+                                    src="/logo_eberay.png"
                                     alt="Logo E-Beyray"
                                     width={32}
                                     height={32}

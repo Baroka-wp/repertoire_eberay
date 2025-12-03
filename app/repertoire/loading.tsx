@@ -24,10 +24,10 @@ export default function Loading() {
       <main className="max-w-7xl mx-auto px-6 lg:px-8 pt-6 pb-2">
         <div className="flex items-center justify-center min-h-[calc(100vh-200px)]">
           <div className="flex flex-col items-center gap-4">
-            <Image 
-              src="/logp_eberay.png" 
-              alt="Logo E-Beyray" 
-              width={80} 
+            <Image
+              src="/logo_eberay.png"
+              alt="Logo E-Beyray"
+              width={80}
               height={80}
               className="animate-pulse"
               priority
