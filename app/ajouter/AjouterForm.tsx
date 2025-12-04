@@ -166,8 +166,9 @@ export default function AjouterPage() {
             <main className="max-w-5xl mx-auto px-4 md:px-6 lg:px-8 py-6 md:py-10">
 
                 {/* PROGRESS STEPS */}
-                <div className="bg-white rounded-lg border border-neutral-200 shadow-sm p-6 mb-8">
-                    <div className="flex items-center justify-between">
+                {/* PROGRESS STEPS */}
+                <div className="bg-white rounded-lg border border-neutral-200 shadow-sm p-4 md:p-6 mb-6 md:mb-8 overflow-x-auto">
+                    <div className="flex items-center justify-between min-w-[300px]">
                         {STEPS.map((step, index) => {
                             const Icon = step.icon
                             const isActive = currentStep === step.id
@@ -176,21 +177,21 @@ export default function AjouterPage() {
                             return (
                                 <div key={step.id} className="flex items-center flex-1">
                                     <div className="flex flex-col items-center flex-1">
-                                        <div className={`flex items-center justify-center w-12 h-12 rounded-full border-2 transition-all ${isCompleted
+                                        <div className={`flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-full border-2 transition-all ${isCompleted
                                             ? 'bg-slate-800 border-slate-800 text-white'
                                             : isActive
                                                 ? 'bg-slate-800 border-slate-800 text-white shadow-md'
                                                 : 'bg-white border-neutral-300 text-neutral-400'
                                             }`}>
-                                            {isCompleted ? <Check size={20} /> : <Icon size={20} />}
+                                            {isCompleted ? <Check size={18} className="md:w-5 md:h-5" /> : <Icon size={18} className="md:w-5 md:h-5" />}
                                         </div>
-                                        <span className={`mt-2 text-sm font-semibold ${isActive ? 'text-slate-900' : isCompleted ? 'text-slate-700' : 'text-neutral-400'
+                                        <span className={`mt-2 text-xs md:text-sm font-semibold whitespace-nowrap ${isActive ? 'text-slate-900' : isCompleted ? 'text-slate-700' : 'text-neutral-400'
                                             }`}>
                                             {step.label}
                                         </span>
                                     </div>
                                     {index < STEPS.length - 1 && (
-                                        <div className={`flex-1 h-0.5 mx-4 transition-all ${isCompleted ? 'bg-slate-800' : 'bg-neutral-200'
+                                        <div className={`flex-1 h-0.5 mx-2 md:mx-4 transition-all ${isCompleted ? 'bg-slate-800' : 'bg-neutral-200'
                                             }`} />
                                     )}
                                 </div>
@@ -245,19 +246,19 @@ export default function AjouterPage() {
                     {/* ÉTAPE 1 : IDENTITÉ */}
                     {currentStep === 1 && (
                         <div className="bg-white rounded-lg border border-neutral-200 shadow-sm overflow-hidden">
-                            <div className="px-8 py-6 bg-slate-50 border-b border-neutral-200">
+                            <div className="px-6 py-4 md:px-8 md:py-6 bg-slate-50 border-b border-neutral-200">
                                 <div className="flex items-center gap-4">
-                                    <div className="p-3 bg-slate-800 rounded-lg text-white">
-                                        <User size={24} />
+                                    <div className="p-2 md:p-3 bg-slate-800 rounded-lg text-white">
+                                        <User size={20} className="md:w-6 md:h-6" />
                                     </div>
                                     <div>
-                                        <h2 className="text-xl font-bold text-slate-900">Informations Personnelles</h2>
-                                        <p className="text-sm text-slate-600 mt-1">Renseignez les informations de base</p>
+                                        <h2 className="text-lg md:text-xl font-bold text-slate-900">Informations Personnelles</h2>
+                                        <p className="text-xs md:text-sm text-slate-600 mt-0.5 md:mt-1">Renseignez les informations de base</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="p-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                                 <div>
                                     <label className="block text-sm font-semibold text-slate-700 mb-2">Nom *</label>
                                     <input
@@ -294,12 +295,12 @@ export default function AjouterPage() {
                                 </div>
                             </div>
 
-                            <div className="px-8 py-6 bg-neutral-50 border-t border-neutral-200 flex justify-end">
+                            <div className="px-6 py-4 md:px-8 md:py-6 bg-neutral-50 border-t border-neutral-200 flex justify-end">
                                 <button
                                     type="button"
                                     onClick={nextStep}
                                     disabled={!canProceedToStep2}
-                                    className="flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white px-8 py-3 rounded-lg text-base font-semibold transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white px-6 py-3 md:px-8 md:py-3 rounded-lg text-base font-semibold transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed w-full md:w-auto justify-center"
                                 >
                                     Suivant
                                     <ChevronRight size={18} />
@@ -311,19 +312,19 @@ export default function AjouterPage() {
                     {/* ÉTAPE 2 : LOCALISATION */}
                     {currentStep === 2 && (
                         <div className="bg-white rounded-lg border border-neutral-200 shadow-sm overflow-hidden">
-                            <div className="px-8 py-6 bg-slate-50 border-b border-neutral-200">
+                            <div className="px-6 py-4 md:px-8 md:py-6 bg-slate-50 border-b border-neutral-200">
                                 <div className="flex items-center gap-4">
-                                    <div className="p-3 bg-slate-800 rounded-lg text-white">
-                                        <MapPin size={24} />
+                                    <div className="p-2 md:p-3 bg-slate-800 rounded-lg text-white">
+                                        <MapPin size={20} className="md:w-6 md:h-6" />
                                     </div>
                                     <div>
-                                        <h2 className="text-xl font-bold text-slate-900">Coordonnées & Localisation</h2>
-                                        <p className="text-sm text-slate-600 mt-1">Informations de contact et localisation</p>
+                                        <h2 className="text-lg md:text-xl font-bold text-slate-900">Coordonnées & Localisation</h2>
+                                        <p className="text-xs md:text-sm text-slate-600 mt-0.5 md:mt-1">Informations de contact et localisation</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="p-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                                 <div>
                                     <label className="block text-sm font-semibold text-slate-700 mb-2">Région *</label>
                                     <select
@@ -469,11 +470,11 @@ export default function AjouterPage() {
                                 </div>
                             </div>
 
-                            <div className="px-8 py-6 bg-neutral-50 border-t border-neutral-200 flex justify-between">
+                            <div className="px-6 py-4 md:px-8 md:py-6 bg-neutral-50 border-t border-neutral-200 flex justify-between gap-4">
                                 <button
                                     type="button"
                                     onClick={prevStep}
-                                    className="flex items-center gap-2 bg-neutral-200 hover:bg-neutral-300 text-slate-700 px-8 py-3 rounded-lg text-base font-semibold transition-colors"
+                                    className="flex items-center gap-2 bg-neutral-200 hover:bg-neutral-300 text-slate-700 px-6 py-3 md:px-8 md:py-3 rounded-lg text-base font-semibold transition-colors w-full md:w-auto justify-center"
                                 >
                                     <ChevronLeft size={18} />
                                     Précédent
@@ -482,7 +483,7 @@ export default function AjouterPage() {
                                     type="button"
                                     onClick={nextStep}
                                     disabled={!canProceedToStep3}
-                                    className="flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white px-8 py-3 rounded-lg text-base font-semibold transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white px-6 py-3 md:px-8 md:py-3 rounded-lg text-base font-semibold transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed w-full md:w-auto justify-center"
                                 >
                                     Suivant
                                     <ChevronRight size={18} />
@@ -494,19 +495,19 @@ export default function AjouterPage() {
                     {/* ÉTAPE 3 : COMPÉTENCES */}
                     {currentStep === 3 && (
                         <div className="bg-white rounded-lg border border-neutral-200 shadow-sm overflow-hidden">
-                            <div className="px-8 py-6 bg-slate-50 border-b border-neutral-200">
+                            <div className="px-6 py-4 md:px-8 md:py-6 bg-slate-50 border-b border-neutral-200">
                                 <div className="flex items-center gap-4">
-                                    <div className="p-3 bg-slate-800 rounded-lg text-white">
-                                        <Briefcase size={24} />
+                                    <div className="p-2 md:p-3 bg-slate-800 rounded-lg text-white">
+                                        <Briefcase size={20} className="md:w-6 md:h-6" />
                                     </div>
                                     <div>
-                                        <h2 className="text-xl font-bold text-slate-900">Compétences Pédagogiques</h2>
-                                        <p className="text-sm text-slate-600 mt-1">Niveau, classes et matières enseignées</p>
+                                        <h2 className="text-lg md:text-xl font-bold text-slate-900">Compétences Pédagogiques</h2>
+                                        <p className="text-xs md:text-sm text-slate-600 mt-0.5 md:mt-1">Niveau, classes et matières enseignées</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="p-8 space-y-8">
+                            <div className="p-6 md:p-8 space-y-6 md:space-y-8">
 
                                 {/* DIPLÔME */}
                                 <div>
@@ -646,7 +647,7 @@ export default function AjouterPage() {
 
                             </div>
 
-                            <div className="px-8 py-6 bg-neutral-50 border-t border-neutral-200 flex justify-between">
+                            <div className="px-6 py-4 md:px-8 md:py-6 bg-neutral-50 border-t border-neutral-200 flex justify-between">
                                 <button
                                     type="button"
                                     onClick={prevStep}
@@ -670,19 +671,19 @@ export default function AjouterPage() {
                     {/* ÉTAPE 4 : DOCUMENTS */}
                     {currentStep === 4 && (
                         <div className="bg-white rounded-lg border border-neutral-200 shadow-sm overflow-hidden">
-                            <div className="px-8 py-6 bg-slate-50 border-b border-neutral-200">
+                            <div className="px-6 py-4 md:px-8 md:py-6 bg-slate-50 border-b border-neutral-200">
                                 <div className="flex items-center gap-4">
-                                    <div className="p-3 bg-slate-800 rounded-lg text-white">
-                                        <FileText size={24} />
+                                    <div className="p-2 md:p-3 bg-slate-800 rounded-lg text-white">
+                                        <FileText size={20} className="md:w-6 md:h-6" />
                                     </div>
                                     <div>
-                                        <h2 className="text-xl font-bold text-slate-900">Documents Justificatifs</h2>
-                                        <p className="text-sm text-slate-600 mt-1">Téléchargez vos documents officiels</p>
+                                        <h2 className="text-lg md:text-xl font-bold text-slate-900">Documents Justificatifs</h2>
+                                        <p className="text-xs md:text-sm text-slate-600 mt-0.5 md:mt-1">Téléchargez vos documents officiels</p>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="p-8 space-y-8">
+                            <div className="p-6 md:p-8 space-y-6 md:space-y-8">
                                 {/* Casier Judiciaire - Required */}
                                 <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
                                     <div className="flex items-center gap-2 mb-2">
@@ -700,7 +701,7 @@ export default function AjouterPage() {
                                 {/* Carte d&apos;identite and Passeport */}
                                 <div>
                                     <label className="block text-sm font-semibold text-slate-700 mb-4">Pièce d&apos;identité</label>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                                         <div>
                                             <label className="block text-sm font-semibold text-slate-700 mb-2">Carte d&apos;identité</label>
                                             <p className="text-xs text-slate-600 mb-4">Joindre une copie de votre carte d&apos;identité nationale</p>
@@ -725,7 +726,7 @@ export default function AjouterPage() {
                                 </div>
                             </div>
 
-                            <div className="px-8 py-6 bg-neutral-50 border-t border-neutral-200 flex flex-col lg:flex-row justify-between gap-4">
+                            <div className="px-6 py-4 md:px-8 md:py-6 bg-neutral-50 border-t border-neutral-200 flex flex-col lg:flex-row justify-between gap-4">
                                 <button
                                     type="button"
                                     onClick={prevStep}
